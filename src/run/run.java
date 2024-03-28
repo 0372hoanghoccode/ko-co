@@ -1,0 +1,60 @@
+package run;
+
+import java.awt.EventQueue;
+
+
+import javax.swing.UIManager;
+
+public class run {
+	
+	private loginFrame login;
+//	private appFrame app;
+	
+	public run() {
+		init();
+		
+	}
+	
+	public void init() {
+		
+		
+		login = new loginFrame();
+		login.setVisible(true);
+		
+//		app = new appFrame();
+//		app.setVisible(false);
+		
+		
+		eventHandler();
+		
+		
+		
+	}
+	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+					new run();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	public void eventHandler() {
+		if (login.getIsLogin() == true) {
+			login.dispose();
+//			app.setVisible(true);
+		}
+		
+		
+	}
+	
+	
+	
+	
+	
+}
