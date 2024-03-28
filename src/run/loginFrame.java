@@ -1,6 +1,7 @@
 package run;
 
 import javax.swing.*;
+
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -21,38 +22,44 @@ public class loginFrame extends JFrame {
     private boolean isLogin = false;
 
     public loginFrame() {
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(800, 400);
-        this.setLocationRelativeTo(null);
-        this.setTitle("Login");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(950, 450);
+        setLocationRelativeTo(null);
+        setTitle("Login");
 
         // Content Pane
         contentPane = new JPanel(new BorderLayout());
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
 
+        // Background Panel
+        ImageIcon backgroundIcon = new ImageIcon("img/background-login.jpg"); // Thay đổi đường dẫn tới ảnh nền
+        JLabel backgroundLabel = new JLabel(backgroundIcon);
+        contentPane.add(backgroundLabel, BorderLayout.CENTER);
+        backgroundLabel.setLayout(new BorderLayout());
+
         // Left Panel
         JPanel leftPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                g.setColor(new Color(204, 229, 255)); // Màu xanh nhạt
+                g.setColor(new Color(204, 229, 255));
                 g.fillRect(0, 0, getWidth(), getHeight());
             }
         };
         leftPanel.setPreferredSize(new Dimension(400, 400));
         leftPanel.setLayout(new BorderLayout());
-        contentPane.add(leftPanel, BorderLayout.WEST);
+        backgroundLabel.add(leftPanel, BorderLayout.WEST);
 
-        // Biểu tượng chào mừng từ FlatIcon
-        ImageIcon welcomeIcon = new ImageIcon("https://icons8.com/icon/vB3C82RDvwwa/user");
+        ImageIcon welcomeIcon = new ImageIcon("path/to/welcome.png");
+        welcomeIcon = resizeIcon(welcomeIcon, 50, 50);
         welcomeLabel = new JLabel("WELCOME QLNS", welcomeIcon, JLabel.CENTER);
         welcomeLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
         leftPanel.add(welcomeLabel, BorderLayout.NORTH);
 
         // Right Panel
         JPanel rightPanel = new JPanel(new BorderLayout());
-        contentPane.add(rightPanel, BorderLayout.CENTER);
+        backgroundLabel.add(rightPanel, BorderLayout.CENTER);
 
         JPanel loginPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -61,8 +68,9 @@ public class loginFrame extends JFrame {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
 
-        // Biểu tượng tài khoản từ FlatIcon
-        ImageIcon accountIcon = new ImageIcon("https://www.flaticon.com/svg/static/icons/svg/1077/1077063.svg");
+        
+        ImageIcon accountIcon = new ImageIcon("img/icons8-user-24.png");
+        accountIcon = resizeIcon(accountIcon, 20, 20);
         JLabel lblNewLabel = new JLabel("Tài Khoản", accountIcon, JLabel.LEFT);
         loginPanel.add(lblNewLabel, gbc);
         gbc.gridy++;
@@ -71,8 +79,9 @@ public class loginFrame extends JFrame {
         loginPanel.add(textField, gbc);
         gbc.gridy++;
 
-        // Biểu tượng mật khẩu từ FlatIcon
-        ImageIcon passwordIcon = new ImageIcon("https://www.flaticon.com/svg/static/icons/svg/1077/1077035.svg");
+        
+        ImageIcon passwordIcon = new ImageIcon("img/icons8-password-50.png");
+        passwordIcon = resizeIcon(passwordIcon, 20, 20);
         JLabel lblNewLabel_1 = new JLabel("Mật Khẩu", passwordIcon, JLabel.LEFT);
         loginPanel.add(lblNewLabel_1, gbc);
         gbc.gridy++;
@@ -81,8 +90,9 @@ public class loginFrame extends JFrame {
         loginPanel.add(textField_1, gbc);
         gbc.gridy++;
 
-        // Biểu tượng nút đăng nhập từ FlatIcon
-        ImageIcon loginButtonIcon = new ImageIcon("https://www.flaticon.com/svg/static/icons/svg/1077/1077036.svg");
+        // Biểu tượng nút đăng nhập từ file cục bộ, được điều chỉnh kích thước
+        ImageIcon loginButtonIcon = new ImageIcon("img/icons8-login-50.png");
+        loginButtonIcon = resizeIcon(loginButtonIcon, 20, 20);
         JButton btnNewButton = new JButton("Đăng Nhập", loginButtonIcon);
         btnNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -124,6 +134,12 @@ public class loginFrame extends JFrame {
             }
         });
         timer.start();
+    }
+
+    private ImageIcon resizeIcon(ImageIcon icon, int width, int height) {
+        Image img = icon.getImage();
+        Image resizedImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        return new ImageIcon(resizedImg);
     }
 
     public boolean getIsLogin() {
