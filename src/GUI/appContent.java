@@ -18,6 +18,8 @@ public class appContent extends JPanel {
 	private JPanel khung5;
 	private JPanel khung6;
 
+	
+	private khungContent cnt;
 
 	/**
 	 * Create the panel.
@@ -30,21 +32,26 @@ public class appContent extends JPanel {
 		
 		setLayout(new CardLayout(0, 0));
 		
+		
+		
 
 		khung1 = new JPanel();
-		khung1.setBounds(5, 5, 100, 560);
+		khung1.setBounds(5, 5, 1000, 560);
 		khung1.setBackground(Color.BLUE);
+		
+		
+		
 		khung2 = new JPanel();
-		khung2.setBounds(5, 5, 100, 560);
+		khung2.setBounds(5, 5, 1000, 560);
 		khung2.setBackground(Color.GREEN);
 		khung3 = new JPanel();
-		khung3.setBounds(5, 5, 100, 560);
+		khung3.setBounds(5, 5, 1000, 560);
 		khung3.setBackground(Color.YELLOW);
 		khung4 = new JPanel();
-		khung4.setBounds(5, 5, 100, 560);
+		khung4.setBounds(5, 5, 1000, 560);
 		khung4.setBackground(Color.PINK);
 		khung5 = new JPanel();
-		khung5.setBounds(5, 5, 100, 560);
+		khung5.setBounds(5, 5, 1000, 560);
 		khung5.setBackground(Color.RED);
 		khung6 = new JPanel();
 		khung6.setBounds(5, 5, 100, 560);
