@@ -29,7 +29,7 @@ public class appFrame extends JFrame {
 		setSize(1200, 700);
 		setLocationRelativeTo(null);
 
-//		setUndecorated(true);
+		setUndecorated(true);
 		
 		mainContentPanel = new JPanel(); 
 		mainContentPanel.setBorder(new LineBorder(Color.PINK,1));

@@ -26,14 +26,14 @@ public class loginFrame extends JFrame {
         setSize(950, 450);
         setLocationRelativeTo(null);
         setTitle("Login");
-
+        setUndecorated(true);
         // Content Pane
         contentPane = new JPanel(new BorderLayout());
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
 
         // Background Panel
-        ImageIcon backgroundIcon = new ImageIcon("img/background-login.jpg"); // Thay đổi đường dẫn tới ảnh nền
+        ImageIcon backgroundIcon = new ImageIcon("img/background-login.jpg"); 
         JLabel backgroundLabel = new JLabel(backgroundIcon);
         contentPane.add(backgroundLabel, BorderLayout.CENTER);
         backgroundLabel.setLayout(new BorderLayout());

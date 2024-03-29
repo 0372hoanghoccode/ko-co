@@ -17,7 +17,7 @@ public class appHeader extends JPanel {
 		
 		JLabel lblNewLabel = new JLabel("Quản lí nhân sự");
 		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblNewLabel.setBounds(10, 10, 114, 17);
+		lblNewLabel.setBounds(30, 10, 114, 17);
 		add(lblNewLabel);
 		
 		JButton btnClose = new JButton();
@@ -29,6 +29,12 @@ public class appHeader extends JPanel {
 		btnClose.setBorderPainted(false);
 		btnClose.setFocusPainted(false);
 		add(btnClose);
+
+		JLabel webIconLabel = new JLabel();
+		webIconLabel.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/assets/appIcon/exit_icon_hover.png")).getImage().getScaledInstance(22, 22, Image.SCALE_AREA_AVERAGING)));
+		webIconLabel.setBounds(10, 6, 22, 22);
+		add(webIconLabel);
+	
 		
 		btnClose.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		btnClose.addMouseListener(new MouseAdapter() {
