@@ -9,14 +9,16 @@ public class appContent extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private ArrayList<JPanel> khungs;
-	private JPanel khung1;
-	private JPanel khung2;
+	private HomePage home;
+	private EmployeePage employee;
+//	private JPanel khung1;
+//	private JPanel khung2;
 	private JPanel khung3;
 	private JPanel khung4;
 	private JPanel khung5;
 	private JPanel khung6;
 
-	private khungContent cnt;
+
 
 	/**
 	 * Create the panel.
@@ -29,17 +31,18 @@ public class appContent extends JPanel {
 		
 		setLayout(new CardLayout(0, 0));
 		
-		cnt = new khungContent(); // Tạo một đối tượng mới của khungContent
-
-		khung1 = new JPanel();
-		khung1.setLayout(new CardLayout()); // Đặt Layout Manager cho khung1 là CardLayout
-		khung1.setBounds(5, 5, 500, 560);
-		khung1.setBackground(Color.BLUE);
-		khung1.add(cnt, "CONTENT"); // Thêm khungContent vào khung1
 		
-		khung2 = new JPanel();
-		khung2.setBounds(5, 5, 1000, 560);
-		khung2.setBackground(Color.GREEN);
+		home = new HomePage();
+		
+//		khung1 = new JPanel();
+//		khung1.setBounds(5, 5, 500, 560);
+//		khung1.setBackground(Color.BLUE);
+		employee = new EmployeePage();
+		
+		
+//		khung2 = new JPanel();
+//		khung2.setBounds(5, 5, 1000, 560);
+//		khung2.setBackground(Color.GREEN);
 		
 		khung3 = new JPanel();
 		khung3.setBounds(5, 5, 1000, 560);
@@ -57,8 +60,10 @@ public class appContent extends JPanel {
 		khung6.setBounds(5, 5, 100, 560);
 		khung6.setBackground(Color.ORANGE);
 		
-		add(khung1, "KHUNG1");
-		add(khung2, "KHUNG2");
+//		add(khung1, "KHUNG1");
+		add(home, "KHUNG1");
+		add(employee, "KHUNG2");
+//		add(khung2, "KHUNG2");
 		add(khung3, "KHUNG3");
 		add(khung4, "KHUNG4");
 		add(khung5, "KHUNG5");
@@ -70,8 +75,10 @@ public class appContent extends JPanel {
 
 	public void addPageToList() {
 		khungs = new ArrayList<JPanel>();
-		khungs.add(khung1);
-		khungs.add(khung2);
+//		khungs.add(khung1);
+		khungs.add(home);
+		khungs.add(employee);
+//		khungs.add(khung2);
 		khungs.add(khung3);
 		khungs.add(khung4);
 		khungs.add(khung5);

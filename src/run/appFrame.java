@@ -50,7 +50,6 @@ public class appFrame extends JFrame {
 		fncPanel.add(nav, BorderLayout.WEST);
 		
 		content = new appContent();
-		content.setBorder(new LineBorder(Color.BLACK,1));
 		content.setPreferredSize(new Dimension(1000, 660));
 		fncPanel.add(content, BorderLayout.CENTER);
 	}
