@@ -4,7 +4,6 @@ import java.awt.Color;
 
 import javax.swing.*;
 
-
 public class khungContent extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -18,16 +17,12 @@ public class khungContent extends JPanel {
 	
 	public void init() {
 		
-//		this.setBounds(50, 50, 100, 100);
-		this.setBackground(Color.WHITE);
+		this.setBackground(Color.yellow); 
 		this.setLayout(null);
 		
 		JLabel testlb = new JLabel("Test thu thoi nha ae");
-		testlb.setBounds(10, 10, 50, 20);
+		testlb.setBounds(10, 10, 100, 100);
 		this.add(testlb);
-		
 	}
-	
-	
 
 }

@@ -1,10 +1,8 @@
 package run;
 
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
-
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -13,7 +11,6 @@ import java.awt.Dimension;
 import GUI.appContent;
 import GUI.appHeader;
 import GUI.menuNavigation;
-
 
 public class appFrame extends JFrame {
 
@@ -36,34 +33,19 @@ public class appFrame extends JFrame {
 		mainContentPanel.setLayout(new BorderLayout());
 		setContentPane(mainContentPanel);
 		
-		
-		/*Giải thích sơ qua thì mainContentPanel là trùm 
-		rồi tới 2 thằng là phần menubar + phần chức năng chính và phần head */
-		
-		
-		
-		
 		//header
 		head = new appHeader();
 		head.setPreferredSize(new Dimension(1200, 40));
 		mainContentPanel.add(head, BorderLayout.NORTH);
 		
-		
-		
-		
 		// menubar + chức năng chính
-		
 		JPanel fncPanel = new JPanel();
 		fncPanel.setLayout(new BorderLayout());
 		fncPanel.setPreferredSize(new Dimension(1200,660));
 		mainContentPanel.add(fncPanel, BorderLayout.CENTER);
-		
-
-
 
 		nav = new menuNavigation(this);
 		nav.setBorder(new LineBorder(Color.PINK,1));
-
 		nav.setPreferredSize(new Dimension(200,660));
 		fncPanel.add(nav, BorderLayout.WEST);
 		
@@ -71,13 +53,9 @@ public class appFrame extends JFrame {
 		content.setBorder(new LineBorder(Color.BLACK,1));
 		content.setPreferredSize(new Dimension(1000, 660));
 		fncPanel.add(content, BorderLayout.CENTER);
-
-
 	}
 
 	public appContent getAppContent() {
 		return content;
-
 	}
-
 }

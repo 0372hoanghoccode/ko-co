@@ -2,9 +2,7 @@ package GUI;
 
 import java.awt.CardLayout;
 import java.awt.Color;
-
 import java.util.ArrayList;
-
 import javax.swing.JPanel;
 
 public class appContent extends JPanel {
@@ -18,7 +16,6 @@ public class appContent extends JPanel {
 	private JPanel khung5;
 	private JPanel khung6;
 
-	
 	private khungContent cnt;
 
 	/**
@@ -32,46 +29,44 @@ public class appContent extends JPanel {
 		
 		setLayout(new CardLayout(0, 0));
 		
-		
-		
+		cnt = new khungContent(); // Tạo một đối tượng mới của khungContent
 
 		khung1 = new JPanel();
-		khung1.setBounds(5, 5, 1000, 560);
+		khung1.setLayout(new CardLayout()); // Đặt Layout Manager cho khung1 là CardLayout
+		khung1.setBounds(5, 5, 500, 560);
 		khung1.setBackground(Color.BLUE);
-		
-		
+		khung1.add(cnt, "CONTENT"); // Thêm khungContent vào khung1
 		
 		khung2 = new JPanel();
 		khung2.setBounds(5, 5, 1000, 560);
 		khung2.setBackground(Color.GREEN);
+		
 		khung3 = new JPanel();
 		khung3.setBounds(5, 5, 1000, 560);
 		khung3.setBackground(Color.YELLOW);
+		
 		khung4 = new JPanel();
 		khung4.setBounds(5, 5, 1000, 560);
 		khung4.setBackground(Color.PINK);
+		
 		khung5 = new JPanel();
 		khung5.setBounds(5, 5, 1000, 560);
 		khung5.setBackground(Color.RED);
+		
 		khung6 = new JPanel();
 		khung6.setBounds(5, 5, 100, 560);
 		khung6.setBackground(Color.ORANGE);
 		
-		add(khung1, 0);
-		add(khung2, 1);
-		add(khung3, 2);
-		add(khung4, 3);
-		add(khung5, 4);
-		add(khung6, 5);
+		add(khung1, "KHUNG1");
+		add(khung2, "KHUNG2");
+		add(khung3, "KHUNG3");
+		add(khung4, "KHUNG4");
+		add(khung5, "KHUNG5");
+		add(khung6, "KHUNG6");
 		
-		
-
 		addPageToList();
-		displayContent(4);
-	
-
+		displayContent(0);
 	}
-
 
 	public void addPageToList() {
 		khungs = new ArrayList<JPanel>();
@@ -84,12 +79,6 @@ public class appContent extends JPanel {
 	}
 
 	public void displayContent(int index) {
-		for(JPanel i : khungs) {
-			i.setVisible(false);
-		}
-		khungs.get(index).setVisible(true);
+		((CardLayout)this.getLayout()).show(this, "KHUNG" + (index + 1));
 	}
-
-	
-
 }
