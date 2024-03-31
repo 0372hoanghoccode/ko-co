@@ -29,7 +29,7 @@ public class PhongbanPage extends JPanel {
 		
 		JPanel panel_1 = new JPanel(); // alo panel này chứa mục riêng của tổng quan vs quản lí
 		panel_1.setBackground(new Color(255, 255, 255));
-		panel_1.setBounds(10, 10, 980, 247);
+		panel_1.setBounds(10, 10, 980, 255);
 		add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -94,7 +94,7 @@ public class PhongbanPage extends JPanel {
 		
 		JPanel panel = new JPanel(); // panel nv phòng ban
 		panel.setBackground(new Color(255, 255, 255));
-		panel.setBounds(10, 267, 645, 323);
+		panel.setBounds(10, 267, 645, 365);
 		add(panel);
 		panel.setLayout(null);
 		
@@ -105,7 +105,7 @@ public class PhongbanPage extends JPanel {
 	
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(255, 255, 255));
-		panel_2.setBounds(665, 267, 325, 323);
+		panel_2.setBounds(665, 267, 325, 365);
 		add(panel_2);
 		panel_2.setLayout(null);
 		
