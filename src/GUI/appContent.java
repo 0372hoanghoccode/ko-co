@@ -11,9 +11,8 @@ public class appContent extends JPanel {
 	private ArrayList<JPanel> khungs;
 	private HomePage home;
 	private EmployeePage employee;
-//	private JPanel khung1;
-//	private JPanel khung2;
-	private JPanel khung3;
+	private PhongbanPage phongBan;
+
 	private JPanel khung4;
 	private JPanel khung5;
 	private JPanel khung6;
@@ -33,20 +32,12 @@ public class appContent extends JPanel {
 		
 		
 		home = new HomePage();
-		
-//		khung1 = new JPanel();
-//		khung1.setBounds(5, 5, 500, 560);
-//		khung1.setBackground(Color.BLUE);
 		employee = new EmployeePage();
+		phongBan = new PhongbanPage();
+
 		
 		
-//		khung2 = new JPanel();
-//		khung2.setBounds(5, 5, 1000, 560);
-//		khung2.setBackground(Color.GREEN);
-		
-		khung3 = new JPanel();
-		khung3.setBounds(5, 5, 1000, 560);
-		khung3.setBackground(Color.YELLOW);
+
 		
 		khung4 = new JPanel();
 		khung4.setBounds(5, 5, 1000, 560);
@@ -60,11 +51,10 @@ public class appContent extends JPanel {
 		khung6.setBounds(5, 5, 100, 560);
 		khung6.setBackground(Color.ORANGE);
 		
-//		add(khung1, "KHUNG1");
+
 		add(home, "KHUNG1");
 		add(employee, "KHUNG2");
-//		add(khung2, "KHUNG2");
-		add(khung3, "KHUNG3");
+		add(phongBan, "KHUNG3");
 		add(khung4, "KHUNG4");
 		add(khung5, "KHUNG5");
 		add(khung6, "KHUNG6");
@@ -75,11 +65,9 @@ public class appContent extends JPanel {
 
 	public void addPageToList() {
 		khungs = new ArrayList<JPanel>();
-//		khungs.add(khung1);
 		khungs.add(home);
 		khungs.add(employee);
-//		khungs.add(khung2);
-		khungs.add(khung3);
+		khungs.add(phongBan);
 		khungs.add(khung4);
 		khungs.add(khung5);
 		khungs.add(khung6);

@@ -102,11 +102,6 @@ public class EmployeePage extends JPanel {
         searchIconLabel.setBounds(170, 0, 25, 30);
         searchPanel.add(searchIconLabel);
 
-        JPanel panel_1 = new JPanel();
-        panel_1.setBackground(new Color(128, 0, 0));
-        panel_1.setBounds(528, 19, 37, 30);
-        panel.add(panel_1);
-
         JButton btnNewButton = new JButton("");
         btnNewButton.setIcon(new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-user-24.png")));
         btnNewButton.setBounds(776, 20, 146, 29);
