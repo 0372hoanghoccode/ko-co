@@ -9,7 +9,7 @@ import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JTextArea;
+
 import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
@@ -98,7 +98,7 @@ public class EmployeePage extends JPanel {
         searchPanel.add(searchField);
 
         JLabel searchIconLabel = new JLabel("");
-        searchIconLabel.setIcon(new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-user-24.png")));
+        searchIconLabel.setIcon(new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-search-24.png")));
         searchIconLabel.setBounds(170, 0, 25, 30);
         searchPanel.add(searchIconLabel);
 

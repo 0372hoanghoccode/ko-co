@@ -11,7 +11,7 @@ public class loginFrame extends JFrame {
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JTextField textField;
-    private JTextField textField_1;
+    private JPasswordField passwordField;
     private boolean isLogin = false;
 
     public loginFrame() {
@@ -39,7 +39,7 @@ public class loginFrame extends JFrame {
         leftPanel.setLayout(new BorderLayout());
         contentPane.add(leftPanel, BorderLayout.WEST);
 
-        // Thêm tấm ảnh background-img vào giữa leftPanel
+       
         ImageIcon welcomeIcon = new ImageIcon("src/assets/appIcon/R.png");
         welcomeIcon = resizeIcon(welcomeIcon, 300, 300);
         JLabel welcomeLabel = new JLabel(welcomeIcon, JLabel.CENTER);
@@ -64,9 +64,8 @@ public class loginFrame extends JFrame {
 
         // Label "Đăng nhập hệ thống"
         JLabel loginSystemLabel = new JLabel("Đăng nhập hệ thống");
-        loginSystemLabel.setFont(new Font("Tahoma", Font.BOLD, 16)); // Đặt font đậm và kích cỡ chữ
-        loginSystemLabel.setForeground(Color.BLACK); // Đặt màu chữ
-        loginPanel.add(loginSystemLabel, gbc);
+        loginSystemLabel.setFont(new Font("Tahoma", Font.BOLD, 16)); 
+        loginSystemLabel.setForeground(Color.BLACK);
         gbc.gridy++;
 
         ImageIcon accountIcon = new ImageIcon("src/assets/appIcon/icons8-user-24.png");
@@ -84,9 +83,9 @@ public class loginFrame extends JFrame {
         JLabel lblNewLabel_1 = new JLabel("Mật Khẩu", passwordIcon, JLabel.LEFT);
         loginPanel.add(lblNewLabel_1, gbc);
         gbc.gridy++;
-        textField_1 = new JTextField();
-        textField_1.setColumns(20);
-        loginPanel.add(textField_1, gbc);
+        passwordField = new JPasswordField();
+        passwordField.setColumns(20);
+        loginPanel.add(passwordField, gbc);
         gbc.gridy++;
 
         // Biểu tượng nút đăng nhập từ file cục bộ, được điều chỉnh kích thước
@@ -96,14 +95,14 @@ public class loginFrame extends JFrame {
         btnNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String inputTaiKhoan = textField.getText();
-                String inputMatKhau = textField_1.getText();
+                String inputMatKhau = passwordField.getText();
 
                 if (inputTaiKhoan.equals("") && inputMatKhau.equals("")) {
                     JOptionPane.showMessageDialog(null, "Giá trị nhập vào không hợp lệ", "Lỗi", JOptionPane.ERROR_MESSAGE);
-                } else if (inputTaiKhoan.equals("1")) { // Thay đổi điều kiện kiểm tra tài khoản
+                } else if (inputTaiKhoan.equals("1")) { 
                     System.out.println("đúng tài khoản");
 
-                    if (inputMatKhau.equals("1")) { // Thay đổi điều kiện kiểm tra mật khẩu
+                    if (inputMatKhau.equals("1")) { 
                         System.out.println("Đúng mật khẩu");
                         dispose();
                         appFrame app = new appFrame();
@@ -113,14 +112,14 @@ public class loginFrame extends JFrame {
                 }
             }
         });
-        btnNewButton.setBackground(Color.BLACK); // Thiết lập màu nền cho nút "Đăng nhập"
-        btnNewButton.setForeground(Color.WHITE); // Thiết lập màu chữ cho nút "Đăng nhập"
+        btnNewButton.setBackground(Color.BLUE); 
+        btnNewButton.setForeground(Color.BLACK);
         loginPanel.add(btnNewButton, gbc);
 
         rightPanel.add(loginPanel, BorderLayout.CENTER);
 
-        // Thêm nút "Thoát" vào panel chứa nút bên phải
-        ImageIcon exitIcon = new ImageIcon("src/assets/appIcon/exit_icon.png");
+        // nút tháo vào panel chứa nút bên phải
+        ImageIcon exitIcon = new ImageIcon("src/assets/appIcon/icons8-close-24.png");
         JButton exitButton = new JButton(exitIcon);
         exitButton.setContentAreaFilled(false);
         exitButton.setFocusPainted(false);
