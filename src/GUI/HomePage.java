@@ -30,7 +30,7 @@ public class HomePage extends JPanel {
 		add(tk2);
 		
 		tk3 = new HomePageTK3();
-		tk3.setBounds(5, 290, 985, 310);
+		tk3.setBounds(5, 290, 985, 340);
 		add(tk3);
 		
 	}
