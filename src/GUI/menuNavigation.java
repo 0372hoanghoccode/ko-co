@@ -32,7 +32,7 @@ public class menuNavigation extends JPanel {
 	
 	public void init() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		
+		setBackground(new Color(255, 255, 255));
 
 		btnList = new ArrayList<JButton>();
 		for (int i = 0; i < fnc.length; i++) {

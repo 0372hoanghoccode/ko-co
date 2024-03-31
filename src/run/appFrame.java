@@ -45,7 +45,7 @@ public class appFrame extends JFrame {
 		mainContentPanel.add(fncPanel, BorderLayout.CENTER);
 
 		nav = new menuNavigation(this);
-		nav.setBorder(new LineBorder(Color.PINK,1));
+//		nav.setBorder(new LineBorder(Color.PINK,1));
 		nav.setPreferredSize(new Dimension(200,660));
 		fncPanel.add(nav, BorderLayout.WEST);
 		
