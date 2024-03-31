@@ -12,8 +12,9 @@ public class appContent extends JPanel {
 	private HomePage home;
 	private EmployeePage employee;
 	private PhongbanPage phongBan;
+	private HopdongPage hopDong;
 
-	private JPanel khung4;
+	
 	private JPanel khung5;
 	private JPanel khung6;
 
@@ -34,14 +35,12 @@ public class appContent extends JPanel {
 		home = new HomePage();
 		employee = new EmployeePage();
 		phongBan = new PhongbanPage();
-
+		hopDong = new HopdongPage();
 		
 		
 
 		
-		khung4 = new JPanel();
-		khung4.setBounds(5, 5, 1000, 560);
-		khung4.setBackground(Color.PINK);
+		
 		
 		khung5 = new JPanel();
 		khung5.setBounds(5, 5, 1000, 560);
@@ -55,7 +54,7 @@ public class appContent extends JPanel {
 		add(home, "KHUNG1");
 		add(employee, "KHUNG2");
 		add(phongBan, "KHUNG3");
-		add(khung4, "KHUNG4");
+		add(hopDong, "KHUNG4");
 		add(khung5, "KHUNG5");
 		add(khung6, "KHUNG6");
 		
@@ -68,7 +67,7 @@ public class appContent extends JPanel {
 		khungs.add(home);
 		khungs.add(employee);
 		khungs.add(phongBan);
-		khungs.add(khung4);
+		khungs.add(hopDong);
 		khungs.add(khung5);
 		khungs.add(khung6);
 	}
