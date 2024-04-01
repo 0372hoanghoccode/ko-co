@@ -103,7 +103,7 @@ public class EmployeePage extends JPanel {
         searchPanel.add(searchIconLabel);
 
         JButton btnNewButton = new JButton("");
-        btnNewButton.setIcon(new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-user-24.png")));
+        btnNewButton.setIcon(new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-reset-24.png")));
         btnNewButton.setBounds(776, 20, 146, 29);
         panel.add(btnNewButton);
 
@@ -118,8 +118,8 @@ public class EmployeePage extends JPanel {
         panel.add(btnNewButton_2);
 
         JButton btnNewButton_3 = new JButton("");
-        btnNewButton_3.setIcon(new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-user-24.png")));
-        btnNewButton_3.setBounds(644, 53, 85, 21);
+        btnNewButton_3.setIcon(new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-reset-24.png")));
+        btnNewButton_3.setBounds(644, 50, 50, 31);
         panel.add(btnNewButton_3);
 
        JPanel panel_2 = new JPanel();
