@@ -2,6 +2,9 @@ package GUI;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 
 import java.awt.event.MouseAdapter;
@@ -69,6 +72,32 @@ public class menuNavigation extends JPanel {
 		}
 		
 	}
+	
+
+	@Override
+    protected void paintComponent(Graphics g) { //tự động chạy daijobu
+        super.paintComponent(g);
+        
+        // Tạo gradient t
+        Color color1 = new Color(100, 244, 220); // Màu xanh biển sáng
+        Color color2 = new Color(100, 248, 250); // Màu xanh biển sáng hơn
+
+        
+        
+
+
+
+       
+        
+        // Tạo GradientPaint
+        GradientPaint gradient = new GradientPaint(0, 0, color1, getWidth(), getHeight(), color2);
+        
+        // Vẽ gradient lên JPanel
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setPaint(gradient);
+        g2d.fillRect(0, 0, getWidth(), getHeight());
+    }
+
 	
 	public int getIndexMenu() {
 		return menuNavigation.index_menu;

@@ -58,8 +58,12 @@ public class appHeader extends JPanel {
         super.paintComponent(g);
         
         // Tạo gradient t
-        Color color1 = new Color(183, 255, 212); 
-        Color color2 = new Color(254, 183, 255); 
+        Color color1 = new Color(100, 149, 237); 
+        Color color2 = new Color(100, 248, 240); 
+
+
+
+
        
         
         // Tạo GradientPaint
