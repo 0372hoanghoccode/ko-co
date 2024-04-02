@@ -14,6 +14,7 @@ public class appContent extends JPanel {
 	private PhongbanPage phongBan;
 	private HopdongPage hopDong;
 	private LuongThuongPage LuongThuongPage; 
+	private TaiKhoanPage taikhoanPage;
 	
 
 	
@@ -38,6 +39,7 @@ public class appContent extends JPanel {
 		phongBan = new PhongbanPage();
 		hopDong = new HopdongPage();
 		LuongThuongPage = new LuongThuongPage();
+		taikhoanPage = new TaiKhoanPage();
 		
 
 		
@@ -57,7 +59,8 @@ public class appContent extends JPanel {
 		add(phongBan, "KHUNG3");
 		add(hopDong, "KHUNG4");
 		add(LuongThuongPage, "KHUNG5");
-		add(khung6, "KHUNG6");
+		add(taikhoanPage, "KHUNG6");
+		
 		
 		addPageToList();
 		displayContent(0);
@@ -70,7 +73,7 @@ public class appContent extends JPanel {
 		khungs.add(phongBan);
 		khungs.add(hopDong);
 		khungs.add(LuongThuongPage);
-		khungs.add(khung6);
+		khungs.add(taikhoanPage);
 	}
 
 	public void displayContent(int index) {
