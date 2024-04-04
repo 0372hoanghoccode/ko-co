@@ -60,7 +60,7 @@ public class LuongThuongPage extends JPanel {
 		lblNewLabel_2.setForeground(new Color(255, 255, 255));
 		lblNewLabel_2.setFont(new Font("Arial", Font.PLAIN, 14));
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setBounds(230, 0, 100, 30);
+		lblNewLabel_2.setBounds(230, 0, 137, 30);
 		panel.add(lblNewLabel_2);
 		
 		
@@ -72,7 +72,7 @@ public class LuongThuongPage extends JPanel {
 	label_tangLuong.setBackground(new Color(0, 128, 128));
 	label_tangLuong.setHorizontalAlignment(SwingConstants.CENTER);
 	label_tangLuong.setFont(new Font("Arial", Font.PLAIN, 14));
-	label_tangLuong.setBounds(330, 0, 130, 30);
+	label_tangLuong.setBounds(366, 0, 130, 30);
 		panel.add(label_tangLuong);
 		
 		tangLuong = new LuongThuongPage_TangLuong();
@@ -81,7 +81,7 @@ public class LuongThuongPage extends JPanel {
 		phuCapKhoanThu = new LuongThuongPage_phuCapKhoanTru();
 		JPanel panel_1 = new JPanel(); // chua may cai kia
 		panel_1.setBackground(new Color(255, 255, 255));
-		panel_1.setBounds(10, 77, 980, 541);
+		panel_1.setBounds(10, 50, 980, 600);
 		add(panel_1);
 		panel_1.setLayout(new CardLayout(0, 0));
 		

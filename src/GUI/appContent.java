@@ -54,4 +54,8 @@ public class appContent extends JPanel {
     public void displayContent(int index) {
         ((CardLayout) this.getLayout()).show(this, "KHUNG" + (index + 1));
     }
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes
