@@ -7,76 +7,51 @@ import javax.swing.JPanel;
 
 public class appContent extends JPanel {
 
-	private static final long serialVersionUID = 1L;
-	private ArrayList<JPanel> khungs;
-	private HomePage home;
-	private EmployeePage employee;
-	private PhongbanPage phongBan;
-	private HopdongPage hopDong;
-	private LuongThuongPage LuongThuongPage; 
-	private TaiKhoanPage taikhoanPage;
-	
+    private static final long serialVersionUID = 1L;
+    private ArrayList<JPanel> pages;
+    private HomePage home;
+    private EmployeePage employee;
+    private PhongbanPage phongBan;
+    private HopdongPage hopDong;
+    private LuongThuongPage luongThuongPage; 
+    private TaiKhoanPage taiKhoanPage;
 
-	
-	private JPanel khung6;
+    public appContent() {
+        init();
+    }
 
+    public void init() {
+        setLayout(new CardLayout(0, 0));
 
+        home = new HomePage();
+        employee = new EmployeePage();
+        phongBan = new PhongbanPage();
+        hopDong = new HopdongPage();
+        luongThuongPage = new LuongThuongPage();
+        taiKhoanPage = new TaiKhoanPage();
 
-	/**
-	 * Create the panel.
-	 */
-	public appContent() {
-		init();
-	}
-	
-	public void init() {
-		
-		setLayout(new CardLayout(0, 0));
-		
-		
-		home = new HomePage();
-		employee = new EmployeePage();
-		phongBan = new PhongbanPage();
-		hopDong = new HopdongPage();
-		LuongThuongPage = new LuongThuongPage();
-		taikhoanPage = new TaiKhoanPage();
-		
+        add(home, "KHUNG1");
+        add(employee, "KHUNG2");
+        add(phongBan, "KHUNG3");
+        add(hopDong, "KHUNG4");
+        add(luongThuongPage, "KHUNG5");
+        add(taiKhoanPage, "KHUNG6");
 
-		
-		
-//		
-//		luongPage = new JPanel();
-//		luongPage.setBounds(5, 5, 1000, 560);
-//		luongPage.setBackground(Color.RED);
-		
-		khung6 = new JPanel();
-		khung6.setBounds(5, 5, 100, 560);
-		khung6.setBackground(Color.ORANGE);
-		
+        createPageList();
+        displayContent(0);
+    }
 
-		add(home, "KHUNG1");
-		add(employee, "KHUNG2");
-		add(phongBan, "KHUNG3");
-		add(hopDong, "KHUNG4");
-		add(LuongThuongPage, "KHUNG5");
-		add(taikhoanPage, "KHUNG6");
-		
-		
-		addPageToList();
-		displayContent(0);
-	}
+    private void createPageList() {
+        pages = new ArrayList<JPanel>();
+        pages.add(home);
+        pages.add(employee);
+        pages.add(phongBan);
+        pages.add(hopDong);
+        pages.add(luongThuongPage);
+        pages.add(taiKhoanPage);
+    }
 
-	public void addPageToList() {
-		khungs = new ArrayList<JPanel>();
-		khungs.add(home);
-		khungs.add(employee);
-		khungs.add(phongBan);
-		khungs.add(hopDong);
-		khungs.add(LuongThuongPage);
-		khungs.add(taikhoanPage);
-	}
-
-	public void displayContent(int index) {
-		((CardLayout)this.getLayout()).show(this, "KHUNG" + (index + 1));
-	}
+    public void displayContent(int index) {
+        ((CardLayout) this.getLayout()).show(this, "KHUNG" + (index + 1));
+    }
 }
