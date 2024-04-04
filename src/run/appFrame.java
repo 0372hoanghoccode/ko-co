@@ -54,7 +54,5 @@ public class appFrame extends JFrame {
 		fncPanel.add(content, BorderLayout.CENTER);
 	}
 
-	public appContent getAppContent() {
-		return content;
-	}
+
 }
