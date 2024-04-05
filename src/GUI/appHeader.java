@@ -21,7 +21,7 @@ public class appHeader extends JPanel {
 		add(lblNewLabel);
 		
 		JButton btnClose = new JButton();
-		btnClose.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/assets/appIcon/exit_icon.png")).getImage().getScaledInstance(22, 22, Image.SCALE_AREA_AVERAGING)));
+		btnClose.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/assets/appIcon/close-black.png")).getImage().getScaledInstance(22, 22, Image.SCALE_AREA_AVERAGING)));
 		btnClose.setBounds(1130, 6, 22, 22);
 		
 		
@@ -31,7 +31,7 @@ public class appHeader extends JPanel {
 		add(btnClose);
 
 		JLabel webIconLabel = new JLabel();
-		webIconLabel.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/assets/appIcon/exit_icon_hover.png")).getImage().getScaledInstance(22, 22, Image.SCALE_AREA_AVERAGING)));
+		webIconLabel.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/assets/appIcon/icons8-close-24.png")).getImage().getScaledInstance(22, 22, Image.SCALE_AREA_AVERAGING)));
 		webIconLabel.setBounds(10, 6, 22, 22);
 		add(webIconLabel);
 	
@@ -42,10 +42,10 @@ public class appHeader extends JPanel {
 				System.exit(0);
 			}
 			public void mouseEntered(MouseEvent e) {
-				btnClose.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/assets/appIcon/exit_icon_hover.png")).getImage().getScaledInstance(22, 22, Image.SCALE_AREA_AVERAGING)));
+				btnClose.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/assets/appIcon/icons8-close-24.png")).getImage().getScaledInstance(22, 22, Image.SCALE_AREA_AVERAGING)));
 			}
 			public void mouseExited(MouseEvent e) {
-				btnClose.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/assets/appIcon/exit_icon.png")).getImage().getScaledInstance(22, 22, Image.SCALE_AREA_AVERAGING)));
+				btnClose.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/assets/appIcon/close-black.png")).getImage().getScaledInstance(22, 22, Image.SCALE_AREA_AVERAGING)));
 			}
 		});
 		

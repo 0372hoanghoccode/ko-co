@@ -66,6 +66,7 @@ public class loginFrame extends JFrame {
         JLabel loginSystemLabel = new JLabel("Đăng nhập hệ thống");
         loginSystemLabel.setFont(new Font("Tahoma", Font.BOLD, 16)); 
         loginSystemLabel.setForeground(Color.BLACK);
+        loginPanel.add(loginSystemLabel, gbc);
         gbc.gridy++;
 
         ImageIcon accountIcon = new ImageIcon("src/assets/appIcon/icons8-user-24.png");

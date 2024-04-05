@@ -10,7 +10,7 @@ public class connection {
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 			try {
-				con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=HRMSystem;user=sa;password=123456789");
+				con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=QLNS;user=sa;password=123456789");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

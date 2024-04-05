@@ -31,7 +31,7 @@ public class EmployeePage extends JPanel {
         setBounds(5, 5, 1000, 600);
         JPanel panel = new JPanel();
         panel.setBackground(new Color(255, 255, 255));
-        panel.setBounds(10, 10, 970, 123);
+        panel.setBounds(20, 9, 970, 123);
         add(panel);
         panel.setLayout(null);
 
@@ -46,22 +46,26 @@ public class EmployeePage extends JPanel {
         panel.add(lblNewLabel_1);
 
         JComboBox<String> comboBox = new JComboBox<>();
-        comboBox.setBounds(10, 83, 120, 30);
+        comboBox.setEditable(false);
+        comboBox.setBackground(Color.WHITE);
+        comboBox.setOpaque(true);
+        comboBox.setBounds(20, 83, 193, 30);
         comboBox.addItem("Phòng ban");
         comboBox.addItem("Kế toán");
         comboBox.addItem("Nhân sự");
         comboBox.addItem("Kinh doanh");
         panel.add(comboBox);
 
+
         JComboBox<String> comboBox_1 = new JComboBox<>();
-        comboBox_1.setBounds(140, 83, 112, 30);
+        comboBox_1.setBounds(236, 83, 112, 30);
         comboBox_1.addItem("Giới tính");
         comboBox_1.addItem("Nam");
         comboBox_1.addItem("Nữ");
         panel.add(comboBox_1);
 
         JComboBox<String> comboBox_2 = new JComboBox<>();
-        comboBox_2.setBounds(262, 83, 120, 30);
+        comboBox_2.setBounds(377, 83, 120, 30);
         comboBox_2.addItem("Độ tuổi");
         comboBox_2.addItem("Dưới 25");
         comboBox_2.addItem("25 - 35");
@@ -70,18 +74,20 @@ public class EmployeePage extends JPanel {
 
         JLabel lblNewLabel_2 = new JLabel("Sắp xếp theo: ");
         lblNewLabel_2.setFont(new Font("Arial", Font.PLAIN, 12));
-        lblNewLabel_2.setBounds(466, 59, 112, 24);
+        lblNewLabel_2.setBounds(547, 59, 112, 24);
         panel.add(lblNewLabel_2);
 
         JComboBox<String> comboBox_3 = new JComboBox<>();
-        comboBox_3.setBounds(466, 83, 123, 30);
+        
+        comboBox_3.setBounds(547, 83, 123, 30);
         comboBox_3.addItem("Mã nhân viên");
         comboBox_3.addItem("Độ tuổi");
         comboBox_3.addItem("Mức lương");
         panel.add(comboBox_3);
 
         JComboBox<String> comboBox_4 = new JComboBox<>();
-        comboBox_4.setBounds(599, 83, 130, 30);
+      
+        comboBox_4.setBounds(714, 83, 130, 30);
         comboBox_4.addItem("Tăng dần");
         comboBox_4.addItem("Giảm dần");
         panel.add(comboBox_4);
@@ -104,22 +110,22 @@ public class EmployeePage extends JPanel {
 
         JButton btnNewButton = new JButton("");
         btnNewButton.setIcon(new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-reset-24.png")));
-        btnNewButton.setBounds(776, 20, 146, 29);
+        btnNewButton.setBounds(749, 19, 50, 29);
         panel.add(btnNewButton);
 
         JButton btnNewButton_1 = new JButton("");
         btnNewButton_1.setIcon(new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-user-24.png")));
-        btnNewButton_1.setBounds(776, 53, 146, 30);
+        btnNewButton_1.setBounds(679, 18, 50, 30);
         panel.add(btnNewButton_1);
 
         JButton btnNewButton_2 = new JButton("");
         btnNewButton_2.setIcon(new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-user-24.png")));
-        btnNewButton_2.setBounds(776, 83, 146, 30);
+        btnNewButton_2.setBounds(814, 19, 146, 30);
         panel.add(btnNewButton_2);
 
         JButton btnNewButton_3 = new JButton("");
         btnNewButton_3.setIcon(new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-reset-24.png")));
-        btnNewButton_3.setBounds(644, 50, 50, 31);
+        btnNewButton_3.setBounds(895, 82, 50, 31);
         panel.add(btnNewButton_3);
 
        JPanel panel_2 = new JPanel();
