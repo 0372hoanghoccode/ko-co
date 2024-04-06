@@ -14,7 +14,7 @@ public class run {
 		init();
 		
 	}
-	
+	// THẤY KO ?
 	public void init() {
 		
 		
