@@ -19,7 +19,7 @@ public class loginFrame extends JFrame {
         setSize(950, 450);
         setLocationRelativeTo(null);
         setTitle("Login");
-        setUndecorated(true);
+
 
         // Content Pane
         contentPane = new JPanel(new BorderLayout());
@@ -51,9 +51,6 @@ public class loginFrame extends JFrame {
 
         JPanel rightPanel = new JPanel(new BorderLayout());
         rightPanelContainer.add(rightPanel, BorderLayout.CENTER);
-
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT)); // Tạo panel mới để chứa nút "Thoát"
-        rightPanelContainer.add(buttonPanel, BorderLayout.EAST); // Đặt panel chứa nút "Thoát" bên phải của rightPanel
 
         JPanel loginPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -118,20 +115,6 @@ public class loginFrame extends JFrame {
         loginPanel.add(btnNewButton, gbc);
 
         rightPanel.add(loginPanel, BorderLayout.CENTER);
-
-        // nút tháo vào panel chứa nút bên phải
-        ImageIcon exitIcon = new ImageIcon("src/assets/appIcon/icons8-close-24.png");
-        JButton exitButton = new JButton(exitIcon);
-        exitButton.setContentAreaFilled(false);
-        exitButton.setFocusPainted(false);
-        exitButton.setBorderPainted(false);
-        exitButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
-        buttonPanel.add(exitButton);
-
     }
 
     private ImageIcon resizeIcon(ImageIcon icon, int width, int height) {
