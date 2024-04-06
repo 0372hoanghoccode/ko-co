@@ -24,11 +24,11 @@ public class LuongPage1 extends JPanel {
      * Create the panel.
      */
     public LuongPage1() {
-        setBounds(100, 100, 979, 599);
+        setBounds(100, 100, 985, 615);
         setLayout(null);
         
         JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setBounds(10, 121, 959, 468);
+        scrollPane.setBounds(0, 118, 985, 490);
         add(scrollPane);
         
         table = new JTable();
@@ -45,7 +45,7 @@ public class LuongPage1 extends JPanel {
         
         JPanel panel = new JPanel();
         panel.setBackground(new Color(255, 255, 255));
-        panel.setBounds(10, 10, 959, 101);
+        panel.setBounds(0, 0, 985, 111);
         add(panel);
         panel.setLayout(null);
         
@@ -88,7 +88,7 @@ public class LuongPage1 extends JPanel {
         panel.add(lblNewLabel_1_1_2);
         
         JComboBox comboBox_1_1_1 = new JComboBox();
-        comboBox_1_1_1.setBounds(660, 63, 67, 31);
+        comboBox_1_1_1.setBounds(660, 63, 83, 31);
         panel.add(comboBox_1_1_1);
         
         textField = new JTextField();

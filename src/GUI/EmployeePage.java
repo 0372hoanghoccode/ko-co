@@ -28,10 +28,10 @@ public class EmployeePage extends JPanel {
 
     public void init() {
         setLayout(null);
-        setBounds(5, 5, 1000, 660);
+        setBounds(5, 5, 1000, 659);
         JPanel panel = new JPanel();
         panel.setBackground(new Color(255, 255, 255));
-        panel.setBounds(10, 9, 980, 123);
+        panel.setBounds(5, 5, 985, 123);
         add(panel);
         panel.setLayout(null);
 
@@ -128,18 +128,18 @@ public class EmployeePage extends JPanel {
         btnNewButton_3.setBounds(895, 82, 50, 31);
         panel.add(btnNewButton_3);
 
-       JPanel panel_2 = new JPanel();
+        JPanel panel_2 = new JPanel();
         panel_2.setBackground(new Color(255, 255, 255));
-        panel_2.setBounds(10, 143, 970, 490);
+        panel_2.setBounds(5, 133, 985, 520);
         add(panel_2);
         panel_2.setLayout(new BorderLayout());
 
-        // Tạo bảng
+        
         String[] columnNames = {"STT", "Tên", "Giới Tính", "Năm Sinh", "SĐT", "Phòng Ban", "Chức Vụ", "Lương"};
         Object[][] data = {
             {"1", "Nguyễn Văn A", "Nam", "1990", "0123456789", "Kế Toán", "Nhân Viên", "10,000,000"},
             {"2", "Trần Thị B", "Nữ", "1995", "0987654321", "Nhân Sự", "Trưởng Phòng", "20,000,000"},
-            // Thêm các dòng dữ liệu khác ở đây
+            
         };
 
         DefaultTableModel model = new DefaultTableModel(data, columnNames);

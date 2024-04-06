@@ -27,13 +27,15 @@ public class HopdongPage_Kigiahan extends JPanel {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255));
-		panel.setBounds(0, 0, 510, 80);
+		panel.setBounds(0, 0, 515, 80);
 		add(panel);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(255, 255, 255));
-		panel_1.setBounds(520, 0, 460, 540);
+		panel_1.setBounds(520, 0, 465, 610);
 		add(panel_1);
+		
+	
 		
 		
 		String[] columnNames = {"STT", "Mã", "Tên", "Phòng", "Bắt đầu thử việc từ"};
@@ -57,7 +59,7 @@ public class HopdongPage_Kigiahan extends JPanel {
         table.setFont(new Font("Arial", Font.PLAIN, 13));
 
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(0, 90, 510, 450);//0 90 510 450
+        scrollPane.setBounds(0, 85, 515, 520);
         add(scrollPane);
 	}
 

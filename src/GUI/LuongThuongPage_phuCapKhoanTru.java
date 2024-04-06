@@ -27,7 +27,7 @@ public class LuongThuongPage_phuCapKhoanTru  extends JPanel {
 		setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 113, 642, 477);
+		scrollPane.setBounds(0, 95, 655, 515);
 		add(scrollPane);
 		
 		table = new JTable();
@@ -44,7 +44,7 @@ public class LuongThuongPage_phuCapKhoanTru  extends JPanel {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255));
-		panel.setBounds(10, 10, 642, 93);
+		panel.setBounds(0, 0, 655, 90);
 		add(panel);
 		panel.setLayout(null);
 		
@@ -75,7 +75,7 @@ public class LuongThuongPage_phuCapKhoanTru  extends JPanel {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(255, 255, 255));
-		panel_1.setBounds(658, 10, 312, 580);
+		panel_1.setBounds(660, 0, 325, 610);
 		add(panel_1);
 		panel_1.setLayout(null);
 		

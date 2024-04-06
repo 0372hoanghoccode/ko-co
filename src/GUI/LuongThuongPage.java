@@ -29,7 +29,7 @@ public class LuongThuongPage extends JPanel {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255));
-		panel.setBounds(10, 10, 980, 30);
+		panel.setBounds(5, 5, 985, 30);
 		add(panel);
 		panel.setLayout(null);
 		
@@ -81,7 +81,7 @@ public class LuongThuongPage extends JPanel {
 		phuCapKhoanThu = new LuongThuongPage_phuCapKhoanTru();
 		JPanel panel_1 = new JPanel(); // chua may cai kia
 		panel_1.setBackground(new Color(255, 255, 255));
-		panel_1.setBounds(10, 50, 980, 600);
+		panel_1.setBounds(5, 40, 985, 615);
 		add(panel_1);
 		panel_1.setLayout(new CardLayout(0, 0));
 		
@@ -96,24 +96,51 @@ public class LuongThuongPage extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				showPage(0);
 			}
+			public void mouseEntered(MouseEvent e) {
+				lblNewLabel.setBackground(new Color(204, 0, 204));
+            }
+            public void mouseExited(MouseEvent e) {
+            	lblNewLabel.setBackground(new Color(0, 64, 128));
+            }
 		});
+		
 		lblNewLabel_1.addMouseListener(new MouseAdapter() { // ki / gia han
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				showPage(1);
 			}
+			public void mouseEntered(MouseEvent e) {
+				lblNewLabel_1.setBackground(new Color(204, 0, 204));
+            }
+            public void mouseExited(MouseEvent e) {
+            	lblNewLabel_1.setBackground(new Color(0, 128, 128));
+            }
 		});
+		
 		lblNewLabel_2.addMouseListener(new MouseAdapter() { // thong ke
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				showPage(2);
 			}
+			public void mouseEntered(MouseEvent e) {
+				lblNewLabel_2.setBackground(new Color(204, 0, 204));
+            }
+            public void mouseExited(MouseEvent e) {
+            	lblNewLabel_2.setBackground(new Color(0, 64, 128));
+            }
 		});
+		
 		label_tangLuong.addMouseListener(new MouseAdapter() { // thong ke
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				showPage(3);
 			}
+			public void mouseEntered(MouseEvent e) {
+				label_tangLuong.setBackground(new Color(204, 0, 204));
+            }
+            public void mouseExited(MouseEvent e) {
+            	label_tangLuong.setBackground(new Color(0, 128, 128));
+            }
 		});
 
 		showPage(0);

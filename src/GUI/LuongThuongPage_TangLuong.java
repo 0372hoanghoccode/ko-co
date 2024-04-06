@@ -30,11 +30,11 @@ public class LuongThuongPage_TangLuong extends JPanel {
 		label_tieuDe.setOpaque(true);
 		label_tieuDe.setBackground(new Color(255, 255, 255));
 		label_tieuDe.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		label_tieuDe.setBounds(10, 10, 626, 56);
+		label_tieuDe.setBounds(0, 0, 640, 55);
 		add(label_tieuDe);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 76, 626, 519);
+		scrollPane.setBounds(0, 60, 640, 550);
 		add(scrollPane);
 		
 		table = new JTable();
@@ -51,7 +51,7 @@ public class LuongThuongPage_TangLuong extends JPanel {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255));
-		panel.setBounds(646, 10, 324, 585);
+		panel.setBounds(645, 0, 340, 610);
 		add(panel);
 		panel.setLayout(null);
 		
