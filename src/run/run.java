@@ -15,6 +15,7 @@ public class run {
 		
 	}
 	// THẤY KO ?
+	// Thấy không 2 >>
 	public void init() {
 		
 		
