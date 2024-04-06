@@ -3,10 +3,13 @@ package GUI;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.time.LocalDate;
+
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
@@ -56,22 +59,45 @@ public class LuongThuongPage_phuCapKhoanTru  extends JPanel {
 		JComboBox comboBox_nam = new JComboBox();
 		comboBox_nam.setBounds(10, 56, 65, 21);
 		panel.add(comboBox_nam);
-		
+		int currentYear = LocalDate.now().getYear();
+        for (int year = currentYear; year >= currentYear - 10; year--) {
+            comboBox_nam.addItem(year);
+        }
+        // Thiết lập giá trị mặc định cho comboBox_nam
+        comboBox_nam.setSelectedItem(currentYear); // Chọn năm hiện tại
+        
 		JComboBox comboBox_thang = new JComboBox();
 		comboBox_thang.setBounds(85, 56, 65, 21);
 		panel.add(comboBox_thang);
+		
+		   for (int month = 1; month <= 12; month++) {
+	            comboBox_thang.addItem(month);
+	        }
+	        // thiet lap mac dinh
+	        comboBox_thang.setSelectedItem(LocalDate.now().getMonthValue()); // chọn tháng hiện tại
 		
 		JComboBox comboBox_phongBan = new JComboBox();
 		comboBox_phongBan.setBounds(160, 56, 147, 21);
 		panel.add(comboBox_phongBan);
 		
+        comboBox_phongBan.addItem("Phòng A");
+        comboBox_phongBan.addItem("Phòng B");
+        comboBox_phongBan.addItem("Phòng C");
+        
 		JComboBox comboBox_thoiGian = new JComboBox();
 		comboBox_thoiGian.setBounds(317, 56, 147, 21);
 		panel.add(comboBox_thoiGian);
 		
+	    comboBox_thoiGian.addItem("Thời gian");
+        comboBox_thoiGian.addItem("Lương thưởng");
+        comboBox_thoiGian.addItem("Thực lãnh");
+		
 		JComboBox comboBox_tangGiam = new JComboBox();
 		comboBox_tangGiam.setBounds(474, 56, 65, 21);
 		panel.add(comboBox_tangGiam);
+		
+		 comboBox_tangGiam.addItem("Tăng dần");
+	        comboBox_tangGiam.addItem("Giảm dần");
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(255, 255, 255));
@@ -114,25 +140,36 @@ public class LuongThuongPage_phuCapKhoanTru  extends JPanel {
 		panel_1.add(textField_2);
 		textField_2.setColumns(10);
 		
-		JButton button_xacNhan_1 = new JButton("Xác nhận");
-		button_xacNhan_1.setBounds(189, 254, 113, 27);
-		panel_1.add(button_xacNhan_1);
+		  ImageIcon confirm1 = new ImageIcon(getClass().getResource("/assets/appIcon/icons8-confirm-30.png"));
+			JButton button_xacNhan_1 = new JButton(confirm1);
+			button_xacNhan_1.setBounds(189, 254, 60, 27);
+			panel_1.add(button_xacNhan_1);
 		
 		JLabel label_khoanTru_1 = new JLabel("Khoản Trừ");
 		label_khoanTru_1.setBounds(10, 295, 122, 27);
 		panel_1.add(label_khoanTru_1);
 		
-		JLabel label_thoiGian2 = new JLabel("Thời Gian");
-		label_thoiGian2.setBounds(10, 344, 122, 24);
-		panel_1.add(label_thoiGian2);
-		
+	
 		JComboBox comboBox_5_2 = new JComboBox();
-		comboBox_5_2.setBounds(10, 378, 105, 20);
-		panel_1.add(comboBox_5_2);
+		comboBox_5_2.setBounds(10, 378, 105, 21);
+		panel_1.add(comboBox_5);
+		
+		 int currentYear2 = LocalDate.now().getYear();
+	        for (int year = currentYear2; year >= currentYear2 - 10; year--) {
+	            comboBox_5.addItem(year);
+	        }
+	        comboBox_nam.setSelectedItem(currentYear2);
 		
 		JComboBox comboBox_5_1_1_1 = new JComboBox();
 		comboBox_5_1_1_1.setBounds(125, 378, 105, 21);
 		panel_1.add(comboBox_5_1_1_1);
+		
+		   // them dư lieu 12 tháng vào
+        for (int month = 1; month <= 12; month++) {
+            comboBox_5_1.addItem(month);
+        }
+        // thiet lap mac dinh
+        comboBox_5_1.setSelectedItem(LocalDate.now().getMonthValue()); // chọn tháng hiện tại
 		
 		JLabel label_phuCapKhac_1 = new JLabel("Phụ cấp khác");
 		label_phuCapKhac_1.setBounds(10, 471, 122, 21);
@@ -148,8 +185,9 @@ public class LuongThuongPage_phuCapKhoanTru  extends JPanel {
 		panel_1.add(textField);
 		textField.setColumns(10);
 		
-		JButton button_xacNhan = new JButton("Xác nhận");
-		button_xacNhan.setBounds(189, 531, 113, 27);
+	    ImageIcon confirm = new ImageIcon(getClass().getResource("/assets/appIcon/icons8-confirm-30.png"));
+		JButton button_xacNhan = new JButton(confirm);
+		button_xacNhan.setBounds(189, 531, 60, 35);
 		panel_1.add(button_xacNhan);
 		
 		JLabel lblNewLabel_1 = new JLabel("Mã nhân viên");
