@@ -1,2 +1,13 @@
+<<<<<<< Updated upstream
+/GUI/
+/connectionSQL/
+/run/
+=======
+<<<<<<< HEAD
+/run/
+/assets/
+=======
 /GUI/
 /run/
+>>>>>>> d60c68c280bde2b7ec5fe8bca78cad9413b43d17
+>>>>>>> Stashed changes
