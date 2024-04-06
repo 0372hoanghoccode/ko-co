@@ -28,16 +28,16 @@ public class EmployeePage extends JPanel {
 
     public void init() {
         setLayout(null);
-        setBounds(5, 5, 1000, 600);
+        setBounds(5, 5, 1000, 660);
         JPanel panel = new JPanel();
         panel.setBackground(new Color(255, 255, 255));
-        panel.setBounds(20, 9, 970, 123);
+        panel.setBounds(10, 9, 980, 123);
         add(panel);
         panel.setLayout(null);
 
         JLabel lblNewLabel = new JLabel("Thông tin nhân viên ");
-        lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        lblNewLabel.setBounds(10, 10, 146, 17);
+        lblNewLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        lblNewLabel.setBounds(10, 10, 179, 39);
         panel.add(lblNewLabel);
 
         JLabel lblNewLabel_1 = new JLabel("Tìm kiếm theo:");
@@ -49,7 +49,7 @@ public class EmployeePage extends JPanel {
         comboBox.setEditable(false);
         comboBox.setBackground(Color.WHITE);
         comboBox.setOpaque(true);
-        comboBox.setBounds(20, 83, 193, 30);
+        comboBox.setBounds(10, 83, 193, 30);
         comboBox.addItem("Phòng ban");
         comboBox.addItem("Kế toán");
         comboBox.addItem("Nhân sự");

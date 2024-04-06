@@ -17,12 +17,12 @@ public class appHeader extends JPanel {
 		
 		JLabel lblNewLabel = new JLabel("Quản lí nhân sự");
 		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblNewLabel.setBounds(30, 10, 114, 17);
+		lblNewLabel.setBounds(39, 15, 114, 17);
 		add(lblNewLabel);
 		
 		JButton btnClose = new JButton();
 		btnClose.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/assets/appIcon/close-black.png")).getImage().getScaledInstance(22, 22, Image.SCALE_AREA_AVERAGING)));
-		btnClose.setBounds(1130, 6, 22, 22);
+		btnClose.setBounds(1154, 10, 22, 22);
 		
 		
 		btnClose.setContentAreaFilled(false); 
@@ -32,7 +32,7 @@ public class appHeader extends JPanel {
 
 		JLabel webIconLabel = new JLabel();
 		webIconLabel.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/assets/appIcon/icons8-close-24.png")).getImage().getScaledInstance(22, 22, Image.SCALE_AREA_AVERAGING)));
-		webIconLabel.setBounds(10, 6, 22, 22);
+		webIconLabel.setBounds(10, 10, 22, 22);
 		add(webIconLabel);
 	
 		
