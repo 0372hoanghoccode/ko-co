@@ -14,7 +14,7 @@ public class HopdongPage extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private HopdongPage_Tongquan tongQuan;
 	private HopdongPage_Kigiahan kiGiahan;
-	private HopdongPage_Thongke thongKe;
+
 	/**
 	 * Create the panel.
 	 */
@@ -52,22 +52,14 @@ public class HopdongPage extends JPanel {
 		lblNewLabel_1.setBounds(100, 0, 130, 30);
 		panel.add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("Thống kê");
 		
-		lblNewLabel_2.setOpaque(true);
-		lblNewLabel_2.setBackground(new Color(0, 64, 128));
-		lblNewLabel_2.setForeground(new Color(255, 255, 255));
-		lblNewLabel_2.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setBounds(230, 0, 100, 30);
-		panel.add(lblNewLabel_2);
 		
 		
 		
 		
 		tongQuan = new HopdongPage_Tongquan();
 		kiGiahan = new HopdongPage_Kigiahan();
-		thongKe = new HopdongPage_Thongke();
+	
 		JPanel panel_1 = new JPanel(); // chua may cai kia
 		panel_1.setBackground(new Color(255, 255, 255));
 		panel_1.setBounds(10, 50, 980, 541);
@@ -76,7 +68,7 @@ public class HopdongPage extends JPanel {
 		
 		panel_1.add(tongQuan, 0);
 		panel_1.add(kiGiahan, 1);
-		panel_1.add(thongKe, 2);
+
 		
 		
 		
@@ -92,12 +84,7 @@ public class HopdongPage extends JPanel {
 				showPage(1);
 			}
 		});
-		lblNewLabel_2.addMouseListener(new MouseAdapter() { // thong ke
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				showPage(2);
-			}
-		});
+		
 
 		showPage(0);
 	}
@@ -106,18 +93,14 @@ public class HopdongPage extends JPanel {
 		if (index == 0) {
 			tongQuan.setVisible(true);
 			kiGiahan.setVisible(false);
-			thongKe.setVisible(false);
+			
 		}
 		if (index == 1) {
 			tongQuan.setVisible(false);
 			kiGiahan.setVisible(true);
-			thongKe.setVisible(false);
+			
 		}
-		if (index == 2) {
-			tongQuan.setVisible(false);
-			kiGiahan.setVisible(false);
-			thongKe.setVisible(true);
-		}
+		
 		
 	}
 

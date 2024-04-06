@@ -2,6 +2,7 @@ package GUI;
 
 import java.awt.Color;
 import java.awt.Cursor;
+
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -9,7 +10,7 @@ import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import javax.swing.BoxLayout;
+import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -18,31 +19,36 @@ import run.appFrame;
 public class menuNavigation extends JPanel {
     
     private static final long serialVersionUID = 1L;
-    private final String[] fnc = {"Trang chính", "Trang 1", "Trang 2", "Trang 3", "Trang 4", "Trang 5"};
+    private final String[] fnc = {"Trang chính", "Nhân viên", "Phòng ban", "Hợp đồng", "Lương thưởng", "Tài khoản"};
     private final String[] iconMenu = {"/assets/appIcon/icons8-home-24.png","/assets/appIcon/icons8-login-50.png","/assets/appIcon/icons8-salary-50.png","/assets/appIcon/icons8-contract-24.png"};
     private ArrayList<JButton> btnList;
     private static int index_menu = 0;
     private appFrame app;
 
     public menuNavigation(appFrame app) {
-        this.app = app;
+        
         init();
+        this.app = app;
+        
+        
+        
     }
 
     public void init() {
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBackground(new Color(255, 255, 255));
-
+//        setBackground(new Color(255, 255, 255));
+        setLayout(null);
+        setOpaque(false);
         btnList = new ArrayList<JButton>();
         for (int i = 0; i < fnc.length; i++) {
             JButton menuBtn = new JButton();
-            menuBtn.setContentAreaFilled(false);
+            menuBtn.setContentAreaFilled(true);
             menuBtn.setBorderPainted(false);
             menuBtn.setFocusPainted(false);
             menuBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            menuBtn.setBackground(new Color(100, 244, 220));
             menuBtn.setIconTextGap(10);
             Color defaultColor = menuBtn.getBackground();
-
+            menuBtn.setBounds(0, 40 * i, 200, 40);
             menuBtn.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
                     int index = btnList.indexOf(menuBtn);
@@ -61,6 +67,8 @@ public class menuNavigation extends JPanel {
             add(menuBtn);
             menuBtn.setIcon(new ImageIcon(new ImageIcon(getClass().getResource(iconMenu[i % iconMenu.length])).getImage().getScaledInstance(22, 22, Image.SCALE_AREA_AVERAGING)));
             menuBtn.setText(fnc[i]);
+            menuBtn.setHorizontalAlignment(SwingConstants.LEFT);
+
             btnList.add(menuBtn);
         }
     }
