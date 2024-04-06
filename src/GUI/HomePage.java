@@ -22,15 +22,15 @@ public class HomePage extends JPanel {
 	public void init() {
 		setLayout(null);
 		tk1 = new HomePageTK1();
-		tk1.setBounds(5, 5, 496, 275);
+		tk1.setBounds(5, 5, 500, 295);
 		add(tk1);
 		
 		tk2 = new HomePageTK2();
-		tk2.setBounds(511, 5, 479, 275);
+		tk2.setBounds(510, 5, 480, 295);
 		add(tk2);
 		
 		tk3 = new HomePageTK3();
-		tk3.setBounds(5, 290, 985, 340);
+		tk3.setBounds(5, 304, 985, 346);
 		add(tk3);
 		
 	}
