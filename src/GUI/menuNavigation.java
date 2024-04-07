@@ -57,8 +57,9 @@ public class menuNavigation extends JPanel {
                     app.getAppContent().displayContent(index);
                 }
                 public void mouseEntered(MouseEvent e) {
-                    menuBtn.setBackground(new Color(204, 0, 204));
+                    menuBtn.setBackground(new Color(255, 182, 193)); // Màu hồng nhạt
                 }
+
                 public void mouseExited(MouseEvent e) {
                     menuBtn.setBackground(defaultColor);
                 }
