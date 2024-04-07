@@ -32,17 +32,17 @@ public class TaiKhoanPage extends JPanel {
 		lblNewLabel.setBackground(new Color(255, 255, 255));
 		lblNewLabel.setOpaque(true);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblNewLabel.setBounds(10, 11, 960, 67);
+		lblNewLabel.setBounds(5, 5, 985, 55);
 		add(lblNewLabel);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
-		panel.setBounds(20, 89, 387, 505);
+		panel.setBounds(5, 65, 390, 590);
 		add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("TÀI KHOẢN NGƯỜI DÙNG");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNewLabel_1.setBounds(10, 11, 160, 30);
 		panel.add(lblNewLabel_1);
 		
@@ -51,7 +51,7 @@ public class TaiKhoanPage extends JPanel {
 		panel.add(comboBox);
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(10, 363, 367, 131);
+		panel_2.setBounds(10, 432, 367, 148);
 		panel.add(panel_2);
 		panel_2.setLayout(null);
 		
@@ -62,16 +62,16 @@ public class TaiKhoanPage extends JPanel {
 		
 		JLabel lblNewLabel_3 = new JLabel("001 - Nguyen h");
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblNewLabel_3.setBounds(10, 45, 169, 29);
+		lblNewLabel_3.setBounds(10, 60, 169, 29);
 		panel_2.add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_4 = new JLabel("Quyền tài khoản");
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblNewLabel_4.setBounds(10, 81, 169, 29);
+		lblNewLabel_4.setBounds(10, 95, 169, 29);
 		panel_2.add(lblNewLabel_4);
 		
 		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(189, 81, 168, 29);
+		comboBox_1.setBounds(189, 95, 168, 29);
 		panel_2.add(comboBox_1);
 		
 		JButton btnNewButton = new JButton("New button");
@@ -79,18 +79,18 @@ public class TaiKhoanPage extends JPanel {
 		panel_2.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Lưu");
-		btnNewButton_1.setBounds(268, 48, 89, 23);
+		btnNewButton_1.setBounds(268, 63, 89, 23);
 		panel_2.add(btnNewButton_1);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(Color.WHITE);
-		panel_3.setBounds(417, 88, 276, 506);
+		panel_3.setBounds(400, 65, 305, 590);
 		add(panel_3);
 		panel_3.setLayout(null);
 		
 		JLabel lblNewLabel_5 = new JLabel("Nhóm Quyền");
 		lblNewLabel_5.setBackground(Color.GRAY);
-		lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNewLabel_5.setBounds(10, 21, 167, 30);
 		panel_3.add(lblNewLabel_5);
 		
@@ -100,7 +100,7 @@ public class TaiKhoanPage extends JPanel {
 		
 		JPanel panel_6 = new JPanel();
 		panel_6.setBackground(Color.WHITE);
-		panel_6.setBounds(703, 89, 267, 505);
+		panel_6.setBounds(710, 65, 280, 590);
 		add(panel_6);
 		
 		JButton btnNewButton_3 = new JButton("New button");
@@ -142,7 +142,7 @@ public class TaiKhoanPage extends JPanel {
         table.setFont(new Font("Arial", Font.PLAIN, 12));
 
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(10, 49, 367, 303);
+        scrollPane.setBounds(10, 100, 370, 310);
         panel. add(scrollPane);
         
         String[] columnNamesNhomQuyen = {"STT", "Tên Phòng", "Tên Trưởng Phòng", "Số Nhân Viên", "Lương Trung Bình"};
@@ -169,7 +169,7 @@ public class TaiKhoanPage extends JPanel {
         table.setFont(new Font("Arial", Font.PLAIN, 12));
 
         JScrollPane scrollPaneNq = new JScrollPane(tableNq);
-        scrollPaneNq.setBounds(10, 62, 256, 433);
+        scrollPaneNq.setBounds(10, 100, 285, 433);
         panel_3. add(scrollPaneNq);
         
      

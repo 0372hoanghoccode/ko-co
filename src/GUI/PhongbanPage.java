@@ -29,7 +29,7 @@ public class PhongbanPage extends JPanel {
 		
 		JPanel panel_1 = new JPanel(); // alo panel này chứa mục riêng của tổng quan vs quản lí
 		panel_1.setBackground(new Color(255, 255, 255));
-		panel_1.setBounds(10, 10, 980, 255);
+		panel_1.setBounds(5, 5, 985, 275);
 		add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -66,7 +66,7 @@ public class PhongbanPage extends JPanel {
 		table.setFont(new Font("Arial", Font.PLAIN, 14));
 
 		JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(10, 46, 960, 211);
+        scrollPane.setBounds(10, 46, 965, 219);
 
 		panel_1.add(scrollPane);
 		
@@ -92,9 +92,10 @@ public class PhongbanPage extends JPanel {
 		
 		
 		
+		
 		JPanel panel = new JPanel(); // panel nv phòng ban
 		panel.setBackground(new Color(255, 255, 255));
-		panel.setBounds(10, 267, 645, 365);
+		panel.setBounds(5, 285, 650, 365);
 		add(panel);
 		panel.setLayout(null);
 		
@@ -102,10 +103,11 @@ public class PhongbanPage extends JPanel {
 		lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 14));
 		lblNewLabel_1.setBounds(10, 10, 273, 30);
 		panel.add(lblNewLabel_1);
+		
 	
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(255, 255, 255));
-		panel_2.setBounds(665, 267, 325, 365);
+		panel_2.setBounds(660, 285, 330, 365);
 		add(panel_2);
 		panel_2.setLayout(null);
 		
@@ -175,7 +177,7 @@ public class PhongbanPage extends JPanel {
 		tableNV.setFont(new Font("Arial", Font.PLAIN, 14));
 
 		JScrollPane scrollPaneNV = new JScrollPane(tableNV);
-        scrollPaneNV.setBounds(10, 50, 625, 263);
+       scrollPaneNV.setBounds(10, 50, 630, 305);
 
 		panel.add(scrollPaneNV);
 		
