@@ -19,10 +19,10 @@ import run.appFrame;
 public class menuNavigation extends JPanel {
     
     private static final long serialVersionUID = 1L;
-    private final String[] fnc = {"Trang chính", "Nhân viên", "Phòng ban", "Hợp đồng","Chấm công", "Lương thưởng","Đánh giá", "Tài khoản"};
+    private final String[] fnc = {"Trang chính", "Nhân viên", "Phòng ban", "Hợp đồng","Chấm công", "Lương thưởng","Đánh giá", "Tài khoản", "Tuyển dụng"};
     private final String[] iconMenu = {"/assets/appIcon/icons8-home-24.png","/assets/appIcon/icons8-staff-50.png","/assets/appIcon/icons8-department-50.png",
-    		"/assets/appIcon/icons8-contract-24.png","/assets/appIcon/icons8-calendar-48.png","/assets/appIcon/icons8-salary-50.png",
-    		"/assets/appIcon/icons8-favorite-64.png","/assets/appIcon/icons8-login-50.png"};
+            "/assets/appIcon/icons8-contract-24.png","/assets/appIcon/icons8-calendar-48.png","/assets/appIcon/icons8-salary-50.png",
+            "/assets/appIcon/icons8-favorite-64.png","/assets/appIcon/icons8-login-50.png","/assets/appIcon/icons8-salary-50.png"};
     private ArrayList<JButton> btnList;
     private static int index_menu = 0;
     private appFrame app;
@@ -32,12 +32,9 @@ public class menuNavigation extends JPanel {
         init();
         this.app = app;
         
-        
-        
     }
 
     public void init() {
-//        setBackground(new Color(255, 255, 255));
         setLayout(null);
         setOpaque(false);
         btnList = new ArrayList<JButton>();
@@ -47,23 +44,24 @@ public class menuNavigation extends JPanel {
             menuBtn.setBorderPainted(false);
             menuBtn.setFocusPainted(false);
             menuBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-            menuBtn.setBackground(new Color(100, 244, 220));
             menuBtn.setIconTextGap(10);
-            Color defaultColor = menuBtn.getBackground();
+            menuBtn.setBackground(new Color(100, 244, 220)); // Màu mặc định
             menuBtn.setBounds(0, 40 * i, 200, 40);
             menuBtn.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
                     int index = btnList.indexOf(menuBtn);
-                    menuNavigation.index_menu = index;
-                    System.out.println("Button index: " + index);
+                    index_menu = index;
                     app.getAppContent().displayContent(index);
+                    updateButtonColor(index);
                 }
                 public void mouseEntered(MouseEvent e) {
                     menuBtn.setBackground(new Color(255, 182, 193)); // Màu hồng nhạt
                 }
 
                 public void mouseExited(MouseEvent e) {
-                    menuBtn.setBackground(defaultColor);
+                    if (getIndexMenu() != btnList.indexOf(menuBtn)) {
+                        menuBtn.setBackground(new Color(100, 244, 220)); // Màu mặc định
+                    }
                 }
             });
 
@@ -74,6 +72,8 @@ public class menuNavigation extends JPanel {
 
             btnList.add(menuBtn);
         }
+        // Cập nhật màu sắc của nút khi khởi tạo
+        updateButtonColor(index_menu);
     }
 
     @Override
@@ -91,6 +91,13 @@ public class menuNavigation extends JPanel {
     }
 
     public int getIndexMenu() {
-        return menuNavigation.index_menu;
+        return index_menu;
+    }
+
+    public void updateButtonColor(int index) {
+        for (int i = 0; i < btnList.size(); i++) {
+            JButton button = btnList.get(i);
+            button.setBackground(i == index ? new Color(255, 182, 193) : new Color(100, 244, 220));
+        }
     }
 }
