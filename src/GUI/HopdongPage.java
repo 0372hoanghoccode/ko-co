@@ -28,7 +28,7 @@ public class HopdongPage extends JPanel {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255));
-		panel.setBounds(10, 10, 980, 30);
+		panel.setBounds(5, 5, 985, 30);
 		add(panel);
 		panel.setLayout(null);
 		
@@ -62,7 +62,7 @@ public class HopdongPage extends JPanel {
 	
 		JPanel panel_1 = new JPanel(); // chua may cai kia
 		panel_1.setBackground(new Color(255, 255, 255));
-		panel_1.setBounds(10, 50, 980, 541);
+		panel_1.setBounds(5, 40, 985, 610);
 		add(panel_1);
 		panel_1.setLayout(new CardLayout(0, 0));
 		
@@ -77,12 +77,24 @@ public class HopdongPage extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				showPage(0);
 			}
+			public void mouseEntered(MouseEvent e) {
+				lblNewLabel.setBackground(new Color(204, 0, 204));
+            }
+            public void mouseExited(MouseEvent e) {
+            	lblNewLabel.setBackground(new Color(0, 64, 128));
+            }
 		});
 		lblNewLabel_1.addMouseListener(new MouseAdapter() { // ki / gia han
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				showPage(1);
 			}
+			public void mouseEntered(MouseEvent e) {
+				lblNewLabel_1.setBackground(new Color(204, 0, 204));
+            }
+            public void mouseExited(MouseEvent e) {
+            	lblNewLabel_1.setBackground(new Color(0, 128, 128));
+            }
 		});
 		
 

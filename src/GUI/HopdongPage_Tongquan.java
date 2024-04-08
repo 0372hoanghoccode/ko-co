@@ -25,7 +25,7 @@ public class HopdongPage_Tongquan extends JPanel {
 		
 		JPanel panel = new JPanel();// tinh nang
 		panel.setBackground(new Color(255, 255, 255));
-		panel.setBounds(0, 0, 980, 45);
+		panel.setBounds(0, 0, 985, 45);
 		add(panel);
 		
 		String[] columnNames = {"STT", "Mã", "Tên", "Phòng", "Bắt đầu từ", "Kết thúc", "Lương"};
@@ -76,7 +76,7 @@ public class HopdongPage_Tongquan extends JPanel {
         table.setFont(new Font("Arial", Font.PLAIN, 13));
 
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(0, 55, 980, 540);
+        scrollPane.setBounds(0, 50, 985, 555);
         add(scrollPane);
 		
 	}

@@ -1,5 +1,4 @@
 package run;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -90,6 +89,7 @@ public class loginFrame extends JFrame {
         ImageIcon loginButtonIcon = new ImageIcon("src/assets/appIcon/icons8-login-50.png");
         loginButtonIcon = resizeIcon(loginButtonIcon, 20, 20);
         JButton btnNewButton = new JButton("Đăng Nhập", loginButtonIcon);
+        gbc.gridwidth = 5; // Tăng chiều dài của nút đăng nhập lên 2 ô
         btnNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String inputTaiKhoan = textField.getText();

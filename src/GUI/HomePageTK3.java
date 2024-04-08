@@ -23,12 +23,16 @@ public class HomePageTK3 extends JPanel {
 
     public void init() {
         setLayout(null);
-        setBounds(5, 300, 940, 300);
+        setBounds(5, 300, 985, 346);
 
         JLabel lblNewLabel = new JLabel("Thống kê chi tiết từng phòng ban ");
         lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        lblNewLabel.setBounds(10, 10, 300, 29);
+        lblNewLabel.setBounds(10, 10, 300, 17);
         add(lblNewLabel);
+        
+        
+
+        
 
         // Tạo bảng
         String[] columnNames = {"STT", "Tên Phòng", "Tên Trưởng Phòng", "Số Nhân Viên", "Lương Trung Bình"};
@@ -55,7 +59,7 @@ public class HomePageTK3 extends JPanel {
         table.setFont(new Font("Arial", Font.PLAIN, 12));
 
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(10, 50, 920, 240);
+        scrollPane.setBounds(10, 37, 965, 299);
         add(scrollPane);
     }
 }
