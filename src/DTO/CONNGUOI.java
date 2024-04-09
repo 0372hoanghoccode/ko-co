@@ -11,8 +11,6 @@ public class CONNGUOI {
     private String sdt;
     private String tinhTrangHonNhan;
     private String danToc;
-    
-
 	private String tonGiao;
     private String email;
 

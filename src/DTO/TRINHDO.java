@@ -9,7 +9,10 @@ public class TRINHDO {
     private String chuyenNganh;
     
     public TRINHDO(){
-        
+    	this.maTrinhDo = "";
+        this.trinhDoHocVan = "";
+        this.trinhDoChuyenMon = "";
+        this.chuyenNganh = null;
     }
     
     public TRINHDO(String maTrinhDo, String trinhDoHocVan, String trinhDoChuyenMon, String chuyenNganh){

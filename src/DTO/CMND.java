@@ -10,7 +10,9 @@ public class CMND {
     private LocalDate ngayCap;
     
     public CMND(){
-        
+        this.soCmnd = "";
+        this.noiCap = null;
+        this.ngayCap = null;
     }
     
     public CMND(String soCmnd, String noiCap, LocalDate ngayCap){
