@@ -14,12 +14,12 @@ public class TaiKhoanDAO {
 
     public static void insertTAIKHOAN(TAIKHOAN taikhoan) {
         try (Connection con = ConnectionManager.getConnection();
-             PreparedStatement pst = con.prepareStatement("INSERT INTO TAIKHOAN (maNhanVien, username, pass, maNhomQuyen, avatar) VALUES (?, ?, ?, ?, ?)")) {
-            pst.setString(1, taikhoan.getMaNhanVien());
-            pst.setString(2, taikhoan.getUsername());
-            pst.setString(3, taikhoan.getPass());
-            pst.setString(4, taikhoan.getMaNhomQuyen());
-            pst.setString(5, taikhoan.getAvatarImg());
+             PreparedStatement pst = con.prepareStatement("INSERT INTO TAIKHOAN (username, pass, maNhomQuyen, avatar) VALUES (?, ?, ?, ?)")) {
+            
+            pst.setString(1, taikhoan.getUsername());
+            pst.setString(2, taikhoan.getPass());
+            pst.setString(3, taikhoan.getMaNhomQuyen());
+            pst.setString(4, taikhoan.getAvatarImg());
 
             pst.executeUpdate();
         } catch (SQLException e) {
@@ -29,12 +29,12 @@ public class TaiKhoanDAO {
 
     public static void updateTAIKHOAN(TAIKHOAN taikhoan) {
         try (Connection con = ConnectionManager.getConnection();
-             PreparedStatement pst = con.prepareStatement("UPDATE TAIKHOAN SET maNhanVien = ?, pass = ?, maNhomQuyen = ?, avatar = ? WHERE username = ?")) {
-            pst.setString(1, taikhoan.getMaNhanVien());
-            pst.setString(2, taikhoan.getPass());
-            pst.setString(3, taikhoan.getMaNhomQuyen());
-            pst.setString(4, taikhoan.getAvatarImg());
-            pst.setString(5, taikhoan.getUsername());
+             PreparedStatement pst = con.prepareStatement("UPDATE TAIKHOAN SET  pass = ?, maNhomQuyen = ?, avatar = ? WHERE username = ?")) {
+            
+            pst.setString(1, taikhoan.getPass());
+            pst.setString(2, taikhoan.getMaNhomQuyen());
+            pst.setString(3, taikhoan.getAvatarImg());
+            pst.setString(4, taikhoan.getUsername());
 
             pst.executeUpdate();
         } catch (SQLException e) {
@@ -78,7 +78,7 @@ public class TaiKhoanDAO {
         ArrayList<TAIKHOAN> list = new ArrayList<>();
         try (Connection con = ConnectionManager.getConnection();
              Statement st = con.createStatement();
-             ResultSet rs = st.executeQuery("SELECT * FROM TAIKHOAN JOIN NHANVIEN ON NHANVIEN.maNhanVien = TAIKHOAN.maNhanVien")) {
+             ResultSet rs = st.executeQuery("SELECT * FROM TAIKHOAN JOIN NHANVIEN ON NHANVIEN.maNhanVien = TAIKHOAN.username")) {
             while (rs.next()) {
 //                TAIKHOAN taikhoan = new TAIKHOAN(rs.getString("maNhanVien"), rs.getString("username"), rs.getString("pass"), rs.getString("maNhomQuyen"), rs.getString("avatar"));
 //                list.add(taikhoan);
@@ -96,7 +96,7 @@ public class TaiKhoanDAO {
              ResultSet rs = st.executeQuery("SELECT nv.maNhanVien, cn.hoTen, tk.username, tk.pass, tk.maNhomQuyen FROM CONNGUOI cn JOIN NHANVIEN nv ON cn.CMND = nv.CMND JOIN CHUCVU cv ON nv.maChucVu = cv.maChucVu JOIN TAIKHOAN tk ON nv.maNhanVien = tk.username WHERE nv.trangThai = 1")) {
             int count = 0;
             while (rs.next()) {
-                Object[] ob = new Object[]{count + 1 + "", rs.getString("maNhanVien") + " - " + rs.getString("hoTen"), rs.getString("maNhomQuyen")};
+                Object[] ob = new Object[]{count + 1 + "", rs.getString("username") + " - " + rs.getString("hoTen"), rs.getString("maNhomQuyen")};
                 list.add(ob);
                 count++;
             }

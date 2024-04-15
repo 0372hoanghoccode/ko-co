@@ -3,32 +3,27 @@ package DTO;
 import java.util.Objects;
 
 public class TAIKHOAN {
-	private String maNhanVien;
+	
     private String username;
     private String pass;
     private String maNhomQuyen;
     private String avatarImg;
-    private int trangThai;
+    
     
     public TAIKHOAN(){
       
     }
     
-	public TAIKHOAN(String maNhanVien , String username, String pass,String maNhomQuyen, String avatarImg, int trangThai){
+	public TAIKHOAN(String username, String pass,String maNhomQuyen, String avatarImg){
         this.username = username;
         this.pass = pass;
         this.avatarImg = avatarImg;
         this.maNhomQuyen = maNhomQuyen;
-        this.trangThai = trangThai;
-        this.maNhanVien = maNhanVien;
+     
+       
     }
     
-	public String getMaNhanVien() {
-		return maNhanVien;
-	}
-	public void setMaNhanVien(String maNhanVien) {
-		this.maNhanVien = maNhanVien;
-	}
+	
     public String getUsername() {
         return username;
     }
@@ -59,20 +54,15 @@ public class TAIKHOAN {
     	this.maNhomQuyen = maNhomQuyen;
     }
    
-    public int getTrangThai() {
-    	return this.trangThai;
-    }
-    public void setTrangThai(int trangThai) {
-    	this.trangThai = trangThai;
-    }
+    
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 19 * hash + Objects.hashCode(this.maNhanVien);
+        
         hash = 19 * hash + Objects.hashCode(this.username);
         hash = 19 * hash + Objects.hashCode(this.pass);
         hash = 19 * hash + Objects.hashCode(this.maNhomQuyen);
-        hash = 19 * hash + this.trangThai;
+        
         return hash;
     }
 
@@ -88,15 +78,11 @@ public class TAIKHOAN {
             return false;
         }
         final TAIKHOAN other = (TAIKHOAN) obj;
-        if (this.maNhanVien != other.maNhanVien) {
-            return false;
-        }
+        
         if (this.maNhomQuyen != other.maNhomQuyen) {
             return false;
         }
-        if (this.trangThai != other.trangThai) {
-            return false;
-        }
+        
         if (!Objects.equals(this.username, other.username)) {
             return false;
         }
@@ -105,6 +91,6 @@ public class TAIKHOAN {
 
     @Override
     public String toString() {
-        return "AccountDTO{" + "manv=" + maNhanVien + ", username=" + username + ", pass=" + pass + ", maNhomQuyen=" + maNhomQuyen + ", trangThai=" + trangThai + '}';
+        return "AccountDTO{" +  ", username=" + username + ", pass=" + pass + ", maNhomQuyen=" + maNhomQuyen +  '}';
     }
 }
