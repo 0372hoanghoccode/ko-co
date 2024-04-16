@@ -80,7 +80,7 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
 				nv.setGioiTinh(rs.getString("gioiTinh"));
 				nv.setNgaySinh(rs.getDate("ngaySinh").toLocalDate().plusDays(2));
 				nv.setDiaChi(new DIACHI(arr2[0],temp, arr[1], arr[2], arr[3]));
-				nv.setTinhTrangHonNhan(rs.getString("tinhTrangHonNhan"));
+//				nv.setTinhTrangHonNhan(rs.getString("tinhTrangHonNhan"));
 				nv.setDanToc(rs.getString("danToc"));
 				nv.setTonGiao(rs.getString("tonGiao"));
 				nv.setEmail(rs.getString("email"));

@@ -11,9 +11,9 @@ public class UNGVIEN extends CONNGUOI {
     public String chucVu;
     private String trangThai;
     
-    public UNGVIEN(CMND cmnd,String hoTen,String gioiTinh,LocalDate ngaySinh,DIACHI diaChi,String sdt,String danToc,String tonGiao,String honNhan,String email,String maTuyenDung, String maUngVien, double mucLuongDeal, TRINHDO trinhDo, String chucVu,
+    public UNGVIEN(CMND cmnd,String hoTen,String gioiTinh,LocalDate ngaySinh,DIACHI diaChi,String sdt,String danToc,String tonGiao,String email,String maTuyenDung, String maUngVien, double mucLuongDeal, TRINHDO trinhDo, String chucVu,
 			String trangThai) {
-		super(cmnd, hoTen, gioiTinh, ngaySinh, diaChi, sdt, danToc, honNhan, tonGiao, email);
+		super(cmnd, hoTen, gioiTinh, ngaySinh, diaChi, sdt, danToc, tonGiao, email);
 		this.maTuyenDung = maTuyenDung;
 		this.maUngVien = maUngVien;
 		this.mucLuongDeal = mucLuongDeal;

@@ -20,7 +20,7 @@ public class NHANVIEN extends CONNGUOI {
         this.taiKhoan = new TAIKHOAN();
     }
     public NHANVIEN(String maNhanVien,String hoTen,  String gioiTinh,  LocalDate ngaySinh,DIACHI diaChi,String sdt, CMND cmnd, String danToc,String tinhTrangHonNhan,String tonGiao, String email,String maPhong, TRINHDO trinhDo, CHUCVU chucVu, TAIKHOAN taiKhoan   ) {
-        super(cmnd,hoTen, gioiTinh, ngaySinh, diaChi, sdt, danToc,tinhTrangHonNhan, tonGiao, email);
+        super(cmnd,hoTen, gioiTinh, ngaySinh, diaChi, sdt, danToc, tonGiao, email);
         this.maNhanVien = maNhanVien;
         this.maPhong = maPhong;
         this.trinhDo = trinhDo;

@@ -49,7 +49,7 @@ public class TaiKhoanDAO {
             pst.setString(1, username);
             try (ResultSet rs = pst.executeQuery()) {
                 if (rs.next()) {
-//                    taikhoan = new TAIKHOAN(rs.getString("maNhanVien"), rs.getString("username"), rs.getString("pass"), rs.getString("maNhomQuyen"), rs.getString("avatar"));
+                    taikhoan = new TAIKHOAN( rs.getString("username"), rs.getString("pass"), rs.getString("maNhomQuyen"), rs.getString("avatar"));
                 }
             }
         } catch (SQLException e) {
@@ -80,8 +80,8 @@ public class TaiKhoanDAO {
              Statement st = con.createStatement();
              ResultSet rs = st.executeQuery("SELECT * FROM TAIKHOAN JOIN NHANVIEN ON NHANVIEN.maNhanVien = TAIKHOAN.username")) {
             while (rs.next()) {
-//                TAIKHOAN taikhoan = new TAIKHOAN(rs.getString("maNhanVien"), rs.getString("username"), rs.getString("pass"), rs.getString("maNhomQuyen"), rs.getString("avatar"));
-//                list.add(taikhoan);
+                TAIKHOAN taikhoan = new TAIKHOAN( rs.getString("username"), rs.getString("pass"), rs.getString("maNhomQuyen"), rs.getString("avatar"));
+               list.add(taikhoan);
             }
         } catch (SQLException e) {
             e.printStackTrace();
