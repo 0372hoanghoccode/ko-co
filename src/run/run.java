@@ -38,7 +38,7 @@ public class run {
 				try {
 					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
-					System.out.println(DAO.TaiKhoanDAO.getInstance().getList().get(0).getMaNhomQuyen());
+					System.out.println(DAO.NhanVienDAO.getInstance().getList().get(0).getHoTen());
 
 					new run();
 				} catch (Exception e) {

@@ -5,10 +5,10 @@ import java.util.ArrayList;
 // --- IMPORT DTO ----
 import DTO.CHUCVU;
 
-public class ChucVuCongTyDAO implements DAOInterface<CHUCVU>{
+public class ChucVuDAO implements DAOInterface<CHUCVU>{
 
-    public static ChucVuCongTyDAO getInstance() {
-        return new ChucVuCongTyDAO();
+    public static ChucVuDAO getInstance() {
+        return new ChucVuDAO();
     }
 
     @Override

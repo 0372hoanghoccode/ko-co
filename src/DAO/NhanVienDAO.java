@@ -28,10 +28,12 @@ import java.sql.SQLException;
 
 public class NhanVienDAO implements DAOInterface<NHANVIEN>{
 	
-	 
+	// cmnd, con nguoi, trinh do, chuc vu
 	
 	
-	
+	public static NhanVienDAO getInstance() {
+		return new NhanVienDAO();
+	}
 
 
 
@@ -63,7 +65,7 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
 				}
 				temp = temp.trim();
 				
-				if (rs.getString(16)==null) { // Dòng 16 truy vấn là ngày bắt đầu thử việc
+				if (rs.getString(15)==null) { // Dòng 16 truy vấn là ngày bắt đầu thử việc
 					nv = new NHANVIENTHUVIEC();
 					((NHANVIENTHUVIEC)nv).setNgayBatDauThuViec(rs.getDate("ngayBatDauThuViec").toLocalDate().plusDays(2));
 					((NHANVIENTHUVIEC)nv).setNgayKetThucThuViec(rs.getDate("ngayKetThucThuViec").toLocalDate().plusDays(2));
@@ -114,7 +116,7 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
 			// trinh do -> đang soi
 			TrinhDoDAO.getInstance().insert(x.getTrinhDo());
 			// chuc vu -> đang soi
-			ChucVuCongTyDAO.getInstance().insert(x.getChucVu());
+			ChucVuDAO.getInstance().insert(x.getChucVu());
 			// nhanvien
 			PreparedStatement pst;
 			if(x instanceof NHANVIENCHINHTHUC) {
@@ -171,7 +173,7 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
 			CMND_DAO.getInstance().update(t.getCmnd());
 			ConNguoiDAO.updateCONNGUOI((CONNGUOI)t);
 			TrinhDoDAO.getInstance().update(t.getTrinhDo());
-			ChucVuCongTyDAO.getInstance().update(t.getChucVu());
+			ChucVuDAO.getInstance().update(t.getChucVu());
 
 			PreparedStatement pst;
 			if(t instanceof NHANVIENCHINHTHUC) {
