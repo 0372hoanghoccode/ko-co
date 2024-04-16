@@ -6,6 +6,10 @@ import DTO.HOPDONGLAODONG;
 
 public class HopDongLaoDongDAO implements DAOInterface<HOPDONGLAODONG>{
 
+    public static HopDongLaoDongDAO getInstance() {
+        return new HopDongLaoDongDAO();
+    }
+
     @Override
     public ArrayList<HOPDONGLAODONG> getList() {
         // TODO Auto-generated method stub

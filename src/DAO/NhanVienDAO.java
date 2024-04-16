@@ -28,11 +28,10 @@ import java.sql.SQLException;
 
 public class NhanVienDAO implements DAOInterface<NHANVIEN>{
 	
-	CMND_DAO access_CMND = new CMND_DAO(); // non-static
-	TrinhDoDAO access_TRINHDO = new TrinhDoDAO(); // non-static
-	ChucVuCongTyDAO access_CHUCVUCONGTY = new ChucVuCongTyDAO(); // non-static
-	HopDongLaoDongDAO access_HOPDONGLAODONG = new HopDongLaoDongDAO(); // non-static
-
+	 
+	
+	
+	
 
 
 
@@ -109,19 +108,19 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
 		Connection con = ConnectionManager.getConnection();
 		try {
 			// tạo cmnd -> đang soi
-			access_CMND.insert(x.getCmnd());
+			CMND_DAO.getInstance().insert(x.getCmnd());
 			// con người -> đang soi
 			ConNguoiDAO.insertCONNGUOI((CONNGUOI)x);
 			// trinh do -> đang soi
-			access_TRINHDO.insert(x.getTrinhDo());
+			TrinhDoDAO.getInstance().insert(x.getTrinhDo());
 			// chuc vu -> đang soi
-			access_CHUCVUCONGTY.insert(x.getChucVu());
+			ChucVuCongTyDAO.getInstance().insert(x.getChucVu());
 			// nhanvien
 			PreparedStatement pst;
 			if(x instanceof NHANVIENCHINHTHUC) {
 
 				// hop dong lao dong -> đang soi
-				access_HOPDONGLAODONG.insert(((NHANVIENCHINHTHUC)x).getHopDong());
+				HopDongLaoDongDAO.getInstance().insert(((NHANVIENCHINHTHUC)x).getHopDong());
 				// nhan vien
 				pst = con.prepareStatement("insert NHANVIEN values(?,?,?,?,?,?,?,?,?,?)");
 				pst.setString(1, x.getMaNhanVien());
@@ -153,7 +152,7 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
 
 
 			// tài khoản -> đang soi 
-			TaiKhoanDAO.insertTAIKHOAN(x.getTaiKhoan());
+			TaiKhoanDAO.getInstance().insert(x.getTaiKhoan());
 			
 			ConnectionManager.closeConnection(con);
 		} catch (SQLException e) {
@@ -169,14 +168,14 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
 		try {
 
 			// SOI đoạn này lại
-			access_CMND.update(t.getCmnd());
+			CMND_DAO.getInstance().update(t.getCmnd());
 			ConNguoiDAO.updateCONNGUOI((CONNGUOI)t);
-			access_TRINHDO.update(t.getTrinhDo());
-			access_CHUCVUCONGTY.update(t.getChucVu());
+			TrinhDoDAO.getInstance().update(t.getTrinhDo());
+			ChucVuCongTyDAO.getInstance().update(t.getChucVu());
 
 			PreparedStatement pst;
 			if(t instanceof NHANVIENCHINHTHUC) {
-				access_HOPDONGLAODONG.update(((NHANVIENCHINHTHUC)t).getHopDong());
+				HopDongLaoDongDAO.getInstance().update(((NHANVIENCHINHTHUC)t).getHopDong());
 				pst = con.prepareStatement("update NHANVIEN set maPhong = ?, maTrinhDo = ?, maChucVu = ?, maHopDong = ?, ngayBatDauThuViec = null, ngayKetThucThuViec = null, luongThuViec = 0 where maNhanVien = ?");
 				pst.setString(1, t.getMaPhong());
 				pst.setString(2, t.getTrinhDo().getMaTrinhDo());
@@ -196,7 +195,7 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
 				pst.executeUpdate();
 			
 			}
-			TaiKhoanDAO.updateTAIKHOAN(t.getTaiKhoan());
+			TaiKhoanDAO.getInstance().update(t.getTaiKhoan());
 			ConnectionManager.closeConnection(con);
 		}catch (SQLException e) {
 			// TODO Auto-generated catch block

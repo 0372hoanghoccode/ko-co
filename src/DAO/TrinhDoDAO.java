@@ -8,6 +8,12 @@ import DTO.TRINHDO;
 
 public class TrinhDoDAO implements DAOInterface<TRINHDO>{
 
+	public static TrinhDoDAO getInstance() {
+		return new TrinhDoDAO();
+	}
+
+
+
 	@Override
 	public ArrayList<TRINHDO> getList() {
 		// TODO Auto-generated method stub

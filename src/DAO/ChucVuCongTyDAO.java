@@ -7,6 +7,10 @@ import DTO.CHUCVU;
 
 public class ChucVuCongTyDAO implements DAOInterface<CHUCVU>{
 
+    public static ChucVuCongTyDAO getInstance() {
+        return new ChucVuCongTyDAO();
+    }
+
     @Override
     public ArrayList<CHUCVU> getList() {
         // TODO Auto-generated method stub

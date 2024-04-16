@@ -21,6 +21,10 @@ import java.sql.SQLException;
 
 public class CMND_DAO implements DAOInterface<CMND>{
 
+	public static CMND_DAO getInstance() {
+		return new CMND_DAO();
+	}
+
 	@Override
 	public ArrayList<CMND> getList() {
 		ArrayList<CMND> list = new ArrayList<>();

@@ -1,6 +1,10 @@
 package run;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+import DAO.TaiKhoanDAO;
+import DTO.TAIKHOAN;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -92,22 +96,24 @@ public class loginFrame extends JFrame {
         gbc.gridwidth = 5; // Tăng chiều dài của nút đăng nhập lên 2 ô
         btnNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String inputTaiKhoan = textField.getText();
-                String inputMatKhau = passwordField.getText();
+                checkLogin();
 
-                if (inputTaiKhoan.equals("") && inputMatKhau.equals("")) {
-                    JOptionPane.showMessageDialog(null, "Giá trị nhập vào không hợp lệ", "Lỗi", JOptionPane.ERROR_MESSAGE);
-                } else if (inputTaiKhoan.equals("1")) { 
-                    System.out.println("đúng tài khoản");
 
-                    if (inputMatKhau.equals("1")) { 
-                        System.out.println("Đúng mật khẩu");
-                        dispose();
-                        appFrame app = new appFrame();
-                        app.setVisible(true);
-                        isLogin = true;
-                    }
-                }
+                // --------------- KHÚC DƯỚI ĐÂY CHO BAY MÀU DC RỒI HÉN ------------ ????
+                // String inputTaiKhoan = textField.getText();
+                // String inputMatKhau = passwordField.getText();
+                // if (inputTaiKhoan.equals("") && inputMatKhau.equals("")) {
+                //     JOptionPane.showMessageDialog(null, "Giá trị nhập vào không hợp lệ", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                // } else if (inputTaiKhoan.equals("1")) { 
+                //     System.out.println("đúng tài khoản");
+                //     if (inputMatKhau.equals("1")) { 
+                //         System.out.println("Đúng mật khẩu");
+                //         dispose();
+                //         appFrame app = new appFrame();
+                //         app.setVisible(true);
+                //         isLogin = true;
+                //     }
+                // }
             }
         });
         btnNewButton.setBackground(Color.BLUE); 
@@ -126,4 +132,30 @@ public class loginFrame extends JFrame {
     public boolean getIsLogin() {
         return this.isLogin;
     }
+
+
+    public void checkLogin() {
+        String input_taikhoan = textField.getText();
+        String input_maukhau = passwordField.getText();
+        if (input_taikhoan.equals("") || input_maukhau.equals("")) 
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
+        else {
+            TAIKHOAN tk = TaiKhoanDAO.getInstance().getTAIKHOAN(input_taikhoan);
+            if (tk == null)
+                JOptionPane.showMessageDialog(this, "Tài khoản không tồn tại", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
+            else {
+                if (tk.getPass().equals(input_maukhau)) {
+                    // login
+                    dispose();
+                    appFrame app = new appFrame();
+                    app.setVisible(true);
+                    isLogin = true;
+                }
+                else 
+                    JOptionPane.showMessageDialog(this, "Mật khẩu không khớp", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
+                
+            }
+        }
+    }
+
 }
