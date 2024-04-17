@@ -112,7 +112,7 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
 			// tạo cmnd -> đang soi
 			CMND_DAO.getInstance().insert(x.getCmnd());
 			// con người -> đang soi
-			ConNguoiDAO.insertCONNGUOI((CONNGUOI)x);
+			ConNguoiDAO.getInstance().insert((CONNGUOI)x);
 			// trinh do -> đang soi
 			TrinhDoDAO.getInstance().insert(x.getTrinhDo());
 			// chuc vu -> đang soi
@@ -171,7 +171,7 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
 
 			// SOI đoạn này lại
 			CMND_DAO.getInstance().update(t.getCmnd());
-			ConNguoiDAO.updateCONNGUOI((CONNGUOI)t);
+			ConNguoiDAO.getInstance().update((CONNGUOI)t);
 			TrinhDoDAO.getInstance().update(t.getTrinhDo());
 			ChucVuDAO.getInstance().update(t.getChucVu());
 

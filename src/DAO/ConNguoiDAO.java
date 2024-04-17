@@ -9,8 +9,41 @@ import java.util.ArrayList;
 import DTO.CONNGUOI;
 import connectionSQL.ConnectionManager;
 
-public class ConNguoiDAO {
-    public static void insertCONNGUOI(CONNGUOI x) {
+public class ConNguoiDAO implements DAOInterface<CONNGUOI> {
+    public static ConNguoiDAO getInstance() {
+        return new ConNguoiDAO();
+    }
+
+    @Override 
+    public ArrayList<CONNGUOI> getList() {
+        ArrayList<CONNGUOI> list = new ArrayList<>();
+        Connection con = ConnectionManager.getConnection();
+        try {
+            PreparedStatement pst = con.prepareStatement("SELECT * FROM CONNGUOI");
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                CONNGUOI connguoi = new CONNGUOI();
+            //    connguoi.setCmnd(rs.getString("CMND"));
+                connguoi.setHoTen(rs.getString("hoTen"));
+                connguoi.setGioiTinh(rs.getString("gioiTinh"));
+                connguoi.setNgaySinh(rs.getDate("ngaySinh").toLocalDate());
+//                connguoi.setDiaChi(rs.getString("diaChi"));
+                connguoi.setSdt(rs.getString("SDT"));
+//                connguoi.setTinhTrangHonNhan(rs.getString("tinhTrangHonNhan"));
+                connguoi.setDanToc(rs.getString("danToc"));
+                connguoi.setTonGiao(rs.getString("tonGiao"));
+                connguoi.setEmail(rs.getString("email"));
+                list.add(connguoi);
+            }
+            ConnectionManager.closeConnection(con);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
+    public void insert(CONNGUOI x) {
         Connection con = ConnectionManager.getConnection();
         try {
             PreparedStatement pst = con.prepareStatement("INSERT INTO CONNGUOI VALUES(?,?,?,?,?,?,?,?,?)");
@@ -31,7 +64,8 @@ public class ConNguoiDAO {
         }
     }
 
-    public static void updateCONNGUOI(CONNGUOI x) {
+    @Override
+    public void update(CONNGUOI x) {
         Connection con = ConnectionManager.getConnection();
         try {
             PreparedStatement pst = con.prepareStatement("UPDATE CONNGUOI SET hoTen = ?, gioiTinh = ?, ngaySinh = ?, diaChi = ?, SDT = ?, danToc = ?, tonGiao = ?, email = ? WHERE CMND = ?");
@@ -52,7 +86,8 @@ public class ConNguoiDAO {
         }
     }
 
-    public static void deleteCONNGUOI(String cmnd) {
+    @Override
+    public void del(String cmnd) {
         Connection con = ConnectionManager.getConnection();
         try {
             PreparedStatement pst = con.prepareStatement("DELETE FROM CONNGUOI WHERE CMND = ?");
@@ -64,7 +99,10 @@ public class ConNguoiDAO {
         }
     }
 
-    public static CONNGUOI selectCONNGUOIById(String cmnd) {
+
+
+    // PHƯƠNG THỨC KHÔNG ĐƯỢC IMPLEMENT
+    public CONNGUOI selectCONNGUOIById(String cmnd) {
         Connection con = ConnectionManager.getConnection();
         CONNGUOI connguoi = null;
         try {
@@ -91,34 +129,9 @@ public class ConNguoiDAO {
         return connguoi;
     }
 
-    public static ArrayList<CONNGUOI> selectAllCONNGUOI() {
-        ArrayList<CONNGUOI> list = new ArrayList<>();
-        Connection con = ConnectionManager.getConnection();
-        try {
-            PreparedStatement pst = con.prepareStatement("SELECT * FROM CONNGUOI");
-            ResultSet rs = pst.executeQuery();
-            while (rs.next()) {
-                CONNGUOI connguoi = new CONNGUOI();
-//                connguoi.setCmnd(rs.getString("CMND"));
-                connguoi.setHoTen(rs.getString("hoTen"));
-                connguoi.setGioiTinh(rs.getString("gioiTinh"));
-                connguoi.setNgaySinh(rs.getDate("ngaySinh").toLocalDate());
-//                connguoi.setDiaChi(rs.getString("diaChi"));
-                connguoi.setSdt(rs.getString("SDT"));
-//                connguoi.setTinhTrangHonNhan(rs.getString("tinhTrangHonNhan"));
-                connguoi.setDanToc(rs.getString("danToc"));
-                connguoi.setTonGiao(rs.getString("tonGiao"));
-                connguoi.setEmail(rs.getString("email"));
-                list.add(connguoi);
-            }
-            ConnectionManager.closeConnection(con);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
+    
 
-    public static ArrayList<CONNGUOI> searchCONNGUOI(String keyword) {
+    public ArrayList<CONNGUOI> searchCONNGUOI(String keyword) {
         ArrayList<CONNGUOI> list = new ArrayList<>();
         Connection con = ConnectionManager.getConnection();
         try {
@@ -146,7 +159,7 @@ public class ConNguoiDAO {
         return list;
     }
 
-    public static int getNumberOfCONNGUOI() {
+    public int getNumberOfCONNGUOI() {
         int count = 0;
         Connection con = ConnectionManager.getConnection();
         try {
