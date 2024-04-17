@@ -35,28 +35,31 @@ public class TaiKhoanDAO implements DAOInterface<TAIKHOAN>{
 
 
     @Override
-    public void del(String ma) {
+    public int del(String ma) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'del'");
     }
 
-    public void insert(TAIKHOAN taikhoan) {
+    public int insert(TAIKHOAN taikhoan) {
+        int result = 0;
         try (Connection con = ConnectionManager.getConnection();
-             PreparedStatement pst = con.prepareStatement("INSERT INTO TAIKHOAN (username, pass, maNhomQuyen, avatar) VALUES (?, ?, ?, ?)")) {
+            PreparedStatement pst = con.prepareStatement("INSERT INTO TAIKHOAN (username, pass, maNhomQuyen, avatar) VALUES (?, ?, ?, ?)")) {
             
             pst.setString(1, taikhoan.getUsername());
             pst.setString(2, taikhoan.getPass());
             pst.setString(3, taikhoan.getMaNhomQuyen());
             pst.setString(4, taikhoan.getAvatarImg());
 
-            pst.executeUpdate();
+            result = pst.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return result;
     }
 
     @Override
-    public void update(TAIKHOAN taikhoan) {
+    public int update(TAIKHOAN taikhoan) {
+        int result = 0;
         try (Connection con = ConnectionManager.getConnection();
              PreparedStatement pst = con.prepareStatement("UPDATE TAIKHOAN SET  pass = ?, maNhomQuyen = ?, avatar = ? WHERE username = ?")) {
             
@@ -69,6 +72,7 @@ public class TaiKhoanDAO implements DAOInterface<TAIKHOAN>{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return result;
     }
 
 

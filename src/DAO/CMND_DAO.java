@@ -43,17 +43,15 @@ public class CMND_DAO implements DAOInterface<CMND>{
 			}
 			ConnectionManager.closeConnection(con);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// TODO Auto-generated method stub
 		return list;
 	}
 
 
 	@Override
-	public void insert(CMND t) {
-		// TODO Auto-generated method stub
+	public int insert(CMND t) {
+		int result = 0;
 		Connection con = ConnectionManager.getConnection();
 		try {
 			String sql = "insert into CMND values(?,?,?)";
@@ -61,29 +59,29 @@ public class CMND_DAO implements DAOInterface<CMND>{
 			ps.setString(1, t.getSoCmnd());
 			ps.setString(2, t.getNoiCap());
 			ps.setDate(3, java.sql.Date.valueOf(t.getNgayCap()));
-			ps.executeUpdate();
+			result = ps.executeUpdate();
 			ConnectionManager.closeConnection(con);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			System.out.println("Loi khi them cmnd" + e.getMessage());
+		} 
+		return result;
 	}
 
 	@Override
-	public void update(CMND x) {
-		// TODO Auto-generated method stub
+	public int update(CMND x) {
+		int result = 0;
 		Connection con = ConnectionManager.getConnection();
 		try {
 			PreparedStatement pst = con.prepareStatement("update CMND set noiCap = ? , ngayCap = ? where soCMND = ?");
 			pst.setString(1, x.getNoiCap());
 			pst.setDate(2,  java.sql.Date.valueOf(x.getNgayCap()));
 			pst.setString(3, x.getSoCmnd());
-			pst.executeUpdate();
+			result = pst.executeUpdate();
 			ConnectionManager.closeConnection(con);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
 	}
 
 
@@ -92,9 +90,9 @@ public class CMND_DAO implements DAOInterface<CMND>{
 
 	// tạm thời không cần
 	@Override
-	public void del(String ma) {
+	public int del(String ma) {
 		// TODO Auto-generated method stub
-		
+		throw new UnsupportedOperationException("Unimplemented method 'del'");
 	}
 
 }

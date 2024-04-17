@@ -43,7 +43,8 @@ public class ConNguoiDAO implements DAOInterface<CONNGUOI> {
     }
 
     @Override
-    public void insert(CONNGUOI x) {
+    public int insert(CONNGUOI x) {
+        int result = 0;
         Connection con = ConnectionManager.getConnection();
         try {
             PreparedStatement pst = con.prepareStatement("INSERT INTO CONNGUOI VALUES(?,?,?,?,?,?,?,?,?)");
@@ -53,19 +54,20 @@ public class ConNguoiDAO implements DAOInterface<CONNGUOI> {
             pst.setDate(4, Date.valueOf(x.getNgaySinh()));
             pst.setString(5, x.getDiaChi().toString());
             pst.setString(6, x.getSdt());
-//            pst.setString(7, x.getTinhTrangHonNhan());
             pst.setString(7, x.getDanToc());
             pst.setString(8, x.getTonGiao());
             pst.setString(9, x.getEmail());
-            pst.executeUpdate();
+            result = pst.executeUpdate();
             ConnectionManager.closeConnection(con);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return result;
     }
 
     @Override
-    public void update(CONNGUOI x) {
+    public int update(CONNGUOI x) {
+        int result = 0;
         Connection con = ConnectionManager.getConnection();
         try {
             PreparedStatement pst = con.prepareStatement("UPDATE CONNGUOI SET hoTen = ?, gioiTinh = ?, ngaySinh = ?, diaChi = ?, SDT = ?, danToc = ?, tonGiao = ?, email = ? WHERE CMND = ?");
@@ -79,24 +81,27 @@ public class ConNguoiDAO implements DAOInterface<CONNGUOI> {
             pst.setString(7, x.getTonGiao());
             pst.setString(8, x.getEmail());
             pst.setString(9, x.getCmnd().getSoCmnd());
-            pst.executeUpdate();
+            result = pst.executeUpdate();
             ConnectionManager.closeConnection(con);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return result;
     }
 
     @Override
-    public void del(String cmnd) {
+    public int del(String cmnd) {
+        int result = 0;
         Connection con = ConnectionManager.getConnection();
         try {
             PreparedStatement pst = con.prepareStatement("DELETE FROM CONNGUOI WHERE CMND = ?");
             pst.setString(1, cmnd);
-            pst.executeUpdate();
+            result = pst.executeUpdate();
             ConnectionManager.closeConnection(con);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return result;
     }
 
 

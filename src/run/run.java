@@ -2,7 +2,6 @@ package run;
 
 import java.awt.EventQueue;
 
-
 import javax.swing.UIManager;
 
 public class run {
@@ -38,7 +37,7 @@ public class run {
 				try {
 					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
-					System.out.println(DAO.NhanVienDAO.getInstance().getList().get(0).getHoTen());
+					System.out.println(DAO.ChucVuDAO.getInstance().getList().get(0).getMaChucVu());
 
 					new run();
 				} catch (Exception e) {
@@ -56,9 +55,5 @@ public class run {
 		
 		
 	}
-	//test comment
-	
-	
-	
-	
+
 }

@@ -19,19 +19,19 @@ public class HopDongLaoDongDAO implements DAOInterface<HOPDONGLAODONG>{
     }
 
     @Override
-    public void insert(HOPDONGLAODONG t) {
+    public int insert(HOPDONGLAODONG t) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'insert'");
     }
 
     @Override
-    public void update(HOPDONGLAODONG t) {
+    public int update(HOPDONGLAODONG t) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
     @Override
-    public void del(String ma) {
+    public int del(String ma) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'del'");
     }

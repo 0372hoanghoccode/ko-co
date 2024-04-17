@@ -17,24 +17,27 @@ public class TrinhDoDAO implements DAOInterface<TRINHDO>{
 	@Override
 	public ArrayList<TRINHDO> getList() {
 		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("Unimplemented method 'getList'");
 	}
 
 	@Override
-	public void insert(TRINHDO t) {
+	public int insert(TRINHDO t) {
 		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'insert'");
 		
 	}
 
 	@Override
-	public void update(TRINHDO t) {
+	public int update(TRINHDO t) {
 		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'update'");
 		
 	}
 
 	@Override
-	public void del(String ma) {
+	public int del(String ma) {
 		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'del'");
 		
 	}
 

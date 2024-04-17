@@ -8,6 +8,7 @@ import DTO.TAIKHOAN;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 public class loginFrame extends JFrame {
 
@@ -97,23 +98,6 @@ public class loginFrame extends JFrame {
         btnNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 checkLogin();
-
-
-                // --------------- KHÚC DƯỚI ĐÂY CHO BAY MÀU DC RỒI HÉN ------------ ????
-                // String inputTaiKhoan = textField.getText();
-                // String inputMatKhau = passwordField.getText();
-                // if (inputTaiKhoan.equals("") && inputMatKhau.equals("")) {
-                //     JOptionPane.showMessageDialog(null, "Giá trị nhập vào không hợp lệ", "Lỗi", JOptionPane.ERROR_MESSAGE);
-                // } else if (inputTaiKhoan.equals("1")) { 
-                //     System.out.println("đúng tài khoản");
-                //     if (inputMatKhau.equals("1")) { 
-                //         System.out.println("Đúng mật khẩu");
-                //         dispose();
-                //         appFrame app = new appFrame();
-                //         app.setVisible(true);
-                //         isLogin = true;
-                //     }
-                // }
             }
         });
         btnNewButton.setBackground(Color.BLUE); 
@@ -136,15 +120,16 @@ public class loginFrame extends JFrame {
 
     public void checkLogin() {
         String input_taikhoan = textField.getText();
-        String input_maukhau = passwordField.getText();
-        if (input_taikhoan.equals("") || input_maukhau.equals("")) 
+        char[] input_maukhau = passwordField.getPassword();
+        String input_maukhau_str = new String(input_maukhau);
+        if (input_taikhoan.equals("") || input_maukhau_str.equals("")) 
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
         else {
             TAIKHOAN tk = TaiKhoanDAO.getInstance().getTAIKHOAN(input_taikhoan);
             if (tk == null)
                 JOptionPane.showMessageDialog(this, "Tài khoản không tồn tại", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
             else {
-                if (tk.getPass().equals(input_maukhau)) {
+                if (tk.getPass().equals(input_maukhau_str)) {
                     // login
                     dispose();
                     appFrame app = new appFrame();
@@ -153,9 +138,10 @@ public class loginFrame extends JFrame {
                 }
                 else 
                     JOptionPane.showMessageDialog(this, "Mật khẩu không khớp", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
-                
             }
         }
+        // Clear the password for security
+        Arrays.fill(input_maukhau, '0');
     }
 
 }

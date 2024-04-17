@@ -65,7 +65,7 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
 				}
 				temp = temp.trim();
 				
-				if (rs.getString(15)==null) { // Dòng 16 truy vấn là ngày bắt đầu thử việc
+				if (rs.getString(15)==null) { // Dòng 15 truy vấn là ngày bắt đầu thử việc
 					nv = new NHANVIENTHUVIEC();
 					((NHANVIENTHUVIEC)nv).setNgayBatDauThuViec(rs.getDate("ngayBatDauThuViec").toLocalDate().plusDays(2));
 					((NHANVIENTHUVIEC)nv).setNgayKetThucThuViec(rs.getDate("ngayKetThucThuViec").toLocalDate().plusDays(2));
@@ -81,7 +81,6 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
 				nv.setGioiTinh(rs.getString("gioiTinh"));
 				nv.setNgaySinh(rs.getDate("ngaySinh").toLocalDate().plusDays(2));
 				nv.setDiaChi(new DIACHI(arr2[0],temp, arr[1], arr[2], arr[3]));
-//				nv.setTinhTrangHonNhan(rs.getString("tinhTrangHonNhan"));
 				nv.setDanToc(rs.getString("danToc"));
 				nv.setTonGiao(rs.getString("tonGiao"));
 				nv.setEmail(rs.getString("email"));
@@ -105,8 +104,9 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
 	}
 
 	@Override
-	public void insert(NHANVIEN x) {
+	public int insert(NHANVIEN x) {
 		// TODO Auto-generated method stub
+		int result = 0;
 		Connection con = ConnectionManager.getConnection();
 		try {
 			// tạo cmnd -> đang soi
@@ -149,7 +149,7 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
 				pst.setDate(8,Date.valueOf(((NHANVIENTHUVIEC)x).getNgayKetThucThuViec()));
 				pst.setDouble(9,((NHANVIENTHUVIEC)x).getLuongThuViec());
 				pst.setInt(10, 1);
-				pst.executeUpdate();
+				result = pst.executeUpdate();
 			}
 
 
@@ -161,11 +161,13 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
 	}
 
 	@Override
-	public void update(NHANVIEN t) {
+	public int update(NHANVIEN t) {
 		// TODO Auto-generated method stub
+		int result = 0;
 		Connection con = ConnectionManager.getConnection();
 		try {
 
@@ -194,7 +196,7 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
 				pst.setDate(5,Date.valueOf(((NHANVIENTHUVIEC)t).getNgayKetThucThuViec()));
 				pst.setDouble(6,((NHANVIENTHUVIEC)t).getLuongThuViec());
 				pst.setString(7, t.getMaNhanVien());
-				pst.executeUpdate();
+				result = pst.executeUpdate();
 			
 			}
 			TaiKhoanDAO.getInstance().update(t.getTaiKhoan());
@@ -203,21 +205,24 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
 	}
 
 	@Override
-	public void del(String ma) { // --- vẫn chưa hiểu được yêu cầu nha (MẤY NÍ NHỚ COI DÙM) --> kiểu hàm này là dc rồi hay là cho nó bay màu khỏi csdl luôn
+	public int del(String ma) { // vẫn chưa hiểu được yêu cầu nha (MẤY NÍ NHỚ COI DÙM) --> kiểu hàm này là dc rồi hay là cho nó bay màu khỏi csdl luôn
 		// TODO Auto-generated method stub
+		int result = 0;
 		Connection con = ConnectionManager.getConnection();
 		try {
 			PreparedStatement pst = con.prepareStatement("update NHANVIEN set trangThai = 0 where maNhanVien = ?");
 			pst.setString(1, ma);
-			pst.executeUpdate();
+			result = pst.executeUpdate();
 			ConnectionManager.closeConnection(con);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
 	}
 
 
