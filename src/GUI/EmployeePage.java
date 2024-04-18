@@ -15,10 +15,13 @@ import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.BorderFactory;
 
+import BUS.NhanVienBUS;
+//import DTO.NHANVIEN;
+
 public class EmployeePage extends JPanel {
 
     private static final long serialVersionUID = 1L;
-
+    NhanVienBUS nhanVienBUS  = new NhanVienBUS();
     /**
      * Create the panel.
      */
@@ -136,11 +139,7 @@ public class EmployeePage extends JPanel {
 
         
         String[] columnNames = {"STT", "Tên", "Giới Tính", "Năm Sinh", "SĐT", "Phòng Ban", "Chức Vụ", "Lương"};
-        Object[][] data = {
-            {"1", "Nguyễn Văn A", "Nam", "1990", "0123456789", "Kế Toán", "Nhân Viên", "10,000,000"},
-            {"2", "Trần Thị B", "Nữ", "1995", "0987654321", "Nhân Sự", "Trưởng Phòng", "20,000,000"},
-            
-        };
+        Object[][] data = nhanVienBUS.getDataObjectToRender();  // lấy data khúc này nè 
 
         DefaultTableModel model = new DefaultTableModel(data, columnNames);
         JTable table = new JTable(model);
