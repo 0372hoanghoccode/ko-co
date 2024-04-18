@@ -26,7 +26,7 @@ public class HOPDONGLAODONG {
 			double luongCoBan) {
 		this.maHopDong = maHopDong;
 		this.maNhanVien = "null";
-		this.tenNhanVien = "mull";
+		this.tenNhanVien = "null";
 		this.phongBan = "null";
 		this.tuNgay = tuNgay;
 		this.denNgay = denNgay;

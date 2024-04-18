@@ -37,8 +37,8 @@ public class run {
 				try {
 					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
-//					System.out.println(DAO.ChucVuDAO.getInstance().getList().get(0).getMaChucVu());
-
+					// System.out.println(DAO.ChucVuDAO.getInstance().getList().get(0).getTenChucVu());
+					System.out.println(DAO.HopDongLaoDongDAO.getInstance().getList().get(1).getTenNhanVien());
 					new run();
 				} catch (Exception e) {
 					e.printStackTrace();
