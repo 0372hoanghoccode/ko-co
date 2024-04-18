@@ -99,7 +99,7 @@ public class LuongDAO implements DAOInterface<LUONG>{
         }
     }
 
-    public static Object[][]  getObjectToRender() {
+    public Object[][]  getObjectToRender() {
 		Connection con = ConnectionManager.getConnection();
 		ArrayList<Object[]> list = new ArrayList<>();
 		try {
@@ -142,7 +142,7 @@ public class LuongDAO implements DAOInterface<LUONG>{
 		}
 		return null;
 	}
-	public static Object[][]  getObjectToRender(String tenPhong,String thang,String nam,int sortby,int type_sort, String maNhanVien) {
+	public Object[][]  getObjectToRender(String tenPhong,String thang,String nam,int sortby,int type_sort, String maNhanVien) {
 		Connection con = ConnectionManager.getConnection();
 		ArrayList<Object[]> list = new ArrayList<>();
 		try {
@@ -213,7 +213,7 @@ public class LuongDAO implements DAOInterface<LUONG>{
 		}
 		return null;
 	}
-	public static Object[][]  getObjectToRender(String maNhanVien) {
+	public Object[][]  getObjectToRender(String maNhanVien) {
 		Connection con = ConnectionManager.getConnection();
 		ArrayList<Object[]> list = new ArrayList<>();
 		try {
@@ -257,7 +257,7 @@ public class LuongDAO implements DAOInterface<LUONG>{
 		}
 		return null;
 	}
-	public static Object[][]  getDanhSachLuongThuongToRender() {
+	public Object[][]  getDanhSachLuongThuongToRender() {
 		Connection con = ConnectionManager.getConnection();
 		ArrayList<Object[]> list = new ArrayList<>();
 		try {
@@ -298,7 +298,7 @@ public class LuongDAO implements DAOInterface<LUONG>{
 		}
 		return null;
 	}
-	public static Object[][]  getDanhSachLuongThuongToRender(String tenPhong,String thang,String nam,int sortby,int type_sort) {
+	public Object[][]  getDanhSachLuongThuongToRender(String tenPhong,String thang,String nam,int sortby,int type_sort) {
 		Connection con = ConnectionManager.getConnection();
 		ArrayList<Object[]> list = new ArrayList<>();
 		try {
@@ -379,7 +379,7 @@ public class LuongDAO implements DAOInterface<LUONG>{
 		return null;
 	}
 	
-	public static void thuongTatCaNhanVien(int nam,int thang, double phanTramThuong) {
+	public void thuongTatCaNhanVien(int nam,int thang, double phanTramThuong) {
 		Connection con = ConnectionManager.getConnection();
 		String sql = "select * from NHANVIEN nv\r\n"
 				+ "join BANGCHAMCONG bcc on bcc.maNhanVien = nv.maNhanVien \r\n"
@@ -407,7 +407,7 @@ public class LuongDAO implements DAOInterface<LUONG>{
 			e.printStackTrace();
 		}
 	}
-	public static void thuongNhanVienTheoPhongBan(int nam,int thang, double phanTramThuong,String maPhong) {
+	public void thuongNhanVienTheoPhongBan(int nam,int thang, double phanTramThuong,String maPhong) {
 		Connection con = ConnectionManager.getConnection();
 		String sql = "select * from NHANVIEN nv\r\n"
 				+ "join BANGCHAMCONG bcc on bcc.maNhanVien = nv.maNhanVien \r\n"
@@ -436,7 +436,7 @@ public class LuongDAO implements DAOInterface<LUONG>{
 			e.printStackTrace();
 		}
 	}
-	public static void thuongNhanVien(int nam,int thang, double phanTramThuong,String maNhanVien) {
+	public void thuongNhanVien(int nam,int thang, double phanTramThuong,String maNhanVien) {
 		Connection con = ConnectionManager.getConnection();
 		String sql = "select * from NHANVIEN nv\r\n"
 				+ "join BANGCHAMCONG bcc on bcc.maNhanVien = nv.maNhanVien \r\n"
@@ -465,7 +465,7 @@ public class LuongDAO implements DAOInterface<LUONG>{
 			e.printStackTrace();
 		}
 	}
-	public static void phuCapNhanVien(int nam,int thang,String maNhanVien,double phuCapKhac) {
+	public void phuCapNhanVien(int nam,int thang,String maNhanVien,double phuCapKhac) {
 		Connection con = ConnectionManager.getConnection();
 		String sql = "select * from NHANVIEN nv\r\n"
 				+ "join BANGCHAMCONG bcc on bcc.maNhanVien = nv.maNhanVien \r\n"
@@ -488,7 +488,7 @@ public class LuongDAO implements DAOInterface<LUONG>{
 			e.printStackTrace();
 		}
 	}
-	public static void khoanTruNhanVien(int nam,int thang,String maNhanVien,double khoanTru) {
+	public void khoanTruNhanVien(int nam,int thang,String maNhanVien,double khoanTru) {
 		Connection con = ConnectionManager.getConnection();
 		String sql = "select * from NHANVIEN nv\r\n"
 				+ "join BANGCHAMCONG bcc on bcc.maNhanVien = nv.maNhanVien \r\n"
@@ -537,7 +537,7 @@ public class LuongDAO implements DAOInterface<LUONG>{
         }
     }
     
-    public static Object[][] getDanhSachPhuCapKhoanTruToRender() {
+    public Object[][] getDanhSachPhuCapKhoanTruToRender() {
 		Connection con = ConnectionManager.getConnection();
 		try {
 			
@@ -579,7 +579,7 @@ public class LuongDAO implements DAOInterface<LUONG>{
 		}
 		return null;
 	}
-	public static Object[][]  getDanhSachPhuCapKhoanTruToRender(String tenPhong,String thang,String nam,int sortby,int type_sort) {
+	public Object[][]  getDanhSachPhuCapKhoanTruToRender(String tenPhong,String thang,String nam,int sortby,int type_sort) {
 		Connection con = ConnectionManager.getConnection();
 		ArrayList<Object[]> list = new ArrayList<>();
 		try {
@@ -652,7 +652,7 @@ public class LuongDAO implements DAOInterface<LUONG>{
 		}
 		return null;
 	}
-	public static void tangLuongHangNam(String maHopDong, double mucTang) {
+	public void tangLuongHangNam(String maHopDong, double mucTang) {
 		Connection con = ConnectionManager.getConnection();
 		String sql = "update HOPDONGLAODONG set luongCoBan = luongCoBan*? where maHopDong=?";
 		try {
