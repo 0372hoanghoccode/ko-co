@@ -1,23 +1,18 @@
 package GUI;
 
-import java.awt.BorderLayout;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
 
-import java.awt.Color;
-import javax.swing.JButton;
-import javax.swing.ImageIcon;
-import javax.swing.BorderFactory;
+import javax.swing.*;
+import javax.swing.table.*;
+import java.awt.*;
+
+import BUS.NhanVienBUS;
+import javax.swing.border.EmptyBorder;
+
 
 public class EmployeePage extends JPanel {
 
     private static final long serialVersionUID = 1L;
+    NhanVienBUS nhanVienBUS = new NhanVienBUS();
 
     /**
      * Create the panel.
@@ -56,7 +51,6 @@ public class EmployeePage extends JPanel {
         comboBox.addItem("Kinh doanh");
         panel.add(comboBox);
 
-
         JComboBox<String> comboBox_1 = new JComboBox<>();
         comboBox_1.setBounds(236, 83, 112, 30);
         comboBox_1.addItem("Giới tính");
@@ -78,7 +72,7 @@ public class EmployeePage extends JPanel {
         panel.add(lblNewLabel_2);
 
         JComboBox<String> comboBox_3 = new JComboBox<>();
-        
+
         comboBox_3.setBounds(547, 83, 123, 30);
         comboBox_3.addItem("Mã nhân viên");
         comboBox_3.addItem("Độ tuổi");
@@ -86,7 +80,7 @@ public class EmployeePage extends JPanel {
         panel.add(comboBox_3);
 
         JComboBox<String> comboBox_4 = new JComboBox<>();
-      
+
         comboBox_4.setBounds(714, 83, 130, 30);
         comboBox_4.addItem("Tăng dần");
         comboBox_4.addItem("Giảm dần");
@@ -134,20 +128,40 @@ public class EmployeePage extends JPanel {
         add(panel_2);
         panel_2.setLayout(new BorderLayout());
 
-        
-        String[] columnNames = {"STT", "Tên", "Giới Tính", "Năm Sinh", "SĐT", "Phòng Ban", "Chức Vụ", "Lương"};
-        Object[][] data = {
-            {"1", "Nguyễn Văn A", "Nam", "1990", "0123456789", "Kế Toán", "Nhân Viên", "10,000,000"},
-            {"2", "Trần Thị B", "Nữ", "1995", "0987654321", "Nhân Sự", "Trưởng Phòng", "20,000,000"},
-            
+        String[] columnNames = { "STT", "Tên", "Giới Tính", "Năm Sinh", "Địa chỉ", "SĐT", "Phòng Ban", "Chức Vụ", "Lương" };
+        Object[][] data = nhanVienBUS.getDataObjectToRender(); // lấy data khúc này nè
+
+
+        DefaultTableModel model = new DefaultTableModel(data, columnNames) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
         };
 
-        DefaultTableModel model = new DefaultTableModel(data, columnNames);
         JTable table = new JTable(model);
+        table.setRowHeight(30);
         table.setFont(new Font("Arial", Font.PLAIN, 12));
+        
+        
 
-        JScrollPane scrollPane = new JScrollPane(table);
+        table.getColumnModel().getColumn(0).setPreferredWidth(30);  // stt
+		table.getColumnModel().getColumn(1).setPreferredWidth(150);  // ten
+		table.getColumnModel().getColumn(2).setPreferredWidth(65);   // gioitinh
+		table.getColumnModel().getColumn(3).setPreferredWidth(70);  // ngaysinh
+		table.getColumnModel().getColumn(4).setPreferredWidth(250);  // diachi
+		table.getColumnModel().getColumn(5).setPreferredWidth(80);  // Sdt
+		table.getColumnModel().getColumn(6).setPreferredWidth(180);   // phongban
+		table.getColumnModel().getColumn(7).setPreferredWidth(130);  // chucvu
+		table.getColumnModel().getColumn(8).setPreferredWidth(90);  // luong
+		// đang 705
+
+        JScrollPane scrollPane = new JScrollPane(table);      
+        scrollPane.setBackground(Color.white);
+		scrollPane.setVerticalScrollBar(new myScrollBar());
+		scrollPane.setBorder(new EmptyBorder(0,0,0,0));
         panel_2.add(scrollPane, BorderLayout.CENTER);
-    
+
     }
+
+   
 }

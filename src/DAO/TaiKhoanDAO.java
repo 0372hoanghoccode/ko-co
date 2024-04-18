@@ -10,46 +10,83 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class TaiKhoanDAO {
+public class TaiKhoanDAO implements DAOInterface<TAIKHOAN>{
 
-    public static void insertTAIKHOAN(TAIKHOAN taikhoan) {
+    public static TaiKhoanDAO getInstance() {
+        return new TaiKhoanDAO();
+    }
+
+    @Override
+    public ArrayList<TAIKHOAN> getList() {
+        ArrayList<TAIKHOAN> list = new ArrayList<>();
         try (Connection con = ConnectionManager.getConnection();
-             PreparedStatement pst = con.prepareStatement("INSERT INTO TAIKHOAN (maNhanVien, username, pass, maNhomQuyen, avatar) VALUES (?, ?, ?, ?, ?)")) {
-            pst.setString(1, taikhoan.getMaNhanVien());
-            pst.setString(2, taikhoan.getUsername());
-            pst.setString(3, taikhoan.getPass());
-            pst.setString(4, taikhoan.getMaNhomQuyen());
-            pst.setString(5, taikhoan.getAvatarImg());
-
-            pst.executeUpdate();
+            //SELECT * FROM TAIKHOAN  + JOIN NHANVIEN ON NHANVIEN.maNhanVien = TAIKHOAN.username
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM TAIKHOAN ")) {
+            while (rs.next()) {
+                TAIKHOAN taikhoan = new TAIKHOAN( rs.getString("username"), rs.getString("pass"), rs.getString("maNhomQuyen"), rs.getString("avatar"));
+               list.add(taikhoan);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return list;
     }
 
-    public static void updateTAIKHOAN(TAIKHOAN taikhoan) {
+
+    @Override
+    public int del(String ma) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'del'");
+    }
+
+    public int insert(TAIKHOAN taikhoan) {
+        int result = 0;
         try (Connection con = ConnectionManager.getConnection();
-             PreparedStatement pst = con.prepareStatement("UPDATE TAIKHOAN SET maNhanVien = ?, pass = ?, maNhomQuyen = ?, avatar = ? WHERE username = ?")) {
-            pst.setString(1, taikhoan.getMaNhanVien());
+            PreparedStatement pst = con.prepareStatement("INSERT INTO TAIKHOAN (username, pass, maNhomQuyen, avatar) VALUES (?, ?, ?, ?)")) {
+            
+            pst.setString(1, taikhoan.getUsername());
             pst.setString(2, taikhoan.getPass());
             pst.setString(3, taikhoan.getMaNhomQuyen());
             pst.setString(4, taikhoan.getAvatarImg());
-            pst.setString(5, taikhoan.getUsername());
+
+            result = pst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public int update(TAIKHOAN taikhoan) {
+        int result = 0;
+        try (Connection con = ConnectionManager.getConnection();
+             PreparedStatement pst = con.prepareStatement("UPDATE TAIKHOAN SET  pass = ?, maNhomQuyen = ?, avatar = ? WHERE username = ?")) {
+            
+            pst.setString(1, taikhoan.getPass());
+            pst.setString(2, taikhoan.getMaNhomQuyen());
+            pst.setString(3, taikhoan.getAvatarImg());
+            pst.setString(4, taikhoan.getUsername());
 
             pst.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return result;
     }
 
-    public static TAIKHOAN getTAIKHOAN(String username) {
+
+
+
+    // --- NON IMPLEMENT METHODS ---
+    public TAIKHOAN getTAIKHOAN(String username) {
         TAIKHOAN taikhoan = null;
         try (Connection con = ConnectionManager.getConnection();
              PreparedStatement pst = con.prepareStatement("SELECT * FROM TAIKHOAN WHERE username = ?")) {
             pst.setString(1, username);
             try (ResultSet rs = pst.executeQuery()) {
                 if (rs.next()) {
-//                    taikhoan = new TAIKHOAN(rs.getString("maNhanVien"), rs.getString("username"), rs.getString("pass"), rs.getString("maNhomQuyen"), rs.getString("avatar"));
+                    taikhoan = new TAIKHOAN( rs.getString("username"), rs.getString("pass"), rs.getString("maNhomQuyen"), rs.getString("avatar"));
                 }
             }
         } catch (SQLException e) {
@@ -58,7 +95,7 @@ public class TaiKhoanDAO {
         return taikhoan;
     }
 
-    public static String getAvatar(String username) {
+    public String getAvatar(String username) {
         String avatar = "";
         try (Connection con = ConnectionManager.getConnection();
              PreparedStatement pst = con.prepareStatement("SELECT avatar FROM TAIKHOAN WHERE username = ?")) {
@@ -74,29 +111,15 @@ public class TaiKhoanDAO {
         return avatar;
     }
 
-    public static ArrayList<TAIKHOAN> getList() {
-        ArrayList<TAIKHOAN> list = new ArrayList<>();
-        try (Connection con = ConnectionManager.getConnection();
-             Statement st = con.createStatement();
-             ResultSet rs = st.executeQuery("SELECT * FROM TAIKHOAN JOIN NHANVIEN ON NHANVIEN.maNhanVien = TAIKHOAN.maNhanVien")) {
-            while (rs.next()) {
-//                TAIKHOAN taikhoan = new TAIKHOAN(rs.getString("maNhanVien"), rs.getString("username"), rs.getString("pass"), rs.getString("maNhomQuyen"), rs.getString("avatar"));
-//                list.add(taikhoan);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
-
-    public static Object[][] getObjectToRender() {
+    
+    public Object[][] getObjectToRender() {
         ArrayList<Object[]> list = new ArrayList<>();
         try (Connection con = ConnectionManager.getConnection();
              Statement st = con.createStatement();
              ResultSet rs = st.executeQuery("SELECT nv.maNhanVien, cn.hoTen, tk.username, tk.pass, tk.maNhomQuyen FROM CONNGUOI cn JOIN NHANVIEN nv ON cn.CMND = nv.CMND JOIN CHUCVU cv ON nv.maChucVu = cv.maChucVu JOIN TAIKHOAN tk ON nv.maNhanVien = tk.username WHERE nv.trangThai = 1")) {
             int count = 0;
             while (rs.next()) {
-                Object[] ob = new Object[]{count + 1 + "", rs.getString("maNhanVien") + " - " + rs.getString("hoTen"), rs.getString("maNhomQuyen")};
+                Object[] ob = new Object[]{count + 1 + "", rs.getString("username") + " - " + rs.getString("hoTen"), rs.getString("maNhomQuyen")};
                 list.add(ob);
                 count++;
             }
@@ -106,7 +129,7 @@ public class TaiKhoanDAO {
         return list.toArray(new Object[0][]);
     }
 
-    public static Object[][] getObjectToRender(String tenPhong) {
+    public Object[][] getObjectToRender(String tenPhong) {
         ArrayList<Object[]> list = new ArrayList<>();
         try (Connection con = ConnectionManager.getConnection();
              Statement st = con.createStatement()) {
@@ -128,7 +151,7 @@ public class TaiKhoanDAO {
         return list.toArray(new Object[0][]);
     }
 
-    public static String[] getDanhSachEmailVaUsername() {
+    public String[] getDanhSachEmailVaUsername() {
         String[] data = null;
         try (Connection con = ConnectionManager.getConnection();
              Statement st = con.createStatement()) {
@@ -151,7 +174,7 @@ public class TaiKhoanDAO {
         return data;
     }
 
-    public static String getEmail(String username) {
+    public String getEmail(String username) {
         String email = "";
         try (Connection con = ConnectionManager.getConnection();
              Statement st = con.createStatement();
@@ -165,7 +188,7 @@ public class TaiKhoanDAO {
         return email;
     }
 
-    public static String getUsername(String email) {
+    public String getUsername(String email) {
         String user = "";
         try (Connection con = ConnectionManager.getConnection();
              Statement st = con.createStatement();
@@ -179,7 +202,7 @@ public class TaiKhoanDAO {
         return user;
     }
 
-    public static void updatePassword(String username, String pass) {
+    public void updatePassword(String username, String pass) {
         try (Connection con = ConnectionManager.getConnection();
              PreparedStatement pst = con.prepareStatement("UPDATE TAIKHOAN SET pass=? WHERE username=?")) {
             pst.setString(1, pass);
@@ -190,7 +213,7 @@ public class TaiKhoanDAO {
         }
     }
 
-    public static void UpdateQuyenTaiKhoan(String username, String maNhomQuyen) {
+    public void UpdateQuyenTaiKhoan(String username, String maNhomQuyen) {
         try (Connection con = ConnectionManager.getConnection();
              PreparedStatement pst = con.prepareStatement("UPDATE TAIKHOAN SET maNhomQuyen=? WHERE username=?")) {
             pst.setString(1, maNhomQuyen);
@@ -200,5 +223,7 @@ public class TaiKhoanDAO {
             e.printStackTrace();
         }
     }
+
+    
 }
 // viết bậy bạ 

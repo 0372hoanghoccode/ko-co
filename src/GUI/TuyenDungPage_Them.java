@@ -29,6 +29,10 @@ import javax.swing.table.DefaultTableModel;
 
 
 public class TuyenDungPage_Them extends JFrame{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JButton button_dong;
 	private JButton button_luu;
 	private JTextField textField_MaTuyenDung;

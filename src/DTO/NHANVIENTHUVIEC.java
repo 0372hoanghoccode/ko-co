@@ -15,8 +15,8 @@ public class NHANVIENTHUVIEC extends NHANVIEN {
         this.luongThuViec = 0;
     }
 
-    public NHANVIENTHUVIEC( String maNhanVien,String hoTen,    String gioiTinh, LocalDate ngaySinh, DIACHI diaChi,  String sdt,CMND cmnd,String danToc, String tinhTrangHonNhan, String tonGiao, String email,String maPhong,TRINHDO trinhDo, CHUCVU chucVu, TAIKHOAN taiKhoan,LocalDate ngayBatDauThuViec, LocalDate ngayKetThucThuViec, double luongThuViec) {
-        super(maNhanVien, hoTen, gioiTinh, ngaySinh, diaChi, sdt, cmnd,danToc, tinhTrangHonNhan, tonGiao, email, maPhong, trinhDo, chucVu, taiKhoan);
+    public NHANVIENTHUVIEC( String maNhanVien,String hoTen,    String gioiTinh, LocalDate ngaySinh, DIACHI diaChi,  String sdt,CMND cmnd,String danToc, String tonGiao, String email,String maPhong,TRINHDO trinhDo, CHUCVU chucVu, TAIKHOAN taiKhoan,LocalDate ngayBatDauThuViec, LocalDate ngayKetThucThuViec, double luongThuViec) {
+        super(maNhanVien, hoTen, gioiTinh, ngaySinh, diaChi, sdt, cmnd,danToc, tonGiao, email, maPhong, trinhDo, chucVu, taiKhoan);
         this.ngayBatDauThuViec = ngayBatDauThuViec;
         this.ngayKetThucThuViec = ngayKetThucThuViec;
         this.luongThuViec = luongThuViec;

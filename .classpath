@@ -12,7 +12,6 @@
 	<classpathentry kind="lib" path="src/junit-4.6.jar"/>
 	<classpathentry kind="lib" path="lib/jcalendar-1.4.jar"/>
 	<classpathentry kind="lib" path="src/TimingFramework-0.55.jar"/>
-	<classpathentry kind="lib" path="/HRM/src/javax.mail.jar"/>
-	<classpathentry kind="lib" path="/HRM/src/sqljdbc4.jar"/>
+	<classpathentry kind="lib" path="src/sqljdbc4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

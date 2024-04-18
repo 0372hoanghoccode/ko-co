@@ -11,8 +11,8 @@ public class NHANVIENCHINHTHUC extends NHANVIEN {
         this.hopDong = null;
     }
 
-    public NHANVIENCHINHTHUC(HOPDONGLAODONG maHD, String maNhanVien, TAIKHOAN taiKhoan, String hoTen, String gioiTinh, LocalDate ngaySinh, DIACHI diaChi, String sdt,CMND cmnd,String danToc, String tinhTrangHonNhan, String tonGiao, String email,String maPhong, TRINHDO trinhDo, CHUCVU chucVu ) {
-        super(maNhanVien, hoTen, gioiTinh, ngaySinh, diaChi, sdt, cmnd,danToc, tinhTrangHonNhan, tonGiao, email, maPhong, trinhDo, chucVu, taiKhoan);
+    public NHANVIENCHINHTHUC(HOPDONGLAODONG maHD, String maNhanVien, TAIKHOAN taiKhoan, String hoTen, String gioiTinh, LocalDate ngaySinh, DIACHI diaChi, String sdt,CMND cmnd,String danToc, String tonGiao, String email,String maPhong, TRINHDO trinhDo, CHUCVU chucVu ) {
+        super(maNhanVien, hoTen, gioiTinh, ngaySinh, diaChi, sdt, cmnd,danToc, tonGiao, email, maPhong, trinhDo, chucVu, taiKhoan);
         this.hopDong = maHD;
     }
 

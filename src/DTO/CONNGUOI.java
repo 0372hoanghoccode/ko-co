@@ -9,7 +9,6 @@ public class CONNGUOI {
     private LocalDate ngaySinh;
     private DIACHI diaChi;
     private String sdt;
-    private String tinhTrangHonNhan;
     private String danToc;
 	private String tonGiao;
     private String email;
@@ -21,19 +20,17 @@ public class CONNGUOI {
         this.diaChi = new DIACHI();
         this.cmnd = new CMND();
         this.sdt = null;
-        this.tinhTrangHonNhan = null;
         this.tonGiao = null;
         this.email = null;
     }
 
-    public CONNGUOI(CMND cmnd,String hoTen, String gioiTinh, LocalDate ngaySinh, DIACHI diaChi, String sdt,String danToc, String tinhTrangHonNhan, String tonGiao, String email) {
+    public CONNGUOI(CMND cmnd,String hoTen, String gioiTinh, LocalDate ngaySinh, DIACHI diaChi, String sdt,String danToc, String tonGiao, String email) {
         this.hoTen = hoTen;
         this.gioiTinh = gioiTinh;
         this.ngaySinh = ngaySinh;
         this.diaChi = diaChi;
         this.cmnd = cmnd;
         this.sdt = sdt;
-        this.tinhTrangHonNhan = tinhTrangHonNhan;
         this.tonGiao = tonGiao;
         this.danToc =danToc;
         this.email = email;
@@ -61,10 +58,6 @@ public class CONNGUOI {
 
     public void setSdt(String sdt) {
         this.sdt = sdt;
-    }
-
-    public void setTinhTrangHonNhan(String tinhTrangHonNhan) {
-        this.tinhTrangHonNhan = tinhTrangHonNhan;
     }
 
     public void setTonGiao(String tonGiao) {
@@ -105,9 +98,6 @@ public class CONNGUOI {
 	public void setDanToc(String danToc) {
 		this.danToc = danToc;
 	}
-    public String getTinhTrangHonNhan() {
-        return tinhTrangHonNhan;
-    }
 
     public String getTonGiao() {
         return tonGiao;

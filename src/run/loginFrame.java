@@ -2,18 +2,28 @@ package run;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+<<<<<<< HEAD
 import javax.swing.border.LineBorder;
 
 import GUI.RoundJPasswordField;
 import GUI.RoundJTextField;
+=======
+
+import DAO.TaiKhoanDAO;
+import DTO.TAIKHOAN;
+>>>>>>> 96a5d50d69fe47a5df817453228f6a0b86352ef5
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+<<<<<<< HEAD
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
 import java.lang.classfile.instruction.NewMultiArrayInstruction;
+=======
+import java.util.Arrays;
+>>>>>>> 96a5d50d69fe47a5df817453228f6a0b86352ef5
 
 public class loginFrame extends JFrame {
 
@@ -130,22 +140,7 @@ public class loginFrame extends JFrame {
 		});
         btnNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String inputTaiKhoan = textField.getText();
-                String inputMatKhau = passwordField.getText();
-
-                if (inputTaiKhoan.equals("") && inputMatKhau.equals("")) {
-                    JOptionPane.showMessageDialog(null, "Giá trị nhập vào không hợp lệ", "Lỗi", JOptionPane.ERROR_MESSAGE);
-                } else if (inputTaiKhoan.equals("1")) { 
-                    System.out.println("đúng tài khoản");
-
-                    if (inputMatKhau.equals("1")) { 
-                        System.out.println("Đúng mật khẩu");
-                        dispose();
-                        appFrame app = new appFrame();
-                        app.setVisible(true);
-                        isLogin = true;
-                    }
-                }
+                checkLogin();
             }
         });
         btnNewButton.setBackground(new Color(46, 129, 223));
@@ -163,6 +158,7 @@ public class loginFrame extends JFrame {
     public boolean getIsLogin() {
         return this.isLogin;
     }
+<<<<<<< HEAD
     
     private static class RoundedBorder implements Border {
         private int radius;
@@ -188,4 +184,34 @@ public class loginFrame extends JFrame {
         }
     }
     
+=======
+
+
+    public void checkLogin() {
+        String input_taikhoan = textField.getText();
+        char[] input_maukhau = passwordField.getPassword();
+        String input_maukhau_str = new String(input_maukhau);
+        if (input_taikhoan.equals("") || input_maukhau_str.equals("")) 
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
+        else {
+            TAIKHOAN tk = TaiKhoanDAO.getInstance().getTAIKHOAN(input_taikhoan);
+            if (tk == null)
+                JOptionPane.showMessageDialog(this, "Tài khoản không tồn tại", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
+            else {
+                if (tk.getPass().equals(input_maukhau_str)) {
+                    // login
+                    dispose();
+                    appFrame app = new appFrame();
+                    app.setVisible(true);
+                    isLogin = true;
+                }
+                else 
+                    JOptionPane.showMessageDialog(this, "Mật khẩu không khớp", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+        // Clear the password for security
+        Arrays.fill(input_maukhau, '0');
+    }
+
+>>>>>>> 96a5d50d69fe47a5df817453228f6a0b86352ef5
 }
