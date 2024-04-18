@@ -16,7 +16,7 @@ public class NhanVienBUS {
     private ArrayList<NHANVIEN> list_nhanvien = new ArrayList<>();
 
     public NhanVienBUS() {
-        nhanvien_dao.getInstance();
+        // nhanvien_dao.getInstance();
         list_nhanvien = nhanvien_dao.getList();
 
     }
@@ -82,12 +82,13 @@ public class NhanVienBUS {
             NHANVIEN temp_nv = list_nhanvien.get(i);
 
             data[i] = new Object[] {
-                i+1 + "",
+                i+1 + "", 
                 temp_nv.getHoTen(),
                 temp_nv.getGioiTinh(),
                 formatDate(temp_nv.getNgaySinh()),
+                temp_nv.getDiaChi().toString(),
                 temp_nv.getSdt(),
-                temp_nv.getMaPhong(),
+                DAO.PhongBanDAO.getTenTuMaSo(temp_nv.getMaPhong()),
                 temp_nv.getChucVu().getTenChucVu(),
                 formatSalary(temp_nv.getMucLuongChung()),
             };

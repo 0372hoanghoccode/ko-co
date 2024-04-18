@@ -31,7 +31,7 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
 	// cmnd, con nguoi, trinh do, chuc vu
 	
 	
-	public NhanVienDAO getInstance() {
+	public static NhanVienDAO getInstance() {
 		return new NhanVienDAO();
 	}
 

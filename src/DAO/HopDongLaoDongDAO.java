@@ -113,7 +113,7 @@ public class HopDongLaoDongDAO implements DAOInterface<HOPDONGLAODONG>{
 
 
     // PHUƠNG THỨC KHÔNG CÓ TRONG INTERFACE --> Chưa được kiểm chứng --> Cần kiểm chứng
-    public ArrayList<HOPDONGLAODONG> getHopDongSapHetHan() {
+    public ArrayList<HOPDONGLAODONG> getHopDongSapHetHan() { // đã check sql
 		Connection con = ConnectionManager.getConnection();
         ArrayList<HOPDONGLAODONG> list = new ArrayList<>();
 		try {
@@ -141,7 +141,7 @@ public class HopDongLaoDongDAO implements DAOInterface<HOPDONGLAODONG>{
 		return list;
 	}
 
-	public ArrayList<HOPDONGLAODONG> getHopDongDaHetHan() {
+	public ArrayList<HOPDONGLAODONG> getHopDongDaHetHan() { // đã check sql
 		Connection con = ConnectionManager.getConnection();
         ArrayList<HOPDONGLAODONG> list = new ArrayList<>();
 		try {
@@ -220,7 +220,7 @@ public class HopDongLaoDongDAO implements DAOInterface<HOPDONGLAODONG>{
 		return list;
 	}
 
-	public int getSoLuongHopDong(){
+	public int getSoLuongHopDong(){ // đã check sql
 		Connection con = ConnectionManager.getConnection();
 		try {
             String sql = "select COUNT(*) from HOPDONGLAODONG hd join NHANVIEN nv on hd.maHopDong=nv.maHopDong where nv.trangThai=1";
