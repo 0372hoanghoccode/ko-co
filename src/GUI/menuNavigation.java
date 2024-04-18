@@ -19,6 +19,7 @@ import run.appFrame;
 public class menuNavigation extends JPanel {
     
     private static final long serialVersionUID = 1L;
+	private static final String FlatRobotoFont = null;
     private final String[] fnc = {"Trang chính", "Nhân viên", "Phòng ban", "Hợp đồng","Chấm công", "Lương thưởng","Đánh giá", "Tài khoản", "Tuyển dụng"};
     private final String[] iconMenu = {"/assets/appIcon/icons8-home-24.png","/assets/appIcon/icons8-staff-50.png","/assets/appIcon/icons8-department-50.png",
             "/assets/appIcon/icons8-contract-24.png","/assets/appIcon/icons8-calendar-48.png","/assets/appIcon/icons8-salary-50.png",
@@ -45,7 +46,7 @@ public class menuNavigation extends JPanel {
             menuBtn.setFocusPainted(false);
             menuBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             menuBtn.setIconTextGap(10);
-            menuBtn.setBackground(new Color(100, 244, 220)); // Màu mặc định
+            menuBtn.setBackground(new Color(20, 96, 183)); // Màu mặc định
             menuBtn.setBounds(0, 40 * i, 200, 40);
             menuBtn.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
@@ -55,12 +56,12 @@ public class menuNavigation extends JPanel {
                     updateButtonColor(index);
                 }
                 public void mouseEntered(MouseEvent e) {
-                    menuBtn.setBackground(new Color(255, 182, 193)); // Màu hồng nhạt
+                    menuBtn.setBackground(new Color(209, 223, 230)); 
                 }
 
                 public void mouseExited(MouseEvent e) {
                     if (getIndexMenu() != btnList.indexOf(menuBtn)) {
-                        menuBtn.setBackground(new Color(100, 244, 220)); // Màu mặc định
+                        menuBtn.setBackground(new Color(20, 96, 183)); // Màu mặc định
                     }
                 }
             });
@@ -80,10 +81,10 @@ public class menuNavigation extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        Color color1 = new Color(100, 244, 220);
-        Color color2 = new Color(100, 250, 250);
+        Color color1 = new Color(20, 96, 183);
+        //Color color2 = new Color(100, 250, 250);
 
-        GradientPaint gradient = new GradientPaint(0, 0, color1, getWidth(), getHeight(), color2);
+        GradientPaint gradient = new GradientPaint(0, 0, color1, getWidth(), getHeight(), color1);
 
         Graphics2D g2d = (Graphics2D) g;
         g2d.setPaint(gradient);
@@ -97,7 +98,7 @@ public class menuNavigation extends JPanel {
     public void updateButtonColor(int index) {
         for (int i = 0; i < btnList.size(); i++) {
             JButton button = btnList.get(i);
-            button.setBackground(i == index ? new Color(255, 182, 193) : new Color(100, 244, 220));
+            button.setBackground(i == index ? new Color(131, 189, 247 ) : new Color(20, 96, 183));
         }
     }
 }
