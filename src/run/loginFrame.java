@@ -1,27 +1,45 @@
 package run;
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+<<<<<<< HEAD
+import javax.swing.border.LineBorder;
+
+import GUI.RoundJPasswordField;
+import GUI.RoundJTextField;
+=======
 
 import DAO.TaiKhoanDAO;
 import DTO.TAIKHOAN;
+>>>>>>> 96a5d50d69fe47a5df817453228f6a0b86352ef5
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+<<<<<<< HEAD
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.geom.RoundRectangle2D;
+import java.lang.classfile.instruction.NewMultiArrayInstruction;
+=======
 import java.util.Arrays;
+>>>>>>> 96a5d50d69fe47a5df817453228f6a0b86352ef5
 
 public class loginFrame extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
-    private JTextField textField;
+    private RoundJTextField textField;
     private JPasswordField passwordField;
     private boolean isLogin = false;
+    Color FontColor = new Color(108, 188, 231);
 
     public loginFrame() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(950, 450);
+        setUndecorated(true);
         setLocationRelativeTo(null);
+        
         setTitle("Login");
 
 
@@ -57,6 +75,7 @@ public class loginFrame extends JFrame {
         rightPanelContainer.add(rightPanel, BorderLayout.CENTER);
 
         JPanel loginPanel = new JPanel(new GridBagLayout());
+        loginPanel.setBackground(Color.white);
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -64,19 +83,22 @@ public class loginFrame extends JFrame {
         gbc.anchor = GridBagConstraints.WEST;
 
         // Label "Đăng nhập hệ thống"
-        JLabel loginSystemLabel = new JLabel("Đăng nhập hệ thống");
-        loginSystemLabel.setFont(new Font("Tahoma", Font.BOLD, 16)); 
+        JLabel loginSystemLabel = new JLabel("Đăng nhập hệ thống");        
+        loginSystemLabel.setFont(new Font("Tahoma", Font.BOLD, 20)); 
         loginSystemLabel.setForeground(Color.BLACK);
+        gbc.anchor = GridBagConstraints.CENTER;
         loginPanel.add(loginSystemLabel, gbc);
         gbc.gridy++;
 
         ImageIcon accountIcon = new ImageIcon("src/assets/appIcon/icons8-user-24.png");
         accountIcon = resizeIcon(accountIcon, 20, 20);
         JLabel lblNewLabel = new JLabel("Tài Khoản", accountIcon, JLabel.LEFT);
+        gbc.anchor=  GridBagConstraints.WEST;
         loginPanel.add(lblNewLabel, gbc);
         gbc.gridy++;
-        textField = new JTextField();
-        textField.setColumns(20);
+        textField = new RoundJTextField(25); 
+        textField.setBorder(new RoundedBorder(10));        
+        textField.setPreferredSize(new Dimension(250, 30));
         loginPanel.add(textField, gbc);
         gbc.gridy++;
 
@@ -85,8 +107,9 @@ public class loginFrame extends JFrame {
         JLabel lblNewLabel_1 = new JLabel("Mật Khẩu", passwordIcon, JLabel.LEFT);
         loginPanel.add(lblNewLabel_1, gbc);
         gbc.gridy++;
-        passwordField = new JPasswordField();
-        passwordField.setColumns(20);
+        passwordField= new JPasswordField();
+        passwordField.setBorder(new RoundedBorder(10));
+        passwordField.setPreferredSize(new Dimension(250, 30));           
         loginPanel.add(passwordField, gbc);
         gbc.gridy++;
 
@@ -94,16 +117,35 @@ public class loginFrame extends JFrame {
         ImageIcon loginButtonIcon = new ImageIcon("src/assets/appIcon/icons8-login-50.png");
         loginButtonIcon = resizeIcon(loginButtonIcon, 20, 20);
         JButton btnNewButton = new JButton("Đăng Nhập", loginButtonIcon);
-        gbc.gridwidth = 5; // Tăng chiều dài của nút đăng nhập lên 2 ô
+        btnNewButton.setPreferredSize(new Dimension(250,30));
+        btnNewButton.setBorderPainted(false);      
+       //btnNewButton.setContentAreaFilled(false);
+        btnNewButton.setBorder(new RoundedBorder(10));
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.insets = new Insets(20, 0, 0, 0);
+        //gbc.gridwidth = 5; // Tăng chiều dài của nút đăng nhập lên 2 ô
+        
+        btnNewButton.addMouseListener(new MouseAdapter() {
+        	@Override
+            public void mouseEntered(MouseEvent evt) {
+        		btnNewButton.setBackground(FontColor);
+        		btnNewButton.setForeground(Color.black);
+            }
+        	
+        	@Override
+            public void mouseExited(MouseEvent evt) {
+        		btnNewButton.setBackground(new Color(46, 129, 223));
+        		btnNewButton.setForeground(Color.white);
+            }
+		});
         btnNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 checkLogin();
             }
         });
-        btnNewButton.setBackground(Color.BLUE); 
+        btnNewButton.setBackground(new Color(46, 129, 223));
         btnNewButton.setForeground(Color.BLACK);
         loginPanel.add(btnNewButton, gbc);
-
         rightPanel.add(loginPanel, BorderLayout.CENTER);
     }
 
@@ -116,6 +158,33 @@ public class loginFrame extends JFrame {
     public boolean getIsLogin() {
         return this.isLogin;
     }
+<<<<<<< HEAD
+    
+    private static class RoundedBorder implements Border {
+        private int radius;
+
+        public RoundedBorder(int radius) {
+            this.radius = radius;
+        }
+
+        @Override
+        public Insets getBorderInsets(Component c) {
+            return new Insets(this.radius, this.radius , this.radius , this.radius);
+        }
+
+        @Override
+        public boolean isBorderOpaque() {
+            return true;
+        }
+
+        @Override
+        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+            g.setColor(Color.BLACK);
+            ((Graphics2D) g).draw(new RoundRectangle2D.Double(x, y, width - 1, height - 1, radius, radius));
+        }
+    }
+    
+=======
 
 
     public void checkLogin() {
@@ -144,4 +213,5 @@ public class loginFrame extends JFrame {
         Arrays.fill(input_maukhau, '0');
     }
 
+>>>>>>> 96a5d50d69fe47a5df817453228f6a0b86352ef5
 }
