@@ -2,12 +2,20 @@ package run;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+<<<<<<< Updated upstream
 
+=======
+//<<<<<<< HEAD
+>>>>>>> Stashed changes
 import javax.swing.border.LineBorder;
 
 import GUI.RoundJPasswordField;
 import GUI.RoundJTextField;
+<<<<<<< Updated upstream
 
+=======
+//=======
+>>>>>>> Stashed changes
 
 import DAO.TaiKhoanDAO;
 import DTO.TAIKHOAN;
@@ -158,11 +166,38 @@ public class loginFrame extends JFrame {
     public boolean getIsLogin() {
         return this.isLogin;
     }
+<<<<<<< Updated upstream
 
+=======
+//<<<<<<< HEAD
+//    
+//    private static class RoundedBorder implements Border {
+//        private int radius;
+//
+//        public RoundedBorder(int radius) {
+//            this.radius = radius;
+//        }
+//
+//        @Override
+//        public Insets getBorderInsets(Component c) {
+//            return new Insets(this.radius, this.radius , this.radius , this.radius);
+//        }
+//
+//        @Override
+//        public boolean isBorderOpaque() {
+//            return true;
+//        }
+//
+//        @Override
+//        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+//            g.setColor(Color.BLACK);
+//            ((Graphics2D) g).draw(new RoundRectangle2D.Double(x, y, width - 1, height - 1, radius, radius));
+//        }
+//    }
+>>>>>>> Stashed changes
     
-    private static class RoundedBorder implements Border {
-        private int radius;
 
+<<<<<<< Updated upstream
         public RoundedBorder(int radius) {
             this.radius = radius;
         }
@@ -215,3 +250,33 @@ public class loginFrame extends JFrame {
 
 
 }
+=======
+//    public void checkLogin() {
+//        String input_taikhoan = textField.getText();
+//        char[] input_maukhau = passwordField.getPassword();
+//        String input_maukhau_str = new String(input_maukhau);
+//        if (input_taikhoan.equals("") || input_maukhau_str.equals("")) 
+//            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
+//        else {
+//            TAIKHOAN tk = TaiKhoanDAO.getInstance().getTAIKHOAN(input_taikhoan);
+//            if (tk == null)
+//                JOptionPane.showMessageDialog(this, "Tài khoản không tồn tại", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
+//            else {
+//                if (tk.getPass().equals(input_maukhau_str)) {
+//                    // login
+//                    dispose();
+//                    appFrame app = new appFrame();
+//                    app.setVisible(true);
+//                    isLogin = true;
+//                }
+//                else 
+//                    JOptionPane.showMessageDialog(this, "Mật khẩu không khớp", "Cảnh báo!", JOptionPane.WARNING_MESSAGE);
+//            }
+//        }
+//        // Clear the password for security
+//        Arrays.fill(input_maukhau, '0');
+//    }
+//
+//>>>>>>> 96a5d50d69fe47a5df817453228f6a0b86352ef5
+//}
+>>>>>>> Stashed changes
