@@ -2,28 +2,22 @@ package run;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-<<<<<<< HEAD
 import javax.swing.border.LineBorder;
 
 import GUI.RoundJPasswordField;
 import GUI.RoundJTextField;
-=======
 
 import DAO.TaiKhoanDAO;
 import DTO.TAIKHOAN;
->>>>>>> 96a5d50d69fe47a5df817453228f6a0b86352ef5
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-<<<<<<< HEAD
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
 import java.lang.classfile.instruction.NewMultiArrayInstruction;
-=======
 import java.util.Arrays;
->>>>>>> 96a5d50d69fe47a5df817453228f6a0b86352ef5
 
 public class loginFrame extends JFrame {
 
