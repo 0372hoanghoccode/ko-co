@@ -111,7 +111,7 @@ public class ChamCongDAO implements DAOInterface<CHAMCONG> {
     }
 
     // Lấy Bảng Chấm Công từ mã
-    public static CHAMCONG getBangChamCongByMa(String maBCC) {
+    public CHAMCONG getBangChamCongByMa(String maBCC) {
         Connection con = ConnectionManager.getConnection();
 
         try {
@@ -138,7 +138,7 @@ public class ChamCongDAO implements DAOInterface<CHAMCONG> {
     }
 
     // Lấy tên nhân viên từ mã Bảng Chấm Công
-    public static String getTenNhanVien(String maBangChamCong) {
+    public String getTenNhanVien(String maBangChamCong) {
         Connection con = ConnectionManager.getConnection();
 
         try {
@@ -158,7 +158,7 @@ public class ChamCongDAO implements DAOInterface<CHAMCONG> {
     }
 
     // Lấy mã phòng ban từ tên phòng ban
-    public static String getMaPhongBanFromTen(String ten) {
+    public String getMaPhongBanFromTen(String ten) {
         Connection con = ConnectionManager.getConnection();
 
         try {
@@ -178,7 +178,7 @@ public class ChamCongDAO implements DAOInterface<CHAMCONG> {
     }
 
     // Lấy danh sách Bảng Chấm Công theo mã phòng ban
-    public static ArrayList<CHAMCONG> getBangChamCongByMaPhongBan(String maPhong) {
+    public ArrayList<CHAMCONG> getBangChamCongByMaPhongBan(String maPhong) {
         Connection con = ConnectionManager.getConnection();
 
         try {
@@ -210,7 +210,7 @@ public class ChamCongDAO implements DAOInterface<CHAMCONG> {
     }
 
     // Lấy danh sách Bảng Chấm Công theo mã nhân viên
-    public static ArrayList<CHAMCONG> getBangChamCongByMaNhanVien(String maNhanVien) {
+    public  ArrayList<CHAMCONG> getBangChamCongByMaNhanVien(String maNhanVien) {
         Connection con = ConnectionManager.getConnection();
 
         try {

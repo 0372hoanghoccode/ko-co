@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 import connectionSQL.ConnectionManager;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class PhongBanDAO implements DAOInterface<PHONGBAN> {
     
@@ -105,7 +107,7 @@ public class PhongBanDAO implements DAOInterface<PHONGBAN> {
         return rowsAffected;
     }
 
-    public static String getMaSoTuTen(String tenPhong) {
+    public String getMaSoTuTen(String tenPhong) {
         String maPhong = null;
         Connection con = ConnectionManager.getConnection();
         try {
@@ -123,7 +125,7 @@ public class PhongBanDAO implements DAOInterface<PHONGBAN> {
         return maPhong;
     }
 
-    public static String getTenTuMaSo(String maPhong) {
+    public String getTenTuMaSo(String maPhong) {
         String tenPhong = null;
         Connection con = ConnectionManager.getConnection();
         try {
@@ -141,7 +143,7 @@ public class PhongBanDAO implements DAOInterface<PHONGBAN> {
         return tenPhong;
     }
 
-    public static int getSoLuongNhanVien(String maPhongBan) {
+    public int getSoLuongNhanVien(String maPhongBan) {
         int soLuong = 0;
         Connection con = ConnectionManager.getConnection();
         try {
@@ -158,7 +160,7 @@ public class PhongBanDAO implements DAOInterface<PHONGBAN> {
         }
         return soLuong;
     }
-    public static double[] getAverageSalaryData(String maPhongBan) {
+    public double[] getAverageSalaryData(String maPhongBan) {
         double[] data = new double[3];
         Connection con = ConnectionManager.getConnection();
         try {
@@ -178,7 +180,7 @@ public class PhongBanDAO implements DAOInterface<PHONGBAN> {
         return data;
     }
 
-    public static Object[][] getNhanVienCuaPhongBanData(String maPhong) {
+    public Object[][] getNhanVienCuaPhongBanData(String maPhong) {
         Object[][] data = null;
         Connection con = ConnectionManager.getConnection();
         try {
@@ -208,7 +210,7 @@ public class PhongBanDAO implements DAOInterface<PHONGBAN> {
         return data;
     }
 
-    public static ArrayList<String> getDanhSachMaSo() {
+    public ArrayList<String> getDanhSachMaSo() {
         ArrayList<String> data = new ArrayList<>();
         Connection con = ConnectionManager.getConnection();
         try {
@@ -225,7 +227,7 @@ public class PhongBanDAO implements DAOInterface<PHONGBAN> {
         return data;
     }
 
-    public static ArrayList<Object[]> getDuLieuChucVuThongKe(String maPhong) {
+    public ArrayList<Object[]> getDuLieuChucVuThongKe(String maPhong) {
         ArrayList<Object[]> list = new ArrayList<>();
         Connection con = ConnectionManager.getConnection();
         try {
@@ -243,7 +245,7 @@ public class PhongBanDAO implements DAOInterface<PHONGBAN> {
         return list;
     }
 
-    public static int[] getDuLieuGioiTinhThongKe(String maPhong) {
+    public int[] getDuLieuGioiTinhThongKe(String maPhong) {
         int[] data = new int[2];
         Connection con = ConnectionManager.getConnection();
         try {
@@ -267,7 +269,7 @@ public class PhongBanDAO implements DAOInterface<PHONGBAN> {
         return data;
     }
 
-    public static int[] getDuLieuDoTuoiThongKe(String maPhong) {
+    public int[] getDuLieuDoTuoiThongKe(String maPhong) {
         int[] data = new int[4];
         Connection con = ConnectionManager.getConnection();
         try {
@@ -303,7 +305,7 @@ public class PhongBanDAO implements DAOInterface<PHONGBAN> {
         return data;
     }
 
-    public static ArrayList<Object[]> getDanhSachTenVaSoLuongNhanVienPhongBan() {
+    public ArrayList<Object[]> getDanhSachTenVaSoLuongNhanVienPhongBan() {
         ArrayList<Object[]> list = new ArrayList<>();
         Connection con = ConnectionManager.getConnection();
         try {
@@ -323,7 +325,7 @@ public class PhongBanDAO implements DAOInterface<PHONGBAN> {
         return list;
     }
 
-    public static String[] getDanhSachPhongBan() {
+    public String[] getDanhSachPhongBan() {
         String[] data = null;
         Connection con = ConnectionManager.getConnection();
         try {
@@ -346,4 +348,58 @@ public class PhongBanDAO implements DAOInterface<PHONGBAN> {
         return data;
     }
     
+
+    public Object[][] getDataNhanVienCuaPhong(String maPhong) {
+        int sonv = getSoLuongNhanVien(maPhong);
+        Object[][] data = new Object[sonv][];
+        Connection con = ConnectionManager.getConnection();
+        try {
+            String sql = "SELECT * FROM CONNGUOI JOIN NHANVIEN ON CONNGUOI.CMND = NHANVIEN.CMND JOIN CHUCVU ON CHUCVU.maChucVu = NHANVIEN.maChucVu WHERE NHANVIEN.trangThai=1 AND maPhong = ?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, maPhong);
+            ResultSet rs = pst.executeQuery();
+            int index = 0;
+            while (rs.next()) {
+                data[index] = new Object[] {
+                    index + 1 + "",
+                    rs.getString("maNhanVien"),
+                    rs.getString("hoTen"),
+                    rs.getString("tenChucVu"),
+                };
+                index++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionManager.closeConnection(con);
+        }
+        return data;
+    }
+
+    public ArrayList<String> getDataNhanVienTablePhongBan(String maPhong, String maNV) {
+        ArrayList<String> data = new ArrayList<>();
+        Connection con = ConnectionManager.getConnection();
+        try {
+            PreparedStatement pst = con.prepareStatement("SELECT * FROM CONNGUOI JOIN NHANVIEN ON CONNGUOI.CMND = NHANVIEN.CMND JOIN CHUCVU ON CHUCVU.maChucVu = NHANVIEN.maChucVu WHERE NHANVIEN.trangThai=1 AND maPhong = ? AND NHANVIEN.maNhanVien = ?");
+            pst.setString(1, maPhong);
+            pst.setString(2, maNV);
+            ResultSet rs = pst.executeQuery();
+            while(rs.next()) {
+                data.add(rs.getString("maNhanVien"));
+                data.add(rs.getString("hoTen"));
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                LocalDate ngaySinh = rs.getDate("ngaySinh").toLocalDate();
+                data.add(ngaySinh.format(formatter));
+                data.add(rs.getString("diaChi"));
+                data.add(rs.getString("tenChucVu"));
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionManager.closeConnection(con);
+        }
+        return data;
+    }
+
 }

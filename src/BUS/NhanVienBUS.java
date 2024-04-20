@@ -88,7 +88,7 @@ public class NhanVienBUS {
                 formatDate(temp_nv.getNgaySinh()),
                 temp_nv.getDiaChi().toString(),
                 temp_nv.getSdt(),
-                DAO.PhongBanDAO.getTenTuMaSo(temp_nv.getMaPhong()),
+                DAO.PhongBanDAO.getInstance().getTenTuMaSo(temp_nv.getMaPhong()),
                 temp_nv.getChucVu().getTenChucVu(),
                 formatSalary(temp_nv.getMucLuongChung()),
             };
