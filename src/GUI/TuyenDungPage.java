@@ -1,3 +1,4 @@
+
 package GUI;
 
 import java.awt.Color;
@@ -126,11 +127,11 @@ public class TuyenDungPage extends JPanel {
 
 
         JScrollPane scrollPane = new JScrollPane(Table);
-        scrollPane.setBounds(10,70,970,120);
+        scrollPane.setBounds(0, 0, 985, 111);
         scrollPane.setBorder(new LineBorder(Color.decode("#dfe4ea"),3));
         this.add(scrollPane);
         
-		this.setBounds(10, 9, 980, 169);  
+		this.setBounds(0, 0, 985, 111);
 		this.setBackground(new Color(70,130,180));
 		this.setVisible(true);
 	}
@@ -142,6 +143,7 @@ public class TuyenDungPage extends JPanel {
         tableModel = new DefaultTableModel(data, title_table);
         Table.setModel(tableModel);
 	}
+	
 	public JButton getButton_TuyenDung_Xoa() {
 		return button_TuyenDung_Xoa;
 	}
@@ -184,5 +186,4 @@ public class TuyenDungPage extends JPanel {
 	
 
 }
-
 

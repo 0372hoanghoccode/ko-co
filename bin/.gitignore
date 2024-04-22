@@ -1,13 +1,5 @@
-<<<<<<< HEAD
 /GUI/
 /connectionSQL/
 /run/
-=======
-/BUS/
 /DAO/
 /DTO/
-/GUI/
-/connectionSQL/
-/run/
-/database/
->>>>>>> 2f262421643b46e7d4cef894850163803f9a06b8

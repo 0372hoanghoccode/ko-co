@@ -52,7 +52,8 @@ public class DIACHI {
     public void setDuong(String duong) {
         this.duong = duong;
     }
+    @Override
     public String toString() {
-    	return soNha+" "+duong+", "+phuongXa+", "+quanHuyen+", "+tinhThanhPho;
+        return soNha + ", " + duong + ", " + phuongXa + ", " + quanHuyen + ", " + tinhThanhPho;
     }
 }
