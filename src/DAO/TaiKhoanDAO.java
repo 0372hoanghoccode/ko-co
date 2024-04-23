@@ -40,6 +40,8 @@ public class TaiKhoanDAO implements DAOInterface<TAIKHOAN>{
         throw new UnsupportedOperationException("Unimplemented method 'del'");
     }
 
+    
+    @Override
     public int insert(TAIKHOAN taikhoan) {
         int result = 0;
         try (Connection con = ConnectionManager.getConnection();

@@ -84,27 +84,20 @@ public class PHONGBAN_BUS {
     }
 
 
-//    public Object[][] renderChiTietPhongBan(int index) {
-//        PHONGBAN temp_pb = list_phongban.get(index);
-//        Object[][] data = phongban_dao.getDataNhanVienCuaPhong(temp_pb.getMaPhong());
-//        return data;
-//    }
-//
-//    public ArrayList<String> renderChiTietNhanVien(int curr_tablerow, String maNV) {
-//        String maPhong = list_phongban.get(curr_tablerow).getMaPhong();
-//        
-//        ArrayList<String> temp = phongban_dao.getDataNhanVienTablePhongBan(maPhong, maNV);
-//        return temp;    
-//       
-//    }
-    
-    public Object[][] getDataNhanVienCuaPhongById(String maPhong) {
-        return phongban_dao.getDataNhanVienCuaPhong(maPhong);
+    public Object[][] renderChiTietPhongBan(int index) {
+        PHONGBAN temp_pb = list_phongban.get(index);
+        Object[][] data = phongban_dao.getDataNhanVienCuaPhong(temp_pb.getMaPhong());
+        return data;
     }
 
-    public ArrayList<String> getChiTietNhanVienByPhong(String maPhong, String maNV) {
-        return phongban_dao.getDataNhanVienTablePhongBan(maPhong, maNV);
+    public ArrayList<String> renderChiTietNhanVien(int curr_tablerow, String maNV) {
+        String maPhong = list_phongban.get(curr_tablerow).getMaPhong();
+        
+        ArrayList<String> temp = phongban_dao.getDataNhanVienTablePhongBan(maPhong, maNV);
+        return temp;    
+        
     }
+
 
 
 }

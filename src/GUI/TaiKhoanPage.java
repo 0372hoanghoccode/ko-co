@@ -17,10 +17,24 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import BUS.TAIKHOAN_BUS;
+import BUS.NHOMQUYEN_BUS;
+
 public class TaiKhoanPage extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private ArrayList<JCheckBox> listCheckBox;
+
+
+	TAIKHOAN_BUS taikhoan_bus = new TAIKHOAN_BUS();
+	NHOMQUYEN_BUS nhomquyen_bus = new NHOMQUYEN_BUS();
+
+	String[] columnNames = {"STT", "Tài khoản", "Mật khẩu", "Nhóm quyền"};
+    Object[][] data = taikhoan_bus.renderAllTaiKhoanData();
+	String[] columnNamesNhomQuyen = {"STT", "Mã nhóm quyền", "Chi tiết nhóm quyền"};
+    Object[][] dataNhomQuyen = nhomquyen_bus.renderAllNhomQuyenData();
+
+
 	/**
 	 * Create the panel.
 	 */
@@ -70,6 +84,7 @@ public class TaiKhoanPage extends JPanel {
 		lblNewLabel_4.setBounds(10, 95, 169, 29);
 		panel_2.add(lblNewLabel_4);
 		
+		
 		JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.setBounds(189, 95, 168, 29);
 		panel_2.add(comboBox_1);
@@ -118,24 +133,7 @@ public class TaiKhoanPage extends JPanel {
 		
 	
 		
-		String[] columnNames = {"STT", "Tên Phòng", "Tên Trưởng Phòng", "Số Nhân Viên", "Lương Trung Bình"};
-        Object[][] data = {
-            {"1", "Phòng A", "Nguyễn Văn A", "25", "4242424"},
-            {"2", "Phòng B", "Trần Thị B", "30", "23213131"},
-            {"3", "Phòng C", "Lê Văn C", "28", "45242314"},
-            {"4", "Phòng D", "Hoàng Văn D", "35", "6342423"},
-            {"5", "Phòng E", "Mai Thị E", "27", "3351313"},
-            {"6", "Phòng F", "Đỗ Văn F", "31", "8624234"},
-            {"7", "Phòng G", "Vũ Thị G", "33", "7842311"},
-            {"8", "Phòng H", "Phạm Văn H", "29", "5224123"},
-            {"9", "Phòng I", "Bùi Thị I", "26", "7412314"},
-            {"10", "Phòng K", "Nguyễn Văn K", "32", "8923123"},
-            {"11", "Phòng L", "Trần Văn L", "36", "6532423"},
-            {"12", "Phòng M", "Lê Thị M", "29", "4321313"},
-            {"13", "Phòng N", "Hoàng Văn N", "30", "7434234"},
-            {"14", "Phòng O", "Mai Thị O", "28", "9822311"},
-            {"15", "Phòng P", "Đỗ Văn P", "34", "5224123"}
-        };
+		
 
         DefaultTableModel model = new DefaultTableModel(data, columnNames);
         JTable table = new JTable(model);
@@ -145,25 +143,7 @@ public class TaiKhoanPage extends JPanel {
         scrollPane.setBounds(10, 100, 370, 310);
         panel. add(scrollPane);
         
-        String[] columnNamesNhomQuyen = {"STT", "Tên Phòng", "Tên Trưởng Phòng", "Số Nhân Viên", "Lương Trung Bình"};
-        Object[][] dataNhomQuyen = {
-            {"1", "Phòng A", "Nguyễn Văn A", "25", "4242424"},
-            {"2", "Phòng B", "Trần Thị B", "30", "23213131"},
-            {"3", "Phòng C", "Lê Văn C", "28", "45242314"},
-            {"4", "Phòng D", "Hoàng Văn D", "35", "6342423"},
-            {"5", "Phòng E", "Mai Thị E", "27", "3351313"},
-            {"6", "Phòng F", "Đỗ Văn F", "31", "8624234"},
-            {"7", "Phòng G", "Vũ Thị G", "33", "7842311"},
-            {"8", "Phòng H", "Phạm Văn H", "29", "5224123"},
-            {"9", "Phòng I", "Bùi Thị I", "26", "7412314"},
-            {"10", "Phòng K", "Nguyễn Văn K", "32", "8923123"},
-            {"11", "Phòng L", "Trần Văn L", "36", "6532423"},
-            {"12", "Phòng M", "Lê Thị M", "29", "4321313"},
-            {"13", "Phòng N", "Hoàng Văn N", "30", "7434234"},
-            {"14", "Phòng O", "Mai Thị O", "28", "9822311"},
-            {"15", "Phòng P", "Đỗ Văn P", "34", "5224123"}
-        };
-
+        
         DefaultTableModel modelNhomQuyen = new DefaultTableModel(dataNhomQuyen, columnNamesNhomQuyen);
         JTable tableNq = new JTable(modelNhomQuyen);
         table.setFont(new Font("Arial", Font.PLAIN, 12));
