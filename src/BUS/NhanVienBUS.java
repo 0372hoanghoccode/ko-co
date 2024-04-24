@@ -97,6 +97,34 @@ public class NhanVienBUS {
 
         return data;
     }
+    public Object[][] changeDataValue(String[] event_name) {
+    	String[] default_val = new String[]{
+    	    	"Phòng ban", "Giới tính", "Độ tuổi", "Thuộc tính sắp xếp", "Thứ tự sắp"
+        };
+        ArrayList<NHANVIEN> list_render = nhanvien_dao.renderChangeValue(default_val, event_name);
+        int n = list_render.size();
+        Object[][] data = new Object[n][];
+
+        for (int i = 0; i < n ;i++) {
+            NHANVIEN temp_nv = list_render.get(i);
+
+            data[i] = new Object[] {
+                i+1 + "", 
+                temp_nv.getHoTen(),
+                temp_nv.getGioiTinh(),
+                formatDate(temp_nv.getNgaySinh()),
+                temp_nv.getDiaChi().toString(),
+                temp_nv.getSdt(),
+                DAO.PhongBanDAO.getInstance().getTenTuMaSo(temp_nv.getMaPhong()),
+                temp_nv.getChucVu().getTenChucVu(),
+                formatSalary(temp_nv.getMucLuongChung()),
+            };
+
+        }
+    	return data;
+    	
+    	
+    }
 
 
 }

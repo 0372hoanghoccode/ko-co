@@ -52,17 +52,6 @@ public class TuyenDungPage extends JPanel {
 	
 	public void init() {
 		this.setLayout(null);
-		
-		
-		    
-		 button_TuyenDung_Them = new JButton("Thêm");
-	        button_TuyenDung_Them.setHorizontalAlignment(SwingConstants.LEFT);
-	        button_TuyenDung_Them.setFont(new Font("Arial", 0, 13));
-	        this.add(button_TuyenDung_Them);
-	        button_TuyenDung_Them.setIcon(new ImageIcon(
-	                new ImageIcon(getClass().getResource("/assets/appIcon/icons8-search-24.png")).getImage()
-	                        .getScaledInstance(23, 23, Image.SCALE_DEFAULT)));
-	        button_TuyenDung_Them.setBounds(550, 20, 90, 30);
 
 	        // Tạo Action cho nút "Thêm"
 	        Action addNewAction = new AbstractAction() {
@@ -71,32 +60,6 @@ public class TuyenDungPage extends JPanel {
 	                tuyenDungPage_Them.setVisible(true); // hiện thị frame TuyenDungPage_Them khi nút được nhấp
 	            }
 	        };
-
-	        // Gán Action cho JButton
-	        button_TuyenDung_Them.setAction(addNewAction);
-
-	    
-		
-		
-		button_TuyenDung_Xoa= new JButton("Xóa");
-		button_TuyenDung_Xoa.setFont(new Font("Arial",0,13));
-		this.add(button_TuyenDung_Xoa);
-		button_TuyenDung_Xoa.setHorizontalAlignment(SwingConstants.LEFT);
-		button_TuyenDung_Xoa.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/assets/appIcon/icons8-search-24.png")).getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT)));
-		button_TuyenDung_Xoa.setForeground(new Color(128,128,128,100));
-		button_TuyenDung_Xoa.setBounds(440,20,90,30);
-
-		TuyenDung_Find= new JTextField("Nhập thông tin tìm kiếm",JTextField.CENTER);
-		this.add(TuyenDung_Find);
-		TuyenDung_Find.setBounds(10,20,300,30);
-		TuyenDung_Find.setFont(new Font("Arial",0,13));
-		
-		JLabel find= new JLabel();
-		find.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/assets/appIcon/icons8-search-24.png")).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT)));
-		find.setBounds(310,20,30,30);
-		find.setOpaque(true);
-		find.setBackground(new Color(204,229,255));
-		this.add(find);
 
 		//Table
         tableModel = new DefaultTableModel(data, title_table) {
@@ -127,12 +90,58 @@ public class TuyenDungPage extends JPanel {
 
 
         JScrollPane scrollPane = new JScrollPane(Table);
-        scrollPane.setBounds(0, 0, 985, 111);
+        scrollPane.setBounds(5, 90, 990, 390);
         scrollPane.setBorder(new LineBorder(Color.decode("#dfe4ea"),3));
         this.add(scrollPane);
         
-		this.setBounds(0, 0, 985, 111);
+		this.setBounds(0, 0, 1000, 660);
 		this.setBackground(new Color(70,130,180));
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(5, 5, 990, 80);
+		add(panel);
+		panel.setLayout(null);
+		
+				TuyenDung_Find= new JTextField("Nhập thông tin tìm kiếm",JTextField.CENTER);
+				TuyenDung_Find.setBounds(10, 10, 300, 30);
+				panel.add(TuyenDung_Find);
+				TuyenDung_Find.setFont(new Font("Arial",0,13));
+				
+					    
+						
+						
+						button_TuyenDung_Xoa= new JButton("Xóa");
+						button_TuyenDung_Xoa.setBounds(503, 10, 90, 30);
+						panel.add(button_TuyenDung_Xoa);
+						button_TuyenDung_Xoa.setFont(new Font("Arial",0,13));
+						button_TuyenDung_Xoa.setHorizontalAlignment(SwingConstants.LEFT);
+						button_TuyenDung_Xoa.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/assets/appIcon/icons8-search-24.png")).getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT)));
+						button_TuyenDung_Xoa.setForeground(new Color(128,128,128,100));
+						
+						
+						    
+						 button_TuyenDung_Them = new JButton("Thêm");
+						 button_TuyenDung_Them.setBounds(660, 10, 90, 30);
+						 panel.add(button_TuyenDung_Them);
+						 button_TuyenDung_Them.setHorizontalAlignment(SwingConstants.LEFT);
+						 button_TuyenDung_Them.setFont(new Font("Arial", 0, 13));
+						 button_TuyenDung_Them.setIcon(new ImageIcon(
+						         new ImageIcon(getClass().getResource("/assets/appIcon/icons8-search-24.png")).getImage()
+						                 .getScaledInstance(23, 23, Image.SCALE_DEFAULT)));
+						 
+						 	        // Gán Action cho JButton
+						 	        button_TuyenDung_Them.setAction(addNewAction);
+						 	        
+						 	        JLabel find= new JLabel();
+						 	        find.setBounds(310, 10, 30, 30);
+						 	        panel.add(find);
+						 	        find.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/assets/appIcon/icons8-search-24.png")).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT)));
+						 	        find.setOpaque(true);
+						 	        find.setBackground(new Color(204,229,255));
+						 	        
+						 	        JPanel panel_1 = new JPanel();
+						 	        panel_1.setBounds(5, 485, 990, 170);
+						 	        add(panel_1);
 		this.setVisible(true);
 	}
 	public void setData(Object[][] data) {
@@ -183,7 +192,5 @@ public class TuyenDungPage extends JPanel {
 	public JButton getButton_TuyenDung_TuyenThem() {
 		return button_TuyenDung_TuyenThem;
 	}
-	
-
 }
 

@@ -97,7 +97,17 @@ public class PHONGBAN_BUS {
         return temp;    
         
     }
+    
+    public ArrayList<String> getTenPhongBan() {
+        return phongban_dao.getTenPhongBan();
+    }
 
-
+    
 
 }
+
+
+
+
+
+

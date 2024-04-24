@@ -1,22 +1,37 @@
 package GUI;
 
-
 import javax.swing.*;
 import javax.swing.table.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import BUS.NhanVienBUS;
-import javax.swing.border.EmptyBorder;
+import BUS.PHONGBAN_BUS;
+
 
 
 public class EmployeePage extends JPanel {
 
     private static final long serialVersionUID = 1L;
     NhanVienBUS nhanVienBUS = new NhanVienBUS();
+    PHONGBAN_BUS phongban_BUS = new PHONGBAN_BUS();
 
-    /**
-     * Create the panel.
-     */
+
+    String[] event_name = new String[]{
+    	"Phòng ban", "Giới tính", "Độ tuổi", "Thuộc tính sắp xếp", "Thứ tự sắp"
+    };
+    String[] columnNames = { "STT", "Tên", "Giới Tính", "Năm Sinh", "Địa chỉ", "SĐT", "Phòng Ban", "Chức Vụ", "Lương" };
+    Object[][] data = nhanVienBUS.getDataObjectToRender(); 
+    DefaultTableModel model = new DefaultTableModel(data, columnNames) {
+		private static final long serialVersionUID = 1L;
+		public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };
+    JTable table = new JTable();
+
     public EmployeePage() {
         init();
     }
@@ -44,11 +59,11 @@ public class EmployeePage extends JPanel {
         comboBox.setEditable(false);
         comboBox.setBackground(Color.WHITE);
         comboBox.setOpaque(true);
-        comboBox.setBounds(10, 83, 193, 30);
+        comboBox.setBounds(10, 83, 180, 30);
         comboBox.addItem("Phòng ban");
-        comboBox.addItem("Kế toán");
-        comboBox.addItem("Nhân sự");
-        comboBox.addItem("Kinh doanh");
+        for (String i : phongban_BUS.getTenPhongBan()) {
+            comboBox.addItem(i);
+        }
         panel.add(comboBox);
 
         JComboBox<String> comboBox_1 = new JComboBox<>();
@@ -63,7 +78,9 @@ public class EmployeePage extends JPanel {
         comboBox_2.addItem("Độ tuổi");
         comboBox_2.addItem("Dưới 25");
         comboBox_2.addItem("25 - 35");
-        comboBox_2.addItem("Trên 35");
+        comboBox_2.addItem("36 - 45");
+        comboBox_2.addItem("Trên 45");
+        
         panel.add(comboBox_2);
 
         JLabel lblNewLabel_2 = new JLabel("Sắp xếp theo: ");
@@ -74,6 +91,7 @@ public class EmployeePage extends JPanel {
         JComboBox<String> comboBox_3 = new JComboBox<>();
 
         comboBox_3.setBounds(547, 83, 123, 30);
+        comboBox_3.addItem("Thuộc tính sắp xếp");
         comboBox_3.addItem("Mã nhân viên");
         comboBox_3.addItem("Độ tuổi");
         comboBox_3.addItem("Mức lương");
@@ -82,6 +100,7 @@ public class EmployeePage extends JPanel {
         JComboBox<String> comboBox_4 = new JComboBox<>();
 
         comboBox_4.setBounds(714, 83, 130, 30);
+        comboBox_4.addItem("Thứ tự sắp");
         comboBox_4.addItem("Tăng dần");
         comboBox_4.addItem("Giảm dần");
         panel.add(comboBox_4);
@@ -128,22 +147,12 @@ public class EmployeePage extends JPanel {
         add(panel_2);
         panel_2.setLayout(new BorderLayout());
 
-        String[] columnNames = { "STT", "Tên", "Giới Tính", "Năm Sinh", "Địa chỉ", "SĐT", "Phòng Ban", "Chức Vụ", "Lương" };
-        Object[][] data = nhanVienBUS.getDataObjectToRender(); // lấy data khúc này nè
-
-
-        DefaultTableModel model = new DefaultTableModel(data, columnNames) {
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-
-        JTable table = new JTable(model);
+        
+        table.setModel(model);
         table.setRowHeight(30);
         table.setFont(new Font("Arial", Font.PLAIN, 12));
         
-        
-
+       
         table.getColumnModel().getColumn(0).setPreferredWidth(30);  // stt
 		table.getColumnModel().getColumn(1).setPreferredWidth(150);  // ten
 		table.getColumnModel().getColumn(2).setPreferredWidth(65);   // gioitinh
@@ -153,7 +162,7 @@ public class EmployeePage extends JPanel {
 		table.getColumnModel().getColumn(6).setPreferredWidth(180);   // phongban
 		table.getColumnModel().getColumn(7).setPreferredWidth(130);  // chucvu
 		table.getColumnModel().getColumn(8).setPreferredWidth(90);  // luong
-		// đang 705
+
 
         JScrollPane scrollPane = new JScrollPane(table);      
         scrollPane.setBackground(Color.white);
@@ -161,7 +170,78 @@ public class EmployeePage extends JPanel {
 		scrollPane.setBorder(new EmptyBorder(0,0,0,0));
         panel_2.add(scrollPane, BorderLayout.CENTER);
 
+
+
+        // ----- EVENT -------
+        
+        comboBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    String selectedOption = (String) comboBox.getSelectedItem();
+                    event_name[0] = selectedOption;
+                    event_action();
+                }
+            }
+        });
+        comboBox_1.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    String selectedOption = (String) comboBox_1.getSelectedItem();
+                    event_name[1] = selectedOption;
+                    event_action();
+                }
+            }
+        });
+        comboBox_2.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    String selectedOption = (String) comboBox_2.getSelectedItem();
+                    event_name[2] = selectedOption;
+                    for(String i : event_name) {
+                    	System.out.print(i +",");
+                    }
+                    System.out.println();
+                }
+            }
+        });
+        comboBox_3.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    String selectedOption = (String) comboBox_3.getSelectedItem();
+                    event_name[3] = selectedOption;
+                    for(String i : event_name) {
+                    	System.out.print(i +",");
+                    }
+                    System.out.println();
+                }
+            }
+        });
+        comboBox_4.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    String selectedOption = (String) comboBox_4.getSelectedItem();
+                    event_name[4] = selectedOption;
+                    for(String i : event_name) {
+                    	System.out.print(i +",");
+                    }
+                    System.out.println();
+                }
+            }
+        });
+    }
+    
+    public void event_action() {
+        // thay đổi data tùy theo cá tính riêng của bản thân
+    	data = nhanVienBUS.changeDataValue(event_name);
+    	model.setDataVector(data, columnNames);
+        table.setModel(model);
     }
 
+    
    
 }

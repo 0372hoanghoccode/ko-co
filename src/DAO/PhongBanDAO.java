@@ -402,4 +402,27 @@ public class PhongBanDAO implements DAOInterface<PHONGBAN> {
         return data;
     }
 
+    public ArrayList<String> getTenPhongBan() {
+        ArrayList<String> data = new ArrayList<>();
+        Connection con = ConnectionManager.getConnection();
+        try {
+            String sql = "SELECT tenPhong FROM PHONGBAN";
+            PreparedStatement pst = con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            while(rs.next()) {
+                data.add(rs.getString("tenPhong"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionManager.closeConnection(con);
+        }
+        return data;
+    }
+    
+    
+
+
+
+
 }

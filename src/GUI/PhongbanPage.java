@@ -240,5 +240,7 @@ public class PhongbanPage extends JPanel {
         
         tableNV.getSelectionModel().addListSelectionListener(tableNVListener);
 		
+		
+
 	}
 }

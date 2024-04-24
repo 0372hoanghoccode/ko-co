@@ -642,4 +642,69 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
 				return null;
 			}
 
+
+			public ArrayList<NHANVIEN> renderChangeValue(String[] default_val,String[] event_name) {
+				Connection con = ConnectionManager.getConnection();
+				ArrayList<NHANVIEN> list = new ArrayList<>();
+				try {
+					String sql = "select * from CONNGUOI join NHANVIEN on CONNGUOI.CMND = NHANVIEN.CMND join CMND on CMND.soCMND = CONNGUOI.CMND join TRINHDO on NHANVIEN.maTrinhDo = TRINHDO.maTrinhDo join CHUCVU on NHANVIEN.maChucVu = CHUCVU.maChucVu join TAIKHOAN on TAIKHOAN.username = NHANVIEN.maNhanVien left join HOPDONGLAODONG on HOPDONGLAODONG.maHopDong = NHANVIEN.maHopDong join PHONGBAN on NHANVIEN.maPhong = PHONGBAN.maPhong where NHANVIEN.trangThai=1";
+					if (!default_val[0].equals(event_name[0])) {
+						sql += "and tenPhong = N'"+event_name[0]+"' ";
+					}
+					if (!default_val[1].equals(event_name[1])) {
+						sql += "and gioiTinh = N'"+event_name[1]+"' ";
+					}
+					PreparedStatement ps = con.prepareStatement(sql);
+					ResultSet rs = ps.executeQuery();
+					while(rs.next() ) {
+						NHANVIEN nv = null;
+						String str = rs.getString(5);
+						String arr[] = str.split(",");
+						String arr2[] = arr[0].split(" ");
+						String temp ="";
+						for(int i=1;i<arr2.length;i++) {
+							temp+=arr2[i]+" ";
+						}
+						temp = temp.trim();
+						
+						if (rs.getString(15)==null) { // Dòng 15 truy vấn là ngày bắt đầu thử việc
+							nv = new NHANVIENTHUVIEC();
+							((NHANVIENTHUVIEC)nv).setNgayBatDauThuViec(rs.getDate("ngayBatDauThuViec").toLocalDate().plusDays(2));
+							((NHANVIENTHUVIEC)nv).setNgayKetThucThuViec(rs.getDate("ngayKetThucThuViec").toLocalDate().plusDays(2));
+							((NHANVIENTHUVIEC)nv).setLuongThuViec(rs.getDouble("luongThuViec"));
+						}
+						else {
+							nv = new NHANVIENCHINHTHUC();
+							((NHANVIENCHINHTHUC)nv).setHOPDONG(new HOPDONGLAODONG(rs.getString("maHopDong"), rs.getDate("tuNgay").toLocalDate().plusDays(2), rs.getDate("denNgay").toLocalDate().plusDays(2), rs.getString("loaiHopDong"), rs.getDouble("luongCoBan")));
+						}
+						
+						nv.setMaNhanVien(rs.getString("maNhanVien"));
+						nv.setHoTen(rs.getString("hoTen"));
+						nv.setGioiTinh(rs.getString("gioiTinh"));
+						nv.setNgaySinh(rs.getDate("ngaySinh").toLocalDate().plusDays(2));
+						nv.setDiaChi(new DIACHI(arr2[0],temp, arr[1], arr[2], arr[3]));
+						nv.setDanToc(rs.getString("danToc"));
+						nv.setTonGiao(rs.getString("tonGiao"));
+						nv.setEmail(rs.getString("email"));
+						nv.setSdt(rs.getString("SDT"));
+						nv.setCmnd(new CMND(rs.getString("soCMND"),rs.getString("noiCap"),rs.getDate("ngayCap").toLocalDate().plusDays(2)));
+						
+						nv.setTaiKhoan(new TAIKHOAN(rs.getString("username"), rs.getString("pass"), rs.getString("maNhomQuyen"), rs.getString("avatar")));
+						nv.setChucVu(new CHUCVU(rs.getString("maChucVu"), rs.getString("tenChucVu"), rs.getDouble("phuCapChucVu"), rs.getDate("ngayNhanChuc").toLocalDate().plusDays(2)));
+						nv.setMaPhong(rs.getString("maPhong"));
+						nv.setTrinhDo(new TRINHDO(rs.getString("maTrinhDo"), rs.getString("trinhDoHocVan"), rs.getString("trinhDoChuyenMon"), rs.getString("chuyenNganh")));
+						list.add(nv);
+						
+						
+						
+					}
+				} catch(SQLException e) {
+					e.printStackTrace();
+				} finally {
+					ConnectionManager.closeConnection(con);
+				}
+
+				return list;
+			}
+
 }

@@ -68,6 +68,7 @@ public class TuyenDungPage_Them extends JFrame{
 	
 	public TuyenDungPage_Them() {
 		init();
+		addEventListeners();
 	}
 	public void init() {
 		// Khởi tạo màn hình 
@@ -225,6 +226,17 @@ public class TuyenDungPage_Them extends JFrame{
 ////		dc.setTextRefernce(textField_HanNop);
 ////		textField_HanNop.setFont(font);
 	}
+
+	private void addEventListeners() {
+        button_dong.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Đóng frame phụ này lại khi button_dong được nhấn
+                dispose();
+            }
+        });
+    }
+
 	public void setCbbChucVu(String data[]) {
 		String str[] = new String[data.length-2];
 		for(int i=2;i<data.length;i++) {
