@@ -439,4 +439,5 @@ public class TuyenDungPage_Them extends JFrame{
 	public void setNullCheckBox(JCheckBox nullCheckBox) {
 		this.nullCheckBox = nullCheckBox;
 	}
+	
 }

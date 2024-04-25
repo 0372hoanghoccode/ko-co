@@ -63,7 +63,7 @@ public class UngVienPage_TuyenUngVien extends JFrame{
 		
 		
 		JLabel label_img= new JLabel();
-		label_img.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/assets/img/adduv.png")).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT)));
+		label_img.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/assets/appIcon/icons8-search-24.png")).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT)));
 		panelContent.add(label_img);
 		label_img.setBounds(30,10,40,40);
 		
@@ -90,7 +90,7 @@ public class UngVienPage_TuyenUngVien extends JFrame{
 		label_avt.setOpaque(true);
 		label_avt.setBackground(Color.green);
 		label_avt.setFont(new Font("Arial",Font.BOLD,13));
-		label_avt.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/assets/img/user_img/none_user.jpg")).getImage().getScaledInstance(label_avt.getWidth(), label_avt.getHeight(), Image.SCALE_AREA_AVERAGING)));
+		label_avt.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/assets/appIcon/icons8-search-24.png")).getImage().getScaledInstance(label_avt.getWidth(), label_avt.getHeight(), Image.SCALE_AREA_AVERAGING)));
 		info_UngVien.add(label_avt);
 
 		listlabel = new ArrayList<>();
@@ -278,7 +278,7 @@ public class UngVienPage_TuyenUngVien extends JFrame{
 		
 		button_luu=new Button();
 		button_luu.setText("Lưu");
-		button_luu.setIcon(new ImageIcon(getClass().getResource("/assets/img/department_img/department_add_save.png")));
+		button_luu.setIcon(new ImageIcon(getClass().getResource("/assets/appIcon/icons8-search-24.png")));
 		panelContent.add(button_luu);
 		button_luu.setFont(new Font("Arial",1,14));
 		button_luu.setBounds(910,495,90,35);

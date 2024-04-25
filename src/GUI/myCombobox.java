@@ -28,7 +28,7 @@ public class myCombobox<E> extends JComboBox<E>{
 		removeArrow(this);
 		this.setLayout(null);
 		arrow = new JLabel("");
-		arrow.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/assets/img/arrow_cbb2.png")).getImage().getScaledInstance(13, 13, Image.SCALE_AREA_AVERAGING)));
+		arrow.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/assets/appIcon/icons8-search-24.png")).getImage().getScaledInstance(13, 13, Image.SCALE_AREA_AVERAGING)));
 		arrow.setBounds(0,0,0,0);
 		this.add(arrow);
 		

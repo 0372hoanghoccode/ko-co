@@ -75,7 +75,7 @@ public class UngVienPage_Them extends JFrame {
 
 
 		JLabel label_img= new JLabel();
-		label_img.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/assets/img/adduv.png")).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT)));
+		label_img.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/assets/appIcon/icons8-search-24.png")).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT)));
 		panelContent.add(label_img);
 		label_img.setBounds(40,35,40,40);
 		
@@ -84,7 +84,7 @@ public class UngVienPage_Them extends JFrame {
 		button_dong.setBounds(700,530,90,30);
 		button_dong.setForeground(new Color(0,128,255));
 		button_dong.setHorizontalAlignment(SwingConstants.LEFT);
-		button_dong.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/assets/img/3.png")).getImage().getScaledInstance(23, 20, Image.SCALE_DEFAULT)));
+		button_dong.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/assets/appIcon/icons8-search-24.png")).getImage().getScaledInstance(23, 20, Image.SCALE_DEFAULT)));
 
 		
 
@@ -93,7 +93,7 @@ public class UngVienPage_Them extends JFrame {
 		button_luu.setBounds(810,530,80,30);
 		button_luu.setForeground(new Color(0,128,255));
 		button_luu.setHorizontalAlignment(SwingConstants.LEFT);
-		button_luu.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/assets/img/2.png")).getImage().getScaledInstance(23, 23, Image.SCALE_DEFAULT)));
+		button_luu.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/assets/appIcon/icons8-search-24.png")).getImage().getScaledInstance(23, 23, Image.SCALE_DEFAULT)));
 		
 		JLabel label_MaTuyenDung = new JLabel("Mã tuyển dụng");
 		label_MaTuyenDung.setFont(new Font("Arial", 0, 15));
