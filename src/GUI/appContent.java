@@ -12,11 +12,13 @@ public class appContent extends JPanel {
     private EmployeePage employee;
     private PhongbanPage phongBan;
     private HopdongPage hopDong;
-    private ChamCongPage  chamCong;
+    private ChamCongPage1  chamCong;
     private LuongThuongPage luongThuongPage; 
     private DanhGiaPage danhGia;
     private TaiKhoanPage taiKhoanPage;
     private UngVien ungvienPage;
+    private ChamCongPage2 chamCongPage2;
+    private DanhGiaPage2 danhGiaPage2;
 
     public appContent() {
         init();
@@ -29,11 +31,13 @@ public class appContent extends JPanel {
         employee = new EmployeePage();
         phongBan = new PhongbanPage();
         hopDong = new HopdongPage();
-        chamCong= new ChamCongPage();
+        chamCong= new ChamCongPage1();
         luongThuongPage = new LuongThuongPage();
         danhGia= new DanhGiaPage();
         taiKhoanPage = new TaiKhoanPage();
         ungvienPage = new UngVien();
+        chamCongPage2= new ChamCongPage2();
+        danhGiaPage2= new DanhGiaPage2();
 
         add(home, "KHUNG1");
         add(employee, "KHUNG2");
@@ -44,6 +48,8 @@ public class appContent extends JPanel {
         add(danhGia, "KHUNG7");
         add(taiKhoanPage, "KHUNG8");
         add(ungvienPage,"KHUNG9");
+        add(chamCongPage2,"KHUNG10");
+        add(danhGiaPage2,"KHUNG11");
 
         createPageList();
         displayContent(0);
@@ -60,11 +66,22 @@ public class appContent extends JPanel {
         pages.add(danhGia);
         pages.add(taiKhoanPage);
         pages.add(ungvienPage);
+        pages.add(chamCongPage2);
+        pages.add(danhGiaPage2);
     }
 
     public void displayContent(int index) {
         ((CardLayout) this.getLayout()).show(this, "KHUNG" + (index + 1));
     }
+
+	public ChamCongPage1 getChamCong() {
+		return chamCong;
+	}
+
+	public void setChamCong(ChamCongPage1 chamCong) {
+		this.chamCong = chamCong;
+	}
+    
 
 }
 

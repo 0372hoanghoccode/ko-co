@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import connectionSQL.ConnectionManager;
+
+import java.lang.classfile.instruction.ReturnInstruction;
 import java.sql.Connection;
 
 public class ChamCongDAO implements DAOInterface<CHAMCONG> {
@@ -144,7 +146,10 @@ public class ChamCongDAO implements DAOInterface<CHAMCONG> {
         try {
             String ten = "";
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM BANGCHAMCONG JOIN NHANVIEN ON NHANVIEN.maNhanVien = BANGCHAMCONG.maNhanVien JOIN CONNGUOI ON CONNGUOI.CMND = NHANVIEN.CMND WHERE BANGCHAMCONG.maBangChamCong = '" + maBangChamCong + "' ");
+            ResultSet rs = st.executeQuery("SELECT * FROM BANGCHAMCONG "
+            		+ "JOIN NHANVIEN ON NHANVIEN.maNhanVien = BANGCHAMCONG.maNhanVien "
+            		+ "JOIN CONNGUOI ON CONNGUOI.CMND = NHANVIEN.CMND "
+            		+ "WHERE BANGCHAMCONG.maBangChamCong = '" + maBangChamCong + "' ");
 
             while (rs.next()) {
                 ten = rs.getString("maNhanVien") + " - " + rs.getString("hoTen");
@@ -240,4 +245,41 @@ public class ChamCongDAO implements DAOInterface<CHAMCONG> {
         }
         return null;
     }
+    
+    public ArrayList<CHAMCONG> renderChangevalue(String[] default_val, String[] event_name){
+    	Connection con=ConnectionManager.getConnection();
+    	ArrayList<CHAMCONG> list=new ArrayList<>();
+    	try {
+			String sql="select * from BANGCHAMCONG BCC join NHANVIEN NV on BCC.maNhanVien=NV.maNhanVien join PHONGBAN PB on NV.maPhong= PB.maPhong";
+			boolean check=false;
+			if (!default_val[0].equals(event_name[0])) {
+				sql +="where tenPhong = N'"+event_name[0]+"'";
+				check=true;
+			}
+			if(!default_val[1].equals(event_name[1]) || !default_val[2].equals(event_name[2])) {
+				if (check) 						
+					sql +=" and thangChamCong = N'"+event_name[1]+"'"+"and namChamCong = N'"+event_name[2]+"'";
+				else 
+					sql +=" where thangChamCong = N'"+event_name[1]+"'"+"and namChamCong = N'"+event_name[2]+"'";
+			}
+			PreparedStatement ps= con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				CHAMCONG cc=new CHAMCONG();
+				cc.setMaBangChamCong(rs.getString("maBangChamCong"));
+				cc.setMaNhanVien(rs.getString("maNhanVien"));
+				cc.setThangChamCong(rs.getInt("thangChamCong"));
+				cc.setNamChamCong(rs.getInt("namChamCong"));
+				cc.setSoNgayLamViec(rs.getInt("soNgayLamViec"));
+				cc.setSoNgayNghi(rs.getInt("soNgayNghi"));
+				cc.setSoNgayTre(rs.getInt("soNgayTre"));
+				cc.setSoGioLamThem(rs.getInt("soGioLamThem"));
+				list.add(cc);
+			}
+		} catch (Exception e) {
+			
+		}
+    	return list;
+    }
+    
 }

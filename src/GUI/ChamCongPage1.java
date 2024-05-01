@@ -1,5 +1,6 @@
 package GUI;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 
 import javax.swing.JPanel;
@@ -17,22 +18,40 @@ import javax.swing.table.DefaultTableModel;
 import com.toedter.calendar.JMonthChooser;
 import com.toedter.calendar.JYearChooser;
 
+import BUS.CHAMCONG_BUS;
+import BUS.PHONGBAN_BUS;
+
 import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 
-public class ChamCongPage extends JPanel {
-
+public class ChamCongPage1 extends JPanel {
+	
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
-	private JTable table;
-
-	/**
-	 * Create the panel.
-	 */
-	public ChamCongPage() {
+	JTable table=new JTable();
+	CHAMCONG_BUS chamcong_BUS= new CHAMCONG_BUS();
+	PHONGBAN_BUS phongban_BUS= new PHONGBAN_BUS();
+	String[] event_name=new String[] {
+			"Phòng Ban","Tháng","Năm"
+	};
+	String[] columnNames= {"STT", "Mã BCC","Mã nhân viên","Thời gian CC","Ngày làm việc","Nghỉ","Trễ","Giờ làm thêm"};
+	Object[][] data=chamcong_BUS.renderChamCongData();
+	DefaultTableModel model= new DefaultTableModel(data,columnNames) {
+		private static final long serialVersionUID = 1L;
+		public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+	};
+	
+	public ChamCongPage1() {
 		setLayout(null);
 		
 		JPanel panel = new JPanel();
@@ -62,9 +81,14 @@ public class ChamCongPage extends JPanel {
         searchIconLabel.setBounds(170, 0, 25, 30);
         searchPanel.add(searchIconLabel);
 		
+        
+        
 		JButton btnNewButton = new JButton("Thêm");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				appContent parentForm=(appContent) getParent();
+				setVisible(false);
+				parentForm.displayContent(9);
 			}
 		});
 		btnNewButton.setBounds(851, 17, 89, 23);
@@ -74,10 +98,13 @@ public class ChamCongPage extends JPanel {
 		lblNewLabel_1.setBounds(20, 53, 89, 14);
 		panel.add(lblNewLabel_1);
 		
-		JComboBox comboBox_2 = new JComboBox();		
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"Kế toán", "Nhân sự", "Kinh doanh"}));
-		comboBox_2.setSelectedIndex(-1);
+		JComboBox<String> comboBox_2=new JComboBox<>();
+		comboBox_2.setEditable(false);
+		comboBox_2.setBackground(Color.white);
+		comboBox_2.setOpaque(true);
 		comboBox_2.setBounds(722, 71, 115, 22);
+		for(String i: phongban_BUS.getTenPhongBan())
+			comboBox_2.addItem(i);
 		panel.add(comboBox_2);
 		
 		JLabel lblNewLabel_2 = new JLabel("Tháng:");
@@ -119,14 +146,19 @@ public class ChamCongPage extends JPanel {
 		scrollPane.setBounds(0, 0, 980, 335);
 		panel_1.add(scrollPane);
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"STT", "M\u00E3 b\u1EA3ng ch\u1EA5m c\u00F4ng", "M\u00E3 nh\u00E2n vi\u00EAn", "N\u0103m", "Th\u00E1ng", "Ng\u00E0y l\u00E0m vi\u1EC7c", "Ng\u00E0y ngh\u1EC9", "Ng\u00E0y tr\u1EC5", "Gi\u1EDD l\u00E0m th\u00EAm"
-			}
-		));
+		table.setModel(model);
+		table.setRowHeight(30);
+		table.setFont(new Font("Arial", Font.PLAIN, 12));
+	
+		table.getColumnModel().getColumn(0).setPreferredWidth(30);  // stt
+		table.getColumnModel().getColumn(1).setPreferredWidth(150);  // Ma BCC
+		table.getColumnModel().getColumn(2).setPreferredWidth(150);   // Ma Nhan Vien
+		table.getColumnModel().getColumn(3).setPreferredWidth(70);  // thoi gianCC
+		table.getColumnModel().getColumn(2).setPreferredWidth(150);
+		table.getColumnModel().getColumn(4).setPreferredWidth(80);  // nghi
+		table.getColumnModel().getColumn(5).setPreferredWidth(80);  // tre
+		table.getColumnModel().getColumn(6).setPreferredWidth(80);   // gio lam them
+		
 		scrollPane.setViewportView(table);
 		
 		JPanel panel_2 = new JPanel();
@@ -139,6 +171,38 @@ public class ChamCongPage extends JPanel {
 		textArea.setBackground(new Color(240, 240, 240));
 		textArea.setBounds(36, 35, 910, 143);
 		panel_2.add(textArea);
+		
+		
+		comboBox_2.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange()==ItemEvent.SELECTED) {
+					String selectedOption = (String) comboBox_2.getSelectedItem();
+					event_name[0]=selectedOption;
+					event_action();
+				}
+				
+			}
+		});
+		
+//		yearChooser.addComponentListener(new ChangeListener() {
+//		    @Override
+//		    public void stateChanged(ChangeEvent e) {
+//		        int selectedYear = yearChooser.getYear();
+//		        // Thực hiện các hành động cần thiết khi giá trị của JYearChooser thay đổi
+//		        // Ví dụ: Cập nhật dữ liệu hiển thị trên JTable dựa trên năm đã chọn
+//		        event_name[2] = String.valueOf(selectedYear);
+//		        event_action();
+//		    }
+//		});
+//
 
 	}
+	public void event_action() {
+		data = chamcong_BUS.changeDataValue(event_name);
+    	model.setDataVector(data, columnNames);
+        table.setModel(model);
+	}
+	
 }

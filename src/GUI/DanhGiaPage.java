@@ -10,6 +10,9 @@ import javax.swing.JTextField;
 
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
+
+import BUS.DANHGIA_BUS;
+
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.ImageIcon;
@@ -28,11 +31,22 @@ import javax.swing.DefaultComboBoxModel;
 public class DanhGiaPage extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JTable table;
-	private JTextField searchField;
+	JTextField searchField;
 	private JTextField ngayBDField;
 	private JTextField ngayKTField;
-
+	DANHGIA_BUS danhgia_BUS=new DANHGIA_BUS();
+	String[] columnNames= {"STT","Mã Đánh Giá","Nhân Viên","Thời Gian","Người Đánh Giá",
+			"Điểm Đánh Giá","XL Đánh Giá","Loại Đánh Giá"		
+	};
+	
+	Object[][] data= danhgia_BUS.renderAllDanhGiaData();
+	DefaultTableModel model = new DefaultTableModel(data, columnNames) {
+		private static final long serialVersionUID = 1L;
+		public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };
+    JTable table = new JTable();
 	/**
 	 * Create the panel.
 	 */
@@ -108,10 +122,23 @@ public class DanhGiaPage extends JPanel {
 		btnThem.setBackground(new Color(255, 255, 255));
 		btnThem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				appContent parentForm= (appContent) getParent();
+				setVisible(false);
+				parentForm.displayContent(10);
 			}
 		});
 		btnThem.setBounds(864, 29, 89, 23);
 		panel.add(btnThem);
+		
+		JButton btnChiTiet= new JButton("Chi tiết");
+		btnChiTiet.setForeground(new Color(0, 0, 0));
+		btnChiTiet.setBackground(new Color(255, 255, 255));
+		btnChiTiet.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnChiTiet.setBounds(864, 70, 89, 23);
+		panel.add(btnChiTiet);
 		
 		JLabel loaiDanhGia = new JLabel("Loại đánh giá:");
 		loaiDanhGia.setBounds(538, 78, 107, 14);
@@ -143,15 +170,18 @@ public class DanhGiaPage extends JPanel {
 		scrollPane.setBounds(10, 190, 980, 478);
 		add(scrollPane);
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"1", "1", "1", "1", "1", "1", "1", "1", "Chi Ti\u1EBFt"},
-			},
-			new String[] {
-				"STT", "M\u00E3 \u0111\u00E1nh gi\u00E1", "Nh\u00E2n vi\u00EAn", "Ng\u00E0y \u0111\u00E1nh gi\u00E1", "Ng\u01B0\u1EDDi \u0111\u00E1nh gi\u00E1", "\u0110i\u1EC3m \u0111\u00E1nh gi\u00E1", "X\u1EBFp lo\u1EA1i", "Tr\u1EA1ng th\u00E1i", "Xem chi ti\u1EBFt"
-			}
-		));
+		table.setModel(model);
+		table.setRowHeight(30);
+		table.setFont(new Font("Arial", Font.PLAIN, 12));
+		
+		table.getColumnModel().getColumn(0).setPreferredWidth(30);  // stt
+		table.getColumnModel().getColumn(1).setPreferredWidth(80);  // maDanhGia
+		table.getColumnModel().getColumn(2).setPreferredWidth(150);  // nhanVien
+		table.getColumnModel().getColumn(3).setPreferredWidth(50);  // thoiGian
+		table.getColumnModel().getColumn(4).setPreferredWidth(150);  //  nguoiDanhGia
+		table.getColumnModel().getColumn(5).setPreferredWidth(50);  // diemDanhGia
+		table.getColumnModel().getColumn(6).setPreferredWidth(80);  // xepLoai
+		table.getColumnModel().getColumn(7).setPreferredWidth(50);  // loai
 		scrollPane.setViewportView(table);
 		
 	
