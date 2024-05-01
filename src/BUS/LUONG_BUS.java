@@ -1,37 +1,71 @@
 package BUS;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import java.util.ArrayList;
 import DAO.LuongDAO;
 import DAO.NhanVienDAO;
 import DTO.LUONG;
+import DTO.NHANVIEN;
 import DTO.CHAMCONG;
+import DTO.HOPDONGLAODONG;
 
 public class LUONG_BUS {
-    
-    private LuongDAO luongDAO;
+	private final LuongDAO luong_dao = new LuongDAO();
+    private ArrayList<LUONG> list_luong = new ArrayList<>();
 
     public LUONG_BUS() {
-        this.luongDAO = new LuongDAO();
+	
+		list_luong = luong_dao.getList();
     }
 
     public ArrayList<LUONG> getList() {
-        return luongDAO.getList();
+        
+		return list_luong;
     }
+    
+	public int insert(LUONG luong) {
+		int result = luong_dao.insert(luong);
+		if (result > 0) {
+			list_luong.add(luong);
+		}
+		return result;
+	}
+    
+	public int update(LUONG luong) {
+		int result = luong_dao.update(luong);
+		if (result > 0) {
+			int index = getIndexByMaLuong(luong.getMaLuong());
+			if (index != -1) {
+				list_luong.set(index, luong);
+			}
+		}
+		return result;
+	}
+    
+	public int delete(String maLuong) {
+		int result = luong_dao.del(maLuong);
+		if (result > 0) {
+			int index = getIndexByMaLuong(maLuong);
+			if (index != -1) {
+				list_luong.remove(index);
+			}
+		}
+		return result;
+	}
+    
+	private int getIndexByMaLuong(String maLuong) {
+		for (int i = 0; i < list_luong.size(); i++) {
+			if (list_luong.get(i).getMaLuong().equals(maLuong)) {
+				return i;
+			}
+		}
+		return -1;  // Nếu không tìm thấy đối tượng
+	}
+	
 
-    public int insert(LUONG x) {
-        // Có thể thực hiện các kiểm tra trước khi thêm dữ liệu vào cơ sở dữ liệu ở đây
-        return luongDAO.insert(x);
-    }
-
-    public int update(LUONG x) {
-        // Có thể thực hiện các kiểm tra trước khi cập nhật dữ liệu vào cơ sở dữ liệu ở đây
-        return luongDAO.update(x);
-    }
-
-    public int del(String maLuong) {
-        // Có thể thực hiện các kiểm tra trước khi xóa dữ liệu khỏi cơ sở dữ liệu ở đây
-        return luongDAO.del(maLuong);
-    }
+   
 
     public static LUONG chuyenBangChamCongSangLuong(CHAMCONG bcc,double thuong,double phucapkhac,double khoantrukhac) {
 		LUONG x = new LUONG();
@@ -86,4 +120,35 @@ public class LUONG_BUS {
         }
         return s;
 	}
+
+	public Object[][] getDataObjectToRender() {
+		int n = list_luong.size();  
+		Object[][] data = new Object[n][];  
+	
+		for (int i = 0; i < n; i++) {
+			LUONG luong = list_luong.get(i);  
+	
+			data[i] = new Object[] {
+				i + 1 + "",  // STT
+				luong.getMaLuong(),
+				luong.getMaBangChamCong(),
+				formatCurrency(luong.getLuongThucTe()),  
+				formatCurrency(luong.getLuongThuong()),
+				formatCurrency(luong.getPhuCapChucVu()),
+				formatCurrency(luong.getPhuCapKhac()),
+				formatCurrency(luong.getKhoanTruBaoHiem()),
+				formatCurrency(luong.getKhoanTruKhac()),
+				formatCurrency(luong.getThue()),
+				formatCurrency(luong.getThucLanh())
+			};
+		}
+		return data;
+	}
+	
+	public static String formatCurrency(double value) {
+		NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+		return format.format(value);
+	}
+	
+
 }

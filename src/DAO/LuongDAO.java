@@ -109,6 +109,7 @@ public class LuongDAO implements DAOInterface<LUONG>{
 					+ "join BANGCHAMCONG bcc on bcc.maBangChamCong = l.maBangChamCong\r\n"
 					+ "join NHANVIEN nv on nv.maNhanVien = bcc.maNhanVien\r\n"
 					+ "join CONNGUOI cn on cn.CMND = nv.CMND left join HOPDONGLAODONG hd on hd.maHopDong = nv.maHopDong";
+					
 			ResultSet rs = st.executeQuery(sql);
 			int count = 0;
 			while(rs.next()) {

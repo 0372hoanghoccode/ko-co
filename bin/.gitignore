@@ -2,6 +2,7 @@
 /DAO/
 /DTO/
 /GUI/
+<<<<<<< HEAD
 /TimingFramework-0.55.jar
 /assets/
 /background-login.jpg
@@ -14,3 +15,6 @@
 /junit-4.6.jar
 /run/
 /sqljdbc4.jar
+=======
+/BUS/
+>>>>>>> cbd146b0166b5bb1d7525781459c67ec14b39a49
