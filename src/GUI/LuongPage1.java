@@ -14,13 +14,16 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.SwingConstants;
 import java.time.LocalDate;
 import javax.swing.ImageIcon;
+import BUS.LUONG_BUS;
+import BUS.NhanVienBUS;
+import BUS.PHONGBAN_BUS;
 
 public class LuongPage1 extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private JTextField textField;
-    private JTable table;
-
+    LUONG_BUS luongBUS = new LUONG_BUS();
+    PHONGBAN_BUS phongban_BUS = new PHONGBAN_BUS();
     /**
      * Create the panel.
      */
@@ -32,16 +35,23 @@ public class LuongPage1 extends JPanel {
         scrollPane.setBounds(0, 118, 985, 490);
         add(scrollPane);
         
-        table = new JTable();
-        table.setModel(new DefaultTableModel(
-            new Object[][] {
-            },
-            new String[] {
-                "STT", "Nhân Viên", "Thời Gian", "Lương cơ bản",
+        String[] columnNames = { 
+        "STT", "Nhân Viên", "Thời Gian", "Lương cơ bản",
                 "Lương thực tế", "Phụ cấp", "Lương thưởng", 
                 "Các khoản trừ", "Thuế", "Thực lãnh"
-            }
-        ));
+    };
+    Object[][] data = luongBUS.getDataObjectToRender(); 
+    DefaultTableModel model = new DefaultTableModel(data, columnNames) {
+		private static final long serialVersionUID = 1L;
+		public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };
+    JTable table = new JTable(model);
+    
+    String[] event_name = new String[]{
+    	"Năm", "Tháng", "Phòng ban", "khoảng lương", "Thứ tự sắp"
+    };
         scrollPane.setViewportView(table);
         
         JPanel panel = new JPanel();
@@ -55,42 +65,52 @@ public class LuongPage1 extends JPanel {
         panel.add(lblNewLabel);
         lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
         
-        JComboBox<Integer> comboBox_nam = new JComboBox<>();
+        JComboBox<String> comboBox_nam = new JComboBox<>();
         comboBox_nam.setBounds(72, 62, 62, 31);
         panel.add(comboBox_nam);
-        // Thêm dữ liệu vào comboBox_nam (các năm gần đây)
-        int currentYear = LocalDate.now().getYear();
-        for (int year = currentYear; year >= currentYear - 10; year--) {
-            comboBox_nam.addItem(year);
-        }
-        // Thiết lập giá trị mặc định cho comboBox_nam
-        comboBox_nam.setSelectedItem(currentYear); // Chọn năm hiện tại
         
-        JComboBox<Integer> comboBox_thang = new JComboBox<>();
+        //combobox năm
+        comboBox_nam.addItem("Năm");
+
+        for (int year = 2020; year <= 2024; year++) {
+         comboBox_nam.addItem(String.valueOf(year));
+        }
+
+        comboBox_nam.setSelectedItem("Năm");
+        //combobox tháng
+        JComboBox<String> comboBox_thang = new JComboBox<>();
         comboBox_thang.setBounds(214, 62, 97, 31);
         panel.add(comboBox_thang);
-        // them dư lieu 12 tháng vào
+
+        comboBox_thang.addItem("Tháng");
+
         for (int month = 1; month <= 12; month++) {
-            comboBox_thang.addItem(month);
+          comboBox_thang.addItem(String.format("Tháng %d", month));
         }
-        // thiet lap mac dinh
-        comboBox_thang.setSelectedItem(LocalDate.now().getMonthValue()); // chọn tháng hiện tại
+
+        comboBox_thang.setSelectedItem("Tháng");
+
         
         JComboBox<String> comboBox_phongBan = new JComboBox<>();
         comboBox_phongBan.setBounds(368, 62, 107, 31);
         panel.add(comboBox_phongBan);
-        
-        comboBox_phongBan.addItem("Phòng A");
-        comboBox_phongBan.addItem("Phòng B");
-        comboBox_phongBan.addItem("Phòng C");
-        
+
+        comboBox_phongBan.setEditable(false);
+        comboBox_phongBan.setBackground(Color.WHITE);
+        comboBox_phongBan.setOpaque(true);
+        comboBox_phongBan.addItem("Phòng ban");
+        for (String i : phongban_BUS.getTenPhongBan()) {
+            comboBox_phongBan.addItem(i);
+        }
+        panel.add(comboBox_phongBan);
         JComboBox<String> comboBox_sort = new JComboBox<>();
         comboBox_sort.setBounds(488, 62, 107, 31);
         panel.add(comboBox_sort);
         
-        comboBox_sort.addItem("Thời gian");
-        comboBox_sort.addItem("Lương thưởng");
-        comboBox_sort.addItem("Thực lãnh");
+        comboBox_sort.addItem("Khoảng lương");
+        comboBox_sort.addItem("Dưới 10 củ");
+        comboBox_sort.addItem("10 - 20 củ");
+        comboBox_sort.addItem("Trên 20 củ");
         
         JComboBox<String> comboBox_order = new JComboBox<>();
         comboBox_order.setBounds(607, 62, 107, 31);

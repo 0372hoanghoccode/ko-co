@@ -231,12 +231,12 @@ public class UngVienPage extends JPanel {
 	        renderData();
 	        
 	        scrollPane = new JScrollPane(objectTable);
-	        scrollPane.setBounds(20, 214, 947, 354);
+	        scrollPane.setBounds(20, 214, 947, 413);
 	        scrollPane.setVerticalScrollBar(new myScrollBar());
 	        scrollPane.setBorder(new LineBorder(Color.decode("#dfe4ea"),3));
 	        this.add(scrollPane);
 	        
-			this.setBounds(220,46,990,579);
+			this.setBounds(220,46,990,599);
 			this.setBackground(UIManager.getColor("Button.disabledShadow"));
 			this.setVisible(false);
 		}
