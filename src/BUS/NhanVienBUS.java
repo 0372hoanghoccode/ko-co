@@ -7,6 +7,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
+import java.util.Collections;
+import java.util.Comparator;
+
+
 import DAO.NhanVienDAO;
 
 import DTO.NHANVIEN;
@@ -83,7 +87,7 @@ public class NhanVienBUS {
 
             data[i] = new Object[] {
                 i+1 + "", 
-                temp_nv.getHoTen(),
+                temp_nv.getMaNhanVien() + " - " + temp_nv.getHoTen() ,
                 temp_nv.getGioiTinh(),
                 formatDate(temp_nv.getNgaySinh()),
                 temp_nv.getDiaChi().toString(),
@@ -101,30 +105,95 @@ public class NhanVienBUS {
     	String[] default_val = new String[]{
     	    	"Phòng ban", "Giới tính", "Độ tuổi", "Thuộc tính sắp xếp", "Thứ tự sắp"
         };
-        ArrayList<NHANVIEN> list_render = nhanvien_dao.renderChangeValue(default_val, event_name);
-        int n = list_render.size();
-        Object[][] data = new Object[n][];
-
-        for (int i = 0; i < n ;i++) {
-            NHANVIEN temp_nv = list_render.get(i);
-
-            data[i] = new Object[] {
-                i+1 + "", 
-                temp_nv.getHoTen(),
-                temp_nv.getGioiTinh(),
-                formatDate(temp_nv.getNgaySinh()),
-                temp_nv.getDiaChi().toString(),
-                temp_nv.getSdt(),
-                DAO.PhongBanDAO.getInstance().getTenTuMaSo(temp_nv.getMaPhong()),
-                temp_nv.getChucVu().getTenChucVu(),
-                formatSalary(temp_nv.getMucLuongChung()),
-            };
-
-        }
-    	return data;
-    	
+        list_nhanvien = nhanvien_dao.renderChangeValue(default_val, event_name);
+        
+    	return getDataObjectToRender();
     	
     }
 
+    public Object[] renderSelectedNhanVien(String maNhanVien) {
+        NHANVIEN nv = nhanvien_dao.getNhanVien(maNhanVien);
+        Object[] data = new Object[13];
+        data[0] = nv.getMaNhanVien();
+        data[1] = nv.getHoTen();
+        data[2] = nv.getGioiTinh();
+        data[3] = formatDate(nv.getNgaySinh());
+        data[4] = nv.getDiaChi().toString();
+        data[5] = nv.getSdt();
+        data[6] = nv.getDanToc();
+        data[7] = nv.getTonGiao();
+        data[8] = nv.getEmail();
+        data[9] = nv.getMaPhong();
+        data[10] = nv.getTrinhDo().getMaTrinhDo();
+        data[11] = nv.getChucVu().getMaChucVu();
+        data[12] = formatSalary(nv.getMucLuongChung());
+        return data;
+    }
+
+    // Tên
+    public Object[][] sortNhanVienByNameAscending() {
+        Collections.sort(list_nhanvien, new Comparator<NHANVIEN>() {
+            @Override
+            public int compare(NHANVIEN nv1, NHANVIEN nv2) {
+                return nv1.getHoTen().compareTo(nv2.getHoTen());
+            }
+        });
+        return getDataObjectToRender();
+
+    }
+    public Object[][] sortNhanVienByNameDescending() {
+        Collections.sort(list_nhanvien, new Comparator<NHANVIEN>() {
+            @Override
+            public int compare(NHANVIEN nv1, NHANVIEN nv2) {
+                return nv1.getHoTen().compareTo(nv2.getHoTen());
+            }
+        });
+        return getDataObjectToRender();
+    }
+
+    // Ngày sinh
+    public Object[][] sortNhanVienByAgeAscending() {
+        Collections.sort(list_nhanvien, new Comparator<NHANVIEN>() {
+            @Override
+            public int compare(NHANVIEN nv1, NHANVIEN nv2) {
+                return nv1.getNgaySinh().compareTo(nv2.getNgaySinh());
+            }
+        });
+        return getDataObjectToRender();
+    }
+    
+    public Object[][] sortNhanVienByAgeDescending() {
+        Collections.sort(list_nhanvien, new Comparator<NHANVIEN>() {
+            @Override
+            public int compare(NHANVIEN nv1, NHANVIEN nv2) {
+                return nv2.getNgaySinh().compareTo(nv1.getNgaySinh());
+            }
+        });
+        return getDataObjectToRender();
+    }
+
+
+    // Lương
+    public Object[][] sortNhanVienBySalaryAscending() {
+        Collections.sort(list_nhanvien, new Comparator<NHANVIEN>() {
+            @Override
+            public int compare(NHANVIEN nv1, NHANVIEN nv2) {
+                return Double.compare(nv1.getMucLuongChung(), nv2.getMucLuongChung());
+            }
+        });
+        return getDataObjectToRender();
+    }
+    
+    public Object[][] sortNhanVienBySalaryDescending() {
+        Collections.sort(list_nhanvien, new Comparator<NHANVIEN>() {
+            @Override
+            public int compare(NHANVIEN nv1, NHANVIEN nv2) {
+                return Double.compare(nv2.getMucLuongChung(), nv1.getMucLuongChung());
+            }
+        });
+        return getDataObjectToRender();
+    }
+    
+    
 
 }

@@ -9,6 +9,8 @@ import java.awt.event.ItemListener;
 
 import BUS.NhanVienBUS;
 import BUS.PHONGBAN_BUS;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
 
@@ -22,7 +24,7 @@ public class EmployeePage extends JPanel {
     String[] event_name = new String[]{
     	"Phòng ban", "Giới tính", "Độ tuổi", "Thuộc tính sắp xếp", "Thứ tự sắp"
     };
-    String[] columnNames = { "STT", "Tên", "Giới Tính", "Năm Sinh", "Địa chỉ", "SĐT", "Phòng Ban", "Chức Vụ", "Lương" };
+    String[] columnNames = { "STT", "Mã - Tên", "Giới Tính", "Năm Sinh", "Địa chỉ", "SĐT", "Phòng Ban", "Chức Vụ", "Lương" };
     Object[][] data = nhanVienBUS.getDataObjectToRender(); 
     DefaultTableModel model = new DefaultTableModel(data, columnNames) {
 		private static final long serialVersionUID = 1L;
@@ -67,19 +69,20 @@ public class EmployeePage extends JPanel {
         panel.add(comboBox);
 
         JComboBox<String> comboBox_1 = new JComboBox<>();
-        comboBox_1.setBounds(236, 83, 112, 30);
+        comboBox_1.setBounds(200, 83, 88, 30);
         comboBox_1.addItem("Giới tính");
         comboBox_1.addItem("Nam");
         comboBox_1.addItem("Nữ");
         panel.add(comboBox_1);
 
         JComboBox<String> comboBox_2 = new JComboBox<>();
-        comboBox_2.setBounds(377, 83, 120, 30);
+        comboBox_2.setBounds(298, 83, 104, 30);
         comboBox_2.addItem("Độ tuổi");
-        comboBox_2.addItem("Dưới 25");
-        comboBox_2.addItem("25 - 35");
-        comboBox_2.addItem("36 - 45");
-        comboBox_2.addItem("Trên 45");
+        comboBox_2.addItem("18-25");
+        comboBox_2.addItem("26-34");
+        comboBox_2.addItem("35-44");
+        comboBox_2.addItem("45-54");
+        comboBox_2.addItem("55-61");
         
         panel.add(comboBox_2);
 
@@ -92,15 +95,14 @@ public class EmployeePage extends JPanel {
 
         comboBox_3.setBounds(547, 83, 123, 30);
         comboBox_3.addItem("Thuộc tính sắp xếp");
-        comboBox_3.addItem("Mã nhân viên");
+        comboBox_3.addItem("Tên nhân viên");
         comboBox_3.addItem("Độ tuổi");
         comboBox_3.addItem("Mức lương");
         panel.add(comboBox_3);
 
         JComboBox<String> comboBox_4 = new JComboBox<>();
 
-        comboBox_4.setBounds(714, 83, 130, 30);
-        comboBox_4.addItem("Thứ tự sắp");
+        comboBox_4.setBounds(680, 83, 130, 30);
         comboBox_4.addItem("Tăng dần");
         comboBox_4.addItem("Giảm dần");
         panel.add(comboBox_4);
@@ -123,22 +125,31 @@ public class EmployeePage extends JPanel {
 
         JButton btnNewButton = new JButton("");
         btnNewButton.setIcon(new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-reset-24.png")));
-        btnNewButton.setBounds(749, 19, 50, 29);
+        btnNewButton.setBounds(915, 20, 50, 29);
         panel.add(btnNewButton);
 
         JButton btnNewButton_1 = new JButton("");
         btnNewButton_1.setIcon(new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-user-24.png")));
-        btnNewButton_1.setBounds(679, 18, 50, 30);
+        btnNewButton_1.setBounds(831, 19, 74, 30);
         panel.add(btnNewButton_1);
 
         JButton btnNewButton_2 = new JButton("");
         btnNewButton_2.setIcon(new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-user-24.png")));
-        btnNewButton_2.setBounds(814, 19, 146, 30);
+        btnNewButton_2.setBounds(915, 83, 50, 30);
         panel.add(btnNewButton_2);
 
         JButton btnNewButton_3 = new JButton("");
+        btnNewButton_3.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+                int viewRow = table.getSelectedRow();
+                String[] maVaTen = ((String) table.getValueAt(viewRow, 1)).split(" - ");
+        		Object[] data = nhanVienBUS.renderSelectedNhanVien(maVaTen[0]);
+                EmployeeDetail employeeDetail = new EmployeeDetail(data);
+                employeeDetail.setVisible(true);
+        	}
+        });
         btnNewButton_3.setIcon(new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-reset-24.png")));
-        btnNewButton_3.setBounds(895, 82, 50, 31);
+        btnNewButton_3.setBounds(855, 83, 50, 30);
         panel.add(btnNewButton_3);
 
         JPanel panel_2 = new JPanel();
@@ -151,7 +162,7 @@ public class EmployeePage extends JPanel {
         table.setModel(model);
         table.setRowHeight(30);
         table.setFont(new Font("Arial", Font.PLAIN, 12));
-        
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
        
         table.getColumnModel().getColumn(0).setPreferredWidth(30);  // stt
 		table.getColumnModel().getColumn(1).setPreferredWidth(150);  // ten
@@ -174,6 +185,11 @@ public class EmployeePage extends JPanel {
 
         // ----- EVENT -------
         
+        // 3 là reset, 2 là chi tiết
+
+        
+
+
         comboBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -200,36 +216,29 @@ public class EmployeePage extends JPanel {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     String selectedOption = (String) comboBox_2.getSelectedItem();
                     event_name[2] = selectedOption;
-                    for(String i : event_name) {
-                    	System.out.print(i +",");
-                    }
-                    System.out.println();
+                    event_action();
                 }
             }
         });
+        // Thuộc tính sắp
         comboBox_3.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     String selectedOption = (String) comboBox_3.getSelectedItem();
                     event_name[3] = selectedOption;
-                    for(String i : event_name) {
-                    	System.out.print(i +",");
-                    }
-                    System.out.println();
+                    event_action2();
                 }
             }
         });
+        // Thứ tự sắp
         comboBox_4.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     String selectedOption = (String) comboBox_4.getSelectedItem();
                     event_name[4] = selectedOption;
-                    for(String i : event_name) {
-                    	System.out.print(i +",");
-                    }
-                    System.out.println();
+                    event_action2();
                 }
             }
         });
@@ -242,6 +251,33 @@ public class EmployeePage extends JPanel {
         table.setModel(model);
     }
 
+    public void event_action2() {
+        switch(event_name[3]) {
+            case "Tên nhân viên":
+                if (event_name[4].equals("Tăng dần")) {
+                    data = nhanVienBUS.sortNhanVienByNameAscending();
+                } else {
+                    data = nhanVienBUS.sortNhanVienByNameDescending();
+                }
+                break;
+            case "Độ tuổi":
+                if (event_name[4].equals("Tăng dần")) {
+                    data = nhanVienBUS.sortNhanVienByAgeAscending();
+                } else {
+                    data = nhanVienBUS.sortNhanVienByAgeDescending();
+                }
+                break;
+            case "Mức lương":
+                if (event_name[4].equals("Tăng dần")) {
+                    data = nhanVienBUS.sortNhanVienBySalaryAscending();
+                } else {
+                    data = nhanVienBUS.sortNhanVienBySalaryDescending();
+                }
+                break;
+        }
+        model.setDataVector(data, columnNames);
+        table.setModel(model);
+    }
     
    
 }
