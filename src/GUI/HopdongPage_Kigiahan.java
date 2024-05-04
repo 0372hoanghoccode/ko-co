@@ -23,6 +23,14 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -41,6 +49,7 @@ import javax.swing.plaf.basic.BasicComboBoxUI;
 import javax.swing.plaf.basic.ComboPopup;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+
 
 import BUS.PHONGBAN_BUS;
 import DAO.LuongDAO;
@@ -65,10 +74,11 @@ public class HopdongPage_Kigiahan extends JPanel{
 	private Object[][] data;
 	private static String[] columnName = {"STT","Nhân viên","Phòng ban","Thử việc từ"};
 	 private PHONGBAN_BUS phongban_BUS = new PHONGBAN_BUS();
+	 private NhanVienDAO nhanvienDAO = new NhanVienDAO();
 	
 	public HopdongPage_Kigiahan() {
 		listlabel = new ArrayList<>();
-		data = new Object[0][4];
+		data = nhanvienDAO.getDanhSachNhanVienThuViecToRender();
 		model = new DefaultTableModel(data,columnName);
 		init();
 	}
@@ -102,40 +112,37 @@ public class HopdongPage_Kigiahan extends JPanel{
         }
         panelFeature.add(cbbPhong);
 
+		JComboBox<String> cbbSort = new JComboBox<>();
+        String[] cbbSortString = {"Sắp xếp theo: Mã nhân viên", "Sắp xếp theo: Ngày thử việc"};
+        cbbSort.setModel(new DefaultComboBoxModel<>(cbbSortString));
+        cbbSort.setFont(new Font("Arial", Font.BOLD, 12));
+        cbbSort.setForeground(new Color(0, 0, 0, 200));
+        cbbSort.setBounds(240, 45, 200, 26);
+        panelFeature.add(cbbSort);
 
-		
-		
-		cbbSort = new myCombobox<>();
-		String[] cbbSortString = {"Sắp xếp theo: Mã nhân viên","Sắp xếp theo: Ngày thử việc"};
-		cbbSort.setModel(new DefaultComboBoxModel<>(cbbSortString));
-		cbbSort.setFont(new Font("Arial",1,12));
-		cbbSort.setForeground(new Color(0,0,0,200));
-		cbbSort.setBounds(240,45,200,26);
-		panelFeature.add(cbbSort);
-		((myCombobox<String>)cbbSort).showArrow();
-		cbbSort2 = new myCombobox<>();
-		String[] cbbSortString2 = {"Tăng dần","Giảm dần"};
-		cbbSort2.setModel(new DefaultComboBoxModel<>(cbbSortString2));
-		cbbSort2.setFont(new Font("Arial",1,12));
-		cbbSort2.setForeground(new Color(0,0,0,200));
-		cbbSort2.setBounds(450,45,100,26);
-		panelFeature.add(cbbSort2);
-		((myCombobox<String>)cbbSort2).showArrow();
-		JTextField tfFind = new JTextField();
-		tfFind.setFont(new Font("Arial",0,14));
-		tfFind.setText(" Tìm kiếm nhanh...");
-		tfFind.setForeground(new Color(0,0,0,100));
-		tfFind.setBorder(new LineBorder(Color.decode("#3498db"),2));
-		tfFind.setBounds(810,45,230,26);
-		panelFeature.add(tfFind);
-		JButton btnFind = new JButton("");
-		btnFind.setFont(new Font("sansserif",1,13));
-		btnFind.setIcon(new ImageIcon(getClass().getResource("/assets/appIcon/icons8-reset-24.png")));
-		btnFind.setBounds(1040,45,30,26);
-		btnFind.setBackground(Color.decode("#3498db"));
-		btnFind.setBorderPainted(false);
-		btnFind.setFocusPainted(false);
-		panelFeature.add(btnFind);
+        JComboBox<String> cbbSort2 = new JComboBox<>();
+        String[] cbbSortString2 = {"Tăng dần", "Giảm dần"};
+        cbbSort2.setModel(new DefaultComboBoxModel<>(cbbSortString2));
+        cbbSort2.setFont(new Font("Arial", Font.BOLD, 12));
+        cbbSort2.setForeground(new Color(0, 0, 0, 200));
+        cbbSort2.setBounds(450, 45, 100, 26);
+        panelFeature.add(cbbSort2);
+
+		// JTextField tfFind = new JTextField();
+		// tfFind.setFont(new Font("Arial",0,14));
+		// tfFind.setText(" Tìm kiếm nhanh...");
+		// tfFind.setForeground(new Color(0,0,0,100));
+		// tfFind.setBorder(new LineBorder(Color.decode("#3498db"),2));
+		// tfFind.setBounds(810,45,230,26);
+		// panelFeature.add(tfFind);
+		// JButton btnFind = new JButton("");
+		// btnFind.setFont(new Font("sansserif",1,13));
+		// btnFind.setIcon(new ImageIcon(getClass().getResource("/assets/appIcon/icons8-reset-24.png")));
+		// btnFind.setBounds(1040,45,30,26);
+		// btnFind.setBackground(Color.decode("#3498db"));
+		// btnFind.setBorderPainted(false);
+		// btnFind.setFocusPainted(false);
+		// panelFeature.add(btnFind);
 		
 		
 		JPanel panelThuong = new JPanel();
@@ -371,7 +378,7 @@ public class HopdongPage_Kigiahan extends JPanel{
 		jsp1.setBackground(Color.white);
 		jsp1.setVerticalScrollBar(new myScrollBar());
 		jsp1.setBorder(new EmptyBorder(0,0,0,0));
-		jsp1.setBounds(0,96,850,500);
+		jsp1.setBounds(0,96,645,500);
 		this.add(jsp1);
 
 		table = new myTable();
@@ -403,7 +410,7 @@ public class HopdongPage_Kigiahan extends JPanel{
 
 		table.setModel(model);
 		
-		formatSizeColumn();
+//		formatSizeColumn();
 
 		tfBatDauHopDong.getDocument().addDocumentListener(new DocumentListener() {
 		    @Override
@@ -438,13 +445,55 @@ public class HopdongPage_Kigiahan extends JPanel{
 	}
 	public void formatSizeColumn() {
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		table.getColumnModel().getColumn(0).setPreferredWidth(60);  // stt
-		table.getColumnModel().getColumn(1).setPreferredWidth(220);  // anh
-		table.getColumnModel().getColumn(2).setPreferredWidth(240);  // ten
-		table.getColumnModel().getColumn(3).setPreferredWidth(120);  // ten
+		table.getColumnModel().getColumn(0).setPreferredWidth(60);
+		table.getColumnModel().getColumn(1).setPreferredWidth(220);  
+		table.getColumnModel().getColumn(2).setPreferredWidth(240); 
+		table.getColumnModel().getColumn(3).setPreferredWidth(120);  
 		
+		cbbPhong.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    updateTable();
+                    System.out.println("Phòng đã chọn: " + cbbPhong.getSelectedItem());
+                }
+            }
+        });
 		
-	}
+        cbbSort.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    updateTable();
+                    System.out.println("Sắp xếp đã chọn: " + cbbSort.getSelectedItem());
+                }
+            }
+        });
+
+        cbbSort2.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    updateTable();
+                    System.out.println("Chế độ sắp xếp đã chọn: " + cbbSort2.getSelectedItem());
+                }
+            }
+        });
+    }
+
+    private void updateTable() {
+        String selectedPhong = (String) cbbPhong.getSelectedItem();
+        int selectedSortBy = cbbSort.getSelectedIndex();
+        int selectedSortMode = cbbSort2.getSelectedIndex();
+
+        Object[][] newData = nhanvienDAO.getDanhSachNhanVienThuViecToRender(selectedPhong, selectedSortBy, selectedSortMode);
+        model.setRowCount(0); 
+        for (Object[] row : newData) {
+            model.addRow(row); 
+        }
+    }
+    
+	
 	public myCombobox<String> getCbbPhong() {
 		return cbbPhong;
 	}
