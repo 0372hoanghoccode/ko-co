@@ -16,7 +16,7 @@ public class appContent extends JPanel {
     private LuongThuongPage luongThuongPage; 
     private DanhGiaPage danhGia;
     private TaiKhoanPage taiKhoanPage;
-    private UngVien ungvienPage;
+    private UngVien ungvienPage; // tuyển dụng nằm trong ứng viên
     private ChamCongPage2 chamCongPage2;
     private DanhGiaPage2 danhGiaPage2;
 
@@ -82,6 +82,21 @@ public class appContent extends JPanel {
 		this.chamCong = chamCong;
 	}
     
+    public UngVien getUngvienPage() {
+        return ungvienPage;
+    }
+    
+    public appContent getAppContent() {
+        return this;
+    }
+
+    public UngVien getUngvien() {
+        return ungvienPage;
+    }   
+
+    public EmployeePage getEmployeePage() {
+        return employee;
+    }   
 
 }
 

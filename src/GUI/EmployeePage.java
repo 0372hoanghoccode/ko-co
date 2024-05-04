@@ -21,6 +21,10 @@ public class EmployeePage extends JPanel {
     PHONGBAN_BUS phongban_BUS = new PHONGBAN_BUS();
 
 
+    JButton btnNewButton_2;
+
+
+
     String[] event_name = new String[]{
     	"Phòng ban", "Giới tính", "Độ tuổi", "Thuộc tính sắp xếp", "Thứ tự sắp"
     };
@@ -133,13 +137,8 @@ public class EmployeePage extends JPanel {
         btnNewButton_1.setBounds(831, 19, 74, 30);
         panel.add(btnNewButton_1);
 
-        JButton btnNewButton_2 = new JButton("");
-        btnNewButton_2.setIcon(new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-user-24.png")));
-        btnNewButton_2.setBounds(915, 83, 50, 30);
-        panel.add(btnNewButton_2);
-
-        JButton btnNewButton_3 = new JButton("");
-        btnNewButton_3.addActionListener(new ActionListener() {
+        btnNewButton_2 = new JButton(""); // chi tiết
+        btnNewButton_2.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
                 int viewRow = table.getSelectedRow();
                 String[] maVaTen = ((String) table.getValueAt(viewRow, 1)).split(" - ");
@@ -148,6 +147,11 @@ public class EmployeePage extends JPanel {
                 employeeDetail.setVisible(true);
         	}
         });
+        btnNewButton_2.setIcon(new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-user-24.png")));
+        btnNewButton_2.setBounds(915, 83, 50, 30);
+        panel.add(btnNewButton_2);
+
+        JButton btnNewButton_3 = new JButton("");
         btnNewButton_3.setIcon(new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-reset-24.png")));
         btnNewButton_3.setBounds(855, 83, 50, 30);
         panel.add(btnNewButton_3);
@@ -279,5 +283,9 @@ public class EmployeePage extends JPanel {
         table.setModel(model);
     }
     
-   
+    public JButton getButton_ChiTiet() {
+        return btnNewButton_2;
+    }
+
+
 }
