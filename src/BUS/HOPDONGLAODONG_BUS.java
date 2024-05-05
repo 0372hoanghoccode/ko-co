@@ -1,14 +1,20 @@
 package BUS;
 import java.util.ArrayList;
+import java.util.List;
 import java.text.NumberFormat;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import DAO.HopDongLaoDongDAO;
-
+import DAO.NhanVienDAO;
+import DAO.PhongBanDAO;
 import DTO.HOPDONGLAODONG;
+import DTO.NHANVIEN;
+import DTO.NHANVIENTHUVIEC;
+import DTO.NHANVIENCHINHTHUC;
 
 public class HOPDONGLAODONG_BUS {
     private final HopDongLaoDongDAO hopdonglaodong_dao = new HopDongLaoDongDAO();
@@ -96,4 +102,25 @@ public class HOPDONGLAODONG_BUS {
         return data;
     }
 
+    public Object[][] getDataObjectToRenderByMaHopDong(String maHopDong) {
+        List<HOPDONGLAODONG> list = list_hopdonglaodong.stream().filter(hdld -> hdld.getMaHopDong().equals(maHopDong)).collect(Collectors.toList());
+        Object[][] data = new Object[list.size()][];
+        for (int i = 0; i < list.size(); i++) {
+            HOPDONGLAODONG temp_hdld = list.get(i);
+            data[i] = new Object[] {
+                i + 1 + "",
+                temp_hdld.getMaHopDong(),
+                temp_hdld.getMaNhanVien(),
+                temp_hdld.getTenNhanVien(),
+                temp_hdld.getPhongBan(),
+                formatDate(temp_hdld.getTuNgay()),
+                formatDate(temp_hdld.getDenNgay()),
+                temp_hdld.getLoaiHopDong(),
+                formatSalary(temp_hdld.getLuongCoBan()),
+            };
+        }
+        return data;
+    }
+
+    
 }   

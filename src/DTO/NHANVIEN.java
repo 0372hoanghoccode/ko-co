@@ -2,6 +2,8 @@ package DTO;
 
 import java.time.LocalDate;
 
+import DAO.PhongBanDAO;
+import DAO.NhanVienDAO;
 
 public class NHANVIEN extends CONNGUOI {
 
@@ -73,5 +75,97 @@ public class NHANVIEN extends CONNGUOI {
     		return ((NHANVIENTHUVIEC)this).getLuongThuViec();
     	}
     }
- 
+    public String[] getObjectToRender() {
+    	
+    	String loaiHinh = "Chính thức";
+    	String ngayBatDau = "";
+    	String ngayKetThuc = "";
+    	String hopDong = "Chưa có";
+    	String loaiHopDong = "Chưa xác định";
+    	if(this instanceof NHANVIENTHUVIEC) {
+    		loaiHinh = "Thử việc";
+    		ngayBatDau = LocalDateToString(((NHANVIENTHUVIEC)this).getNgayBatDauThuViec());
+    		ngayKetThuc =LocalDateToString(((NHANVIENTHUVIEC)this).getNgayKetThucThuViec());
+    	}else {
+    		hopDong = ((NHANVIENCHINHTHUC)this).getHopDong().getMaHopDong();
+    		loaiHopDong = ((NHANVIENCHINHTHUC)this).getHopDong().getLoaiHopDong();
+    		ngayBatDau = LocalDateToString(((NHANVIENCHINHTHUC)this).getHopDong().getTuNgay());
+    		ngayKetThuc =  LocalDateToString(((NHANVIENCHINHTHUC)this).getHopDong().getDenNgay());
+    	}
+    	String[] data = new String[] {
+			this.getMaNhanVien(),this.getHoTen(),PhongBanDAO.getTenTuMaSo(this.maPhong),this.getChucVu().getTenChucVu(),LocalDateToString(this.getChucVu().getNgayNhanChuc()),loaiHinh,
+			hopDong,ngayBatDau,ngayKetThuc,loaiHopDong,changeSalaryToFormatString(this.getMucLuongChung()),
+			this.getGioiTinh(),LocalDateToString(this.getNgaySinh()),this.getDiaChi().toString(),this.getSdt(),this.getCmnd().getSoCmnd()+" - "+this.getCmnd().getNoiCap()+" - "+LocalDateToString(this.getCmnd().getNgayCap()),this.getTrinhDo().getTrinhDoChuyenMon()+" - "+this.getTrinhDo().getChuyenNganh(),this.getDanToc(),this.getTonGiao(),
+			this.getHoTen(),this.getDiaChi().getTinhThanhPho(),this.getSdt(),this.getEmail(),
+			
+    	};
+		
+		return data;
+    }
+    public String[] getDataToRenderDepartmentDetailInfoEmployee() {
+    	String data[] = {this.getMaNhanVien(),this.getHoTen(),this.getGioiTinh(),LocalDateToString(this.getNgaySinh()),this.getSdt(),this.getDiaChi().getTinhThanhPho().trim(),PhongBanDAO.getTenTuMaSo(this.getMaPhong()),this.getChucVu().getTenChucVu(),"         "+this.getChucVu().getNgayNhanChuc().toString()};
+    	return data;
+    }
+    public String[] getDataToFix() {
+    	String loaiHinh = "Nhân viên chính thức";
+    	String ngayBatDau = "";
+    	String ngayKetThuc = "";
+    	String mucLuong = "";
+    	if(this instanceof NHANVIENCHINHTHUC) {
+    		ngayBatDau = LocalDateToString(((NHANVIENCHINHTHUC)this).getHopDong().getTuNgay());
+    		ngayKetThuc = ((NHANVIENCHINHTHUC)this).getHopDong().getLoaiHopDong();
+    		mucLuong = changeSalaryToFormatStringToFix(((NHANVIENCHINHTHUC)this).getHopDong().getLuongCoBan());
+    		
+    	}else {
+    		loaiHinh = "Nhân viên thử việc";
+    		ngayBatDau = LocalDateToString(((NHANVIENTHUVIEC)this).getNgayBatDauThuViec());
+    		ngayKetThuc = LocalDateToString(((NHANVIENTHUVIEC)this).getNgayKetThucThuViec());
+    		mucLuong = changeSalaryToFormatStringToFix(((NHANVIENTHUVIEC)this).getLuongThuViec());
+    	}
+    	String data[] = { this.getMaNhanVien(),this.getHoTen(),this.getGioiTinh(),LocalDateToString(this.getNgaySinh()),this.getSdt(),this.getEmail(),
+    			this.getDiaChi().getSoNha(),this.getDiaChi().getDuong(),this.getDiaChi().getPhuongXa(),this.getDiaChi().getQuanHuyen(),this.getDiaChi().getTinhThanhPho(),
+    			this.getTrinhDo().getTrinhDoHocVan(),this.getTrinhDo().getTrinhDoChuyenMon(),this.getTrinhDo().getChuyenNganh(),
+    			this.getCmnd().getSoCmnd(),LocalDateToString(this.getCmnd().getNgayCap()),this.getCmnd().getNoiCap(),
+    			this.getDanToc(),this.getTonGiao(),
+    			PhongBanDAO.getTenTuMaSo(this.maPhong),
+    			this.getChucVu().getTenChucVu(),LocalDateToString(this.getChucVu().getNgayNhanChuc()),
+    			loaiHinh,
+    			ngayBatDau,ngayKetThuc,mucLuong,
+    			this.getTaiKhoan().getAvatarImg(),
+    	};
+    	return data;
+    }
+
+    public static String LocalDateToString(LocalDate date) {
+		String arr[] = date.toString().split("-");
+		return arr[2]+"-"+arr[1]+"-"+arr[0];
+		
+	}
+
+    public static String changeSalaryToFormatString(double value) {
+		long temp = (long)value;
+        String s = String.valueOf(temp);
+        
+        int n = s.length(), count = 0;
+        for(int i=n-1;i>=0;i--){
+            if(count==3){
+                s = s.substring(0, i+1) +","+ s.substring(i+1);
+                count = 0;
+            }
+            count++; 
+        }
+        return s;
+	}
+    
+    public static String changeSalaryToFormatStringToFix(double value) {
+		long temp = (long)value;
+        String s = String.valueOf(temp);
+        
+        int n = s.length(), count = 0;
+        String kq = "";
+        for(int i=0;i<n;i++){
+            kq+= s.charAt(i)+"";
+        }
+        return kq;
+	}
 }

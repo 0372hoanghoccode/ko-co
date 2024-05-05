@@ -1,5 +1,14 @@
+<<<<<<< HEAD
 /GUI/
 /BUS/
 /DAO/
 /DTO/
 /run/
+=======
+/DAO/
+/GUI/
+/run/
+/BUS/
+/DTO/
+/database/
+>>>>>>> 9858a890336df2c5092be8eafe4428cd53325208

@@ -3,32 +3,39 @@ package DTO;
 import java.util.Objects;
 
 public class NHOMQUYEN {
-    private String manhomquyen;
-    private String tennhomquyen;
-
-    public NHOMQUYEN() {
-    }
-
-    public NHOMQUYEN(String manhomquyen, String tennhomquyen) {
-        this.manhomquyen = manhomquyen;
-        this.tennhomquyen = tennhomquyen;
-    }
-
-    public String getManhomquyen() {
-        return manhomquyen;
-    }
-
-    public void setManhomquyen(String manhomquyen) {
-        this.manhomquyen = manhomquyen;
-    }
-
-    public String getTennhomquyen() {
-        return tennhomquyen;
-    }
-
-    public void setTennhomquyen(String tennhomquyen) {
-        this.tennhomquyen = tennhomquyen;
-    }
+    private String maNhomQuyen;
+	private String tenNhomQuyen;
+	private boolean[] mangChucNang;
+	public NHOMQUYEN() {
+		
+		this.maNhomQuyen = "";
+		this.tenNhomQuyen = "";
+		this.mangChucNang = null;
+	}
+	public NHOMQUYEN(String maNhomQuyen,String tenNhomQuyen,boolean[] mangChucNang) {
+		
+		this.maNhomQuyen = maNhomQuyen;
+		this.tenNhomQuyen = tenNhomQuyen;
+		this.mangChucNang = mangChucNang;
+	}
+	public String getMaNhomQuyen() {
+		return maNhomQuyen;
+	}
+	public void setMaNhomQuyen(String maNhomQuyen) {
+		this.maNhomQuyen = maNhomQuyen;
+	}
+	public String getTenNhomQuyen() {
+		return tenNhomQuyen;
+	}
+	public void setTenNhomQuyen(String tenNhomQuyen) {
+		this.tenNhomQuyen = tenNhomQuyen;
+	}
+	public boolean[] getMangChucNang() {
+		return mangChucNang;
+	}
+	public void setMangChucNang(boolean[] mangChucNang) {
+		this.mangChucNang = mangChucNang;
+	}
 
     // @Override
     // public int hashCode() {

@@ -14,6 +14,7 @@ public class HopdongPage extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private HopdongPage_Tongquan tongQuan;
 	private HopdongPage_Kigiahan kiGiahan;
+	private HopdongPage_Giahan giaHan;
 
 	/**
 	 * Create the panel.

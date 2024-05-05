@@ -206,6 +206,9 @@ public class loginFrame extends JFrame {
                     dispose();
                     appFrame app = new appFrame();
                     app.setVisible(true);
+                    app.setAccountCurrenLogin(tk);
+                    app.setEventFnc(DAO.NhomQuyenDAO.getInstance().getChucNangTaiKhoan(tk.getUsername()));
+                    app.StartingApp();
                     isLogin = true;
                 }
                 else 

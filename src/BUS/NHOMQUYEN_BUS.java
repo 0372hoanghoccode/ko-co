@@ -23,7 +23,7 @@ public class NHOMQUYEN_BUS {
         int vitri = -1;
 
         while(i < this.list_nhomquyen.size() && vitri == -1) {
-            if (list_nhomquyen.get(i).getManhomquyen() == maNhomQuyen) {
+            if (list_nhomquyen.get(i).getMaNhomQuyen() == maNhomQuyen) {
                 vitri = i;
             }
             else {
@@ -43,7 +43,7 @@ public class NHOMQUYEN_BUS {
     public int updateNhomQuyen(NHOMQUYEN nq) {
         int result = nhomquyen_dao.update(nq);
         if (result > 0) {
-            list_nhomquyen.set(getNhomQuyen(nq.getManhomquyen()), nq);
+            list_nhomquyen.set(getNhomQuyen(nq.getMaNhomQuyen()), nq);
         }
         return result;
     }
@@ -60,8 +60,8 @@ public class NHOMQUYEN_BUS {
         Object[][] data = new Object[list_nhomquyen.size()][3];
         for (int i = 0; i < list_nhomquyen.size(); i++) {
             data[i][0] = i + 1;
-            data[i][1] = list_nhomquyen.get(i).getManhomquyen();
-            data[i][2] = list_nhomquyen.get(i).getTennhomquyen();
+            data[i][1] = list_nhomquyen.get(i).getMaNhomQuyen();
+            data[i][2] = list_nhomquyen.get(i).getTenNhomQuyen();
         }
         return data;
     }

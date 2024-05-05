@@ -125,7 +125,11 @@ public class PhongBanDAO implements DAOInterface<PHONGBAN> {
         return maPhong;
     }
 
-    public String getTenTuMaSo(String maPhong) {
+    public static String getTenTuMaSo(String maPhong) {
+        if (maPhong == null || maPhong.trim().isEmpty()) {
+            return "Không xác định"; // Hoặc một giá trị mặc định phù hợp
+        }
+    
         String tenPhong = null;
         Connection con = ConnectionManager.getConnection();
         try {
@@ -134,14 +138,18 @@ public class PhongBanDAO implements DAOInterface<PHONGBAN> {
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
                 tenPhong = rs.getString("tenPhong");
+            } else {
+                tenPhong = "Không xác định"; // Trường hợp không tìm thấy phòng ban
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            tenPhong = "Lỗi khi truy vấn"; // Để biết lỗi truy vấn
         } finally {
             ConnectionManager.closeConnection(con);
         }
         return tenPhong;
     }
+    
 
     public int getSoLuongNhanVien(String maPhongBan) {
         int soLuong = 0;
