@@ -1,20 +1,5 @@
+/GUI/
 /BUS/
 /DAO/
 /DTO/
-/GUI/
-<<<<<<< HEAD
-/TimingFramework-0.55.jar
-/assets/
-/background-login.jpg
-/connectionSQL/
-/database/
-/icons8-search-50.png
-/jcalendar-1.4.jar
-/jgoodies-common-1.2.0.jar
-/jgoodies-looks-2.4.1.jar
-/junit-4.6.jar
 /run/
-/sqljdbc4.jar
-=======
-/BUS/
->>>>>>> cbd146b0166b5bb1d7525781459c67ec14b39a49

@@ -2,6 +2,7 @@ package GUI;
 
 import java.awt.EventQueue;
 
+import javax.naming.InitialContext;
 import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
 import javax.swing.JFrame;
@@ -11,6 +12,10 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import BUS.DANHGIA_BUS;
+import DAO.DanhGiaDAO;
+import DAO.access_BANGDANHGIA;
+import DTO.DANHGIA;
+import DTO.SUPPORT;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -20,6 +25,7 @@ import java.awt.Dimension;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
@@ -27,7 +33,10 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.classfile.instruction.NewMultiArrayInstruction;
 import java.security.PublicKey;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +51,7 @@ public class DanhGiaPage2 extends JPanel {
 
 	private JTable objectTable= new JTable();
 	private JScrollPane scrollPane1;
-	private JButton btnNewButton;
+	private JButton btnLuu;
 	private JLabel titleDanhGia; 
 	ArrayList<JRadioButton> radioButtons = new ArrayList<JRadioButton>();
 	private JLabel lbdiem;
@@ -53,7 +62,7 @@ public class DanhGiaPage2 extends JPanel {
 	private  JLabel chucVu;
 	private  JLabel maPhongBan;
 	private JScrollBar verticalScrollBar;
-	private JTextField TuyenDung_Find;
+	//private JTextField TuyenDung_Find;
 	private JComboBox comboBox_1;
 	private JComboBox comboBox;
 	private JScrollPane scrollPane;
@@ -61,31 +70,71 @@ public class DanhGiaPage2 extends JPanel {
 	private JButton btnBack;
 	private JTextField tfNgayDanhGia;
 	
+	DanhGiaDAO danhGia_Dao=new DanhGiaDAO();
 	DANHGIA_BUS danhgia_BUS=new DANHGIA_BUS();
 	String[] columnNames= {"STT","Nhân Viên"};
 	Object[][] data=danhgia_BUS.renderDSNhanVienCanDG();
-	DefaultTableModel tableModel=new DefaultTableModel(data,columnNames) {
+	DefaultTableModel tableModel = new DefaultTableModel(data, columnNames) {
 		private static final long serialVersionUID = 1L;
 		public boolean isCellEditable(int row, int column) {
-			return false;
-		}
-	};
+            return false;
+        }
+    };
 	
+//	public Object[][] getData() {
+//		return data;
+//	}
+
 	public DanhGiaPage2() {
+	    init();
+	}
+	
+	public void setData(Object[][] data) {
+        // This method sets new data for the table
+        this.data = data;
+        tableModel.setDataVector(data, columnNames);
+    }
+	
+	
+	public JTextField getTfNgayDanhGia() {
+		return tfNgayDanhGia;
+	}
+	
+
+	public void setTfNgayDanhGia(JTextField tfNgayDanhGia) {
+		this.tfNgayDanhGia = tfNgayDanhGia;
+	}
+	
+	
+
+	public JLabel getLbdiem() {
+		return lbdiem;
+	}
+
+	public void setLbdiem(JLabel lbdiem) {
+		this.lbdiem = lbdiem;
+	}
+
+	
+	
+	public JLabel getHoTen() {
+		return hoTen;
+	}
+
+	public void setHoTen(JLabel hoTen) {
+		this.hoTen = hoTen;
+	}
+
+	public void init() {
 		this.setLayout(null);
-		
-        
+	      
         JPanel panelNhanVien = new JPanel();
         panelNhanVien.setBounds(10,10,311,600);
         panelNhanVien.setBackground(Color.white);
         panelNhanVien.setLayout(null);
         this.add(panelNhanVien);
         
-        scrollPane1 = new JScrollPane(objectTable);
-        scrollPane1.setVerticalScrollBar(new myScrollBar());
-        scrollPane1.setBounds(10,90,330,panelNhanVien.getHeight()-100);
-        panelNhanVien.add(scrollPane1);
-        scrollPane1.setBorder(new EmptyBorder(0,0,0,0));
+        
 		
         //Phiếu đánh giá
         JPanel panelDanhGia = new JPanel();
@@ -161,19 +210,32 @@ public class DanhGiaPage2 extends JPanel {
 		});
 		panelNhanVien.add(btnBack);
 		
+		scrollPane1 = new JScrollPane();
+        scrollPane1.setVerticalScrollBar(new myScrollBar());
+        scrollPane1.setBounds(10,90,300,485);
+        panelNhanVien.add(scrollPane1);
+        scrollPane1.setBorder(new EmptyBorder(0,0,0,0));
+		
 		objectTable.setModel(tableModel);
-		objectTable.setRowHeight(50);
+		objectTable.setRowHeight(30);
 		objectTable.setFont(new Font("Arial", Font.PLAIN, 12));
+		
+		objectTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		if (objectTable.getRowCount() > 0) {
+			objectTable.setRowSelectionInterval(0, 0);
+		}
 		
 		objectTable.getColumnModel().getColumn(0).setPreferredWidth(30);  // stt
 		objectTable.getColumnModel().getColumn(1).setPreferredWidth(150);  // ten
+		
+		scrollPane1.setViewportView(objectTable);
 		
 		JLabel lblblb = new JLabel("Danh sách nhân viên");
 		lblblb.setBounds(15,50,200,30);
 		lblblb.setFont(new Font("Arial",1,13));
 		lblblb.setForeground(new Color(0,0,0,160));
 		panelNhanVien.add(lblblb);
-		formatSizeColumn();
+		//formatSizeColumn();
 		this.setVisible(false);
 	}
 	
@@ -566,14 +628,91 @@ public class DanhGiaPage2 extends JPanel {
 		lblim_1.setBounds(560, 102, 83, 31);
 		panel.add(lblim_1);
 				
-		btnNewButton = new JButton();
-		btnNewButton.setText("Lưu");
-		btnNewButton.setFocusable(false);
-		btnNewButton.setFont(new Font("Arial", 1, 14));
-		btnNewButton.setBounds(521, 1240, 100, 34);
-		panel.add(btnNewButton);
+		btnLuu = new JButton();
+		btnLuu.setText("Lưu");
+		btnLuu.setFocusable(false);
+		btnLuu.setFont(new Font("Arial", 1, 14));
+		btnLuu.setBounds(521, 1240, 100, 34);
+		panel.add(btnLuu);
+		
+		btnLuu.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {				
+					int index = objectTable.getSelectedRow();
+					if(index<0) {
+						JOptionPane.showMessageDialog(null,"Vui lòng chọn nhân viên","Thông báo",JOptionPane.WARNING_MESSAGE);
+						return;
+					}
+					String str2 = getSelectedBangDanhGia();
+					if(str2.length()<59) {
+						JOptionPane.showMessageDialog(null,"Vui lòng đánh giá đủ các tiêu chí","Thông báo",JOptionPane.WARNING_MESSAGE);
+						return;
+					}
+					String maNhanVien = tableModel.getValueAt(index, 1).toString().split(" - ")[0];
+					String maNguoiDanhGia = "HIHI";
+					LocalDate ngayDanhGia = LocalDate.now();
+					String ngayDanhGiaString = ngayDanhGia.toString(); // Chuyển đổi thành chuỗi
+					tfNgayDanhGia.setText(ngayDanhGiaString);			
+					String maDanhGia = "DG"+maNhanVien+localDatetoStringDanhGia(ngayDanhGia) +maNguoiDanhGia;
+					int diem = Integer.valueOf(getLbdiem().getText());
+					String xepLoai = "";
+					if(diem>=110) {
+						xepLoai = "Xuất sắc";
+					}else if(diem>= 90) {
+						xepLoai = "Giỏi";
+					}else if(diem>=70) {
+						xepLoai = "Khá";
+					}else if(diem>=50) {
+						xepLoai = "Trung bình";
+					}else {
+						xepLoai = "Điểm";
+					}
+					String loaiDanhGia = "";
+					if(maNhanVien.equals(maNguoiDanhGia)) {
+						loaiDanhGia = "Tự đánh giá";
+					}else {
+						loaiDanhGia = "Được đánh giá";
+					}
+					DANHGIA danhGia=new DANHGIA(maDanhGia, maNhanVien, maNguoiDanhGia,ngayDanhGia, diem, loaiDanhGia, maDanhGia, loaiDanhGia, loaiDanhGia);
+					if (danhGia_Dao.insert(danhGia)!=0) {
+						
+					}else if(danhGia_Dao.update(danhGia)!=0) {
+						
+					}
+					danhgia_BUS.getList();
+					DanhGiaPage danhGiaPage= new DanhGiaPage();
+					danhGiaPage.setData(danhgia_BUS.renderAllDanhGiaData());
+					JOptionPane.showMessageDialog(null,"Đã lưu vào danh sách đánh giá!","Thông báo ",JOptionPane.OK_OPTION);
+				}
+			
+				
+			
+		});
 		
 	}
+	
+	public static String localDatetoStringDanhGia(LocalDate date) {
+		String d,m,y;
+		if(date.getDayOfMonth()<9) {
+			d = "0"+date.getDayOfMonth();
+		}else {
+			d = date.getDayOfMonth()+"";
+		}
+		if(date.getMonthValue()<9) {
+			m = "0"+date.getMonthValue();
+		}else {
+			m = date.getMonthValue()+"";
+		}
+		if(date.getYear()<9) {
+			y = "0"+date.getYear();
+		}else {
+			y = date.getYear()+"";
+		}
+		
+		return d+m+y;
+	}
+	
 	public void jradio(JPanel panel) {
 		JRadioButton r1_1_1 = new JRadioButton("");
 		r1_1_1.setBackground(Color.WHITE);
@@ -913,7 +1052,7 @@ public class DanhGiaPage2 extends JPanel {
 		
 		JRadioButton r4_7_2 = new JRadioButton("");
 		r4_7_2.setBackground(Color.WHITE);
-		r4_7_2.setBounds(440, 645, 23, 23);
+		r4_7_2.setBounds(420, 645, 23, 23);
 		panel.add(r4_7_2);
 		r4_7_2.setName("1");
 		
@@ -1214,7 +1353,7 @@ public class DanhGiaPage2 extends JPanel {
 		
 		JRadioButton r5_5_3 = new JRadioButton("");
 		r5_5_3.setBackground(Color.WHITE);
-		r5_5_3.setBounds(523, 988, 23, 23);
+		r5_5_3.setBounds(490, 988, 23, 23);
 		panel.add(r5_5_3);
 		r5_5_3.setName("2");
 		
@@ -1451,16 +1590,7 @@ public class DanhGiaPage2 extends JPanel {
 	}
 	
 	
-//	public Boolean kiemTraJradio() {
-//		for(JRadioButton i: radioButtons )
-//		{
-//			if(i.isSelected()) {
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
-
+	
 	public String chuyenArrayListSangString(ArrayList<String> list) {
 		String str= "";
 		for(String i: list) {
@@ -1474,22 +1604,19 @@ public class DanhGiaPage2 extends JPanel {
 		}
 		return str;
 	}
-	public void formatSizeColumn() {
-		objectTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		objectTable.getColumnModel().getColumn(0).setPreferredWidth(70);  // stt
-		objectTable.getColumnModel().getColumn(1).setPreferredWidth(255);  // anh
-		
-	}
-	
-	public String getSelectedBangDanhGia() {
-		// System.out.println(radioButtons.size());
+//	public void formatSizeColumn() {
+//		objectTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+//		objectTable.getColumnModel().getColumn(0).setPreferredWidth(70);  // stt
+//		objectTable.getColumnModel().getColumn(1).setPreferredWidth(255);  // anh
+//		
+//	}
+//	
+	public String getSelectedBangDanhGia() {		
 		String str="";
 		for(int i=0;i<radioButtons.size();i++) {
 			if(radioButtons.get(i).isSelected()) {
 				int temp = i%4;
-				str += temp+",";
-				// System.out.println(str);
-				// System.out.println("true");
+				str += temp+",";				
 			}
 		}
 		if(str.length()>0) {
@@ -1503,4 +1630,6 @@ public class DanhGiaPage2 extends JPanel {
 			i.setSelected(false);
 		}
 	}
+	
+	
 }

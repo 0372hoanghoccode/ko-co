@@ -1,6 +1,7 @@
 package DTO;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.management.loading.PrivateClassLoader;
 
@@ -8,7 +9,7 @@ public class DANHGIA {
 	private String maDanhGia;
 	private String maNhanVien;
 	private String nguoiDanhGia;
-	private Date ngayDanhGia;
+	private LocalDate ngayDanhGia;
 	private float diemDanhGia;
 	private String xepLoaiDanhGia;
 	private String chiTietDanhGia;
@@ -19,7 +20,7 @@ public class DANHGIA {
 		
 	}
 
-	public DANHGIA(String maDanhGia, String maNhanVien, String nguoiDanhGia, Date ngayDanhGia, float diemDanhGia,
+	public DANHGIA(String maDanhGia, String maNhanVien, String nguoiDanhGia, LocalDate ngayDanhGia, float diemDanhGia,
 			String xepLoaiDanhGia, String chiTietDanhGia, String loaiDanhGia, String ghiChu) {
 		super();
 		this.maDanhGia = maDanhGia;
@@ -57,11 +58,11 @@ public class DANHGIA {
 		this.nguoiDanhGia = nguoiDanhGia;
 	}
 
-	public Date getNgayDanhGia() {
+	public LocalDate getNgayDanhGia() {
 		return ngayDanhGia;
 	}
 
-	public void setNgayDanhGia(Date ngayDanhGia) {
+	public void setNgayDanhGia(LocalDate ngayDanhGia) {
 		this.ngayDanhGia = ngayDanhGia;
 	}
 

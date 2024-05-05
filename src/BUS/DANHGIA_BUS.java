@@ -92,5 +92,46 @@ public class DANHGIA_BUS {
 		return data;
 	}
 	
+	public Object[][] renderChiTietDanhGia(String maDanhGia){
+		Object[][] data= new Object[list_danhGia.size()][];
+		for (int i=0; i<list_danhGia.size(); i++) {
+			if (maDanhGia.equals(list_danhGia.get(i).getMaDanhGia())) {
+				DANHGIA temp_dg=list_danhGia.get(i);
+				String tenNhanVien=danhGia_dao.getTenNhanVien(maDanhGia);
+				data[i] = new Object[] {
+						i+1+"",
+						tenNhanVien,
+				};
+				break;
+			}
+		}
+		return data;
+	}
+	
+	public Object[][] changeDatavalue(String[] event_name){
+		String[] default_val= new String[] {
+				"Xếp loại đánh giá","Loại đánh giá","Sắp xếp","Thứ tự"
+		};
+		ArrayList<DANHGIA> list_render= danhGia_dao.renderChangeValue(default_val,event_name);
+		int n=list_render.size();
+		Object[][] data= new Object[n][];
+		for (int i=0; i<n; i++) {
+			DANHGIA temp_dg=list_render.get(i);
+			String nguoiDanhGia=danhGia_dao.getNguoiDanhGia(temp_dg.getMaDanhGia());
+			String tenNhanVien=danhGia_dao.getTenNhanVien(temp_dg.getMaDanhGia());
+			data[i]= new Object[] {
+					i+1+"",
+					temp_dg.getMaDanhGia(),
+					tenNhanVien,
+					temp_dg.getNgayDanhGia(),
+					nguoiDanhGia,
+					temp_dg.getDiemDanhGia(),
+					temp_dg.getXepLoaiDanhGia(),
+					temp_dg.getLoaiDanhGia(),
+			};
+		}
+		return data;	
+	}
+	
 	
 }

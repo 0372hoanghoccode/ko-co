@@ -5,19 +5,27 @@ import java.awt.Font;
 import java.awt.Image;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 
 import BUS.DANHGIA_BUS;
+import DTO.DANHGIA;
 
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
@@ -34,7 +42,11 @@ public class DanhGiaPage extends JPanel {
 	JTextField searchField;
 	private JTextField ngayBDField;
 	private JTextField ngayKTField;
+	DanhGiaPage2 form2;
 	DANHGIA_BUS danhgia_BUS=new DANHGIA_BUS();
+	String[] event_names=new String[] {
+			"Xếp loại đánh giá","Loại đánh giá","Sắp xếp","Thứ tự"
+	};
 	String[] columnNames= {"STT","Mã Đánh Giá","Nhân Viên","Thời Gian","Người Đánh Giá",
 			"Điểm Đánh Giá","XL Đánh Giá","Loại Đánh Giá"		
 	};
@@ -85,16 +97,22 @@ public class DanhGiaPage extends JPanel {
 		lblNewLabel_1.setBounds(20, 53, 49, 14);
 		panel.add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("Ngày:");
-		lblNewLabel_2.setBounds(37, 78, 49, 14);
+		JLabel lblNewLabel_2 = new JLabel("Xếp loại đánh giá:");
+		lblNewLabel_2.setBounds(37, 78, 100, 14);
 		panel.add(lblNewLabel_2);
 		
-		JLabel lblNewLabel_3 = new JLabel("Đến:");
-		lblNewLabel_3.setBounds(255, 78, 49, 14);
-		panel.add(lblNewLabel_3);
+		JComboBox cbbXepLoaiDG= new JComboBox();
+		cbbXepLoaiDG.setModel(new DefaultComboBoxModel(new String[] {"Kém", "Trung bình", "Khá", "Giỏi", "Xuất sắc"}));
+		cbbXepLoaiDG.setSelectedIndex(-1);
+		cbbXepLoaiDG.setBounds(150, 78, 89, 22);
+		panel.add(cbbXepLoaiDG);
+//		
+//		JLabel lblNewLabel_3 = new JLabel("Đến:");
+//		lblNewLabel_3.setBounds(255, 78, 49, 14);
+//		panel.add(lblNewLabel_3);
 		
 		JComboBox cbbLoaiDanhGia = new JComboBox();
-		cbbLoaiDanhGia.setModel(new DefaultComboBoxModel(new String[] {"Kém", "Trung bình", "Khá", "Giỏi", "Xuất sắc"}));
+		cbbLoaiDanhGia.setModel(new DefaultComboBoxModel(new String[] {"Được đánh giá", "Tự đánh giá"}));
 		cbbLoaiDanhGia.setSelectedIndex(-1);
 		cbbLoaiDanhGia.setBounds(655, 74, 89, 22);
 		panel.add(cbbLoaiDanhGia);
@@ -105,11 +123,13 @@ public class DanhGiaPage extends JPanel {
 		
 		JComboBox cbbSapXep = new JComboBox();
 		cbbSapXep.setModel(new DefaultComboBoxModel(new String[] {"Điểm đánh giá", "Ngày đánh giá"}));
+		cbbSapXep.setSelectedIndex(-1);
 		cbbSapXep.setBounds(96, 115, 114, 22);
 		panel.add(cbbSapXep);
 		
 		JComboBox cbbThuTu = new JComboBox();
 		cbbThuTu.setModel(new DefaultComboBoxModel(new String[] {"Giảm dần", "Tăng dần"}));
+		cbbThuTu.setSelectedIndex(-1);
 		cbbThuTu.setBounds(340, 115, 96, 22);
 		panel.add(cbbThuTu);
 		
@@ -125,6 +145,9 @@ public class DanhGiaPage extends JPanel {
 				appContent parentForm= (appContent) getParent();
 				setVisible(false);
 				parentForm.displayContent(10);
+				if (form2==null)
+					form2=new DanhGiaPage2();
+				form2.setData(danhgia_BUS.renderDSNhanVienCanDG());
 			}
 		});
 		btnThem.setBounds(864, 29, 89, 23);
@@ -132,11 +155,7 @@ public class DanhGiaPage extends JPanel {
 		
 		JButton btnChiTiet= new JButton("Chi tiết");
 		btnChiTiet.setForeground(new Color(0, 0, 0));
-		btnChiTiet.setBackground(new Color(255, 255, 255));
-		btnChiTiet.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		btnChiTiet.setBackground(new Color(255, 255, 255));		
 		btnChiTiet.setBounds(864, 70, 89, 23);
 		panel.add(btnChiTiet);
 		
@@ -145,30 +164,35 @@ public class DanhGiaPage extends JPanel {
 		panel.add(loaiDanhGia);
 		
 		
-		JPanel ngayBDPanel = new JPanel();
-		ngayBDPanel.setLayout(null);
-		ngayBDPanel.setBounds(80, 75, 109, 20);
-		ngayBDPanel.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 0, Color.GRAY)); // Đặt viền cho searchPanel
-		panel.add(ngayBDPanel);
+//		JPanel ngayBDPanel = new JPanel();
+//		ngayBDPanel.setLayout(null);
+//		ngayBDPanel.setBounds(80, 75, 109, 20);
+//		ngayBDPanel.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 0, Color.GRAY)); // Đặt viền cho searchPanel
+//		panel.add(ngayBDPanel);
 
-		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBounds(0, 0, 109, 20); // Đặt kích thước và vị trí cho JDateChooser
-		ngayBDPanel.add(dateChooser);
-		
-		JPanel ngayKTPanel = new JPanel();
-		ngayKTPanel.setLayout(null);
-		ngayKTPanel.setBounds(314, 75, 109, 20);
-		ngayKTPanel.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 0, Color.GRAY)); // Đặt viền cho searchPanel
-		panel.add(ngayKTPanel);
-
-		JDateChooser dateChooser1 = new JDateChooser();
-		dateChooser1.setBounds(0, 0, 109, 20); // Đặt kích thước và vị trí cho JDateChooser
-		ngayKTPanel.add(dateChooser1);
+//		JDateChooser dateChooser = new JDateChooser();
+//		dateChooser.setBounds(0, 0, 109, 20); // Đặt kích thước và vị trí cho JDateChooser
+//		ngayBDPanel.add(dateChooser);
+//		
+//		JPanel ngayKTPanel = new JPanel();
+//		ngayKTPanel.setLayout(null);
+//		ngayKTPanel.setBounds(314, 75, 109, 20);
+//		ngayKTPanel.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 0, Color.GRAY)); // Đặt viền cho searchPanel
+//		panel.add(ngayKTPanel);
+//
+//		JDateChooser dateChooser1 = new JDateChooser();
+//		dateChooser1.setBounds(0, 0, 109, 20); // Đặt kích thước và vị trí cho JDateChooser
+//		ngayKTPanel.add(dateChooser1);
 
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 190, 980, 478);
 		add(scrollPane);
+		
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		if (table.getRowCount() > 0) {
+			table.setRowSelectionInterval(0, 0);
+		}
 		
 		table.setModel(model);
 		table.setRowHeight(30);
@@ -184,7 +208,92 @@ public class DanhGiaPage extends JPanel {
 		table.getColumnModel().getColumn(7).setPreferredWidth(50);  // loai
 		scrollPane.setViewportView(table);
 		
+		
+		btnChiTiet.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int selectedRow=table.getSelectedRow();
+				if (selectedRow >=0 && selectedRow <table.getRowCount()) {
+					String maDanhGia=(String ) table.getValueAt(selectedRow, 1);
+					appContent parentForm=(appContent) getParent();
+					setVisible(false);
+					parentForm.displayContent(10);
+					if (form2==null)
+						form2= new DanhGiaPage2();
+					form2.setData(danhgia_BUS.renderChiTietDanhGia(maDanhGia));
+				}
+				else {
+					JOptionPane.showMessageDialog(null,"Vui lòng chọn nhân viên bạn muốn xem chi tiết!", "error", JOptionPane.OK_CANCEL_OPTION);
+				}
+				
+			}
+		});
+		
+		cbbXepLoaiDG.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange()==ItemEvent.SELECTED) {
+					String selectedOption=(String) cbbXepLoaiDG.getSelectedItem();
+					event_names[0]=selectedOption;
+					for(String i : event_names) {
+                    	System.out.print(i +",");
+                    }
+                    System.out.println();
+					event_action();
+				}
+				
+			}
+		});
+		
+		cbbLoaiDanhGia.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange()==ItemEvent.SELECTED) {
+					String selectedOption=(String) cbbLoaiDanhGia.getSelectedItem();
+					event_names[1]=selectedOption;					
+					event_action();
+				}
+				
+			}
+		});
+		
+		cbbSapXep.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange()==ItemEvent.SELECTED) {
+					String selectedOption=(String) cbbSapXep.getSelectedItem();
+					event_names[2]=selectedOption;					
+					event_action();
+				}
+				
+			}
+		});
+		cbbThuTu.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange()==ItemEvent.SELECTED) {
+					String selectedOption=(String) cbbThuTu.getSelectedItem();
+					event_names[3]=selectedOption;					
+					event_action();
+				}
+				
+			}
+		});
 	
 	}
+	
+	public void event_action() {
+		data=danhgia_BUS.changeDatavalue(event_names);
+		model.setDataVector(data, columnNames);
+		table.setModel(model);
+	}
+	
+	public void setData(Object[][] data) {
+        this.data = data;
+        model.setDataVector(this.data, columnNames);
+    }
 
 }

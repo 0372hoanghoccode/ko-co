@@ -6,6 +6,7 @@ import java.awt.Color;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.BorderFactory;
@@ -20,15 +21,24 @@ import com.toedter.calendar.JYearChooser;
 
 import BUS.CHAMCONG_BUS;
 import BUS.PHONGBAN_BUS;
+import DTO.BANGCHAMCONG;
+import DTO.CHAMCONG;
 
 import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 
@@ -36,6 +46,7 @@ public class ChamCongPage1 extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
+	private ArrayList<JLabel>  arr;
 	JTable table=new JTable();
 	CHAMCONG_BUS chamcong_BUS= new CHAMCONG_BUS();
 	PHONGBAN_BUS phongban_BUS= new PHONGBAN_BUS();
@@ -50,6 +61,14 @@ public class ChamCongPage1 extends JPanel {
             return false;
         }
 	};
+	
+	public ArrayList<JLabel> getArr() {
+		return arr;
+	}
+	
+	public void setArr(ArrayList<JLabel> arr) {
+		this.arr = arr;
+	}
 	
 	public ChamCongPage1() {
 		setLayout(null);
@@ -102,7 +121,7 @@ public class ChamCongPage1 extends JPanel {
 		comboBox_2.setEditable(false);
 		comboBox_2.setBackground(Color.white);
 		comboBox_2.setOpaque(true);
-		comboBox_2.setBounds(722, 71, 115, 22);
+		comboBox_2.setBounds(604, 71, 115, 22);
 		for(String i: phongban_BUS.getTenPhongBan())
 			comboBox_2.addItem(i);
 		panel.add(comboBox_2);
@@ -134,8 +153,12 @@ public class ChamCongPage1 extends JPanel {
 		namPanel.add(yearChooser);
 		
 		JLabel lblNewLabel_4 = new JLabel("Phòng ban:");
-		lblNewLabel_4.setBounds(618, 75, 94, 14);
+		lblNewLabel_4.setBounds(500, 75, 94, 14);
 		panel.add(lblNewLabel_4);
+		
+		JButton btnReset= new JButton("Reset");
+		btnReset.setBounds(851, 75, 89, 23);
+		panel.add(btnReset);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(10, 143, 980, 506);
@@ -150,9 +173,14 @@ public class ChamCongPage1 extends JPanel {
 		table.setRowHeight(30);
 		table.setFont(new Font("Arial", Font.PLAIN, 12));
 	
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		if (table.getRowCount() > 0) {
+			table.setRowSelectionInterval(0, 0);
+		}
+		
 		table.getColumnModel().getColumn(0).setPreferredWidth(30);  // stt
 		table.getColumnModel().getColumn(1).setPreferredWidth(150);  // Ma BCC
-		table.getColumnModel().getColumn(2).setPreferredWidth(150);   // Ma Nhan Vien
+		table.getColumnModel().getColumn(2).setPreferredWidth(300);   // Ma Nhan Vien
 		table.getColumnModel().getColumn(3).setPreferredWidth(70);  // thoi gianCC
 		table.getColumnModel().getColumn(2).setPreferredWidth(150);
 		table.getColumnModel().getColumn(4).setPreferredWidth(80);  // nghi
@@ -172,6 +200,22 @@ public class ChamCongPage1 extends JPanel {
 		textArea.setBounds(36, 35, 910, 143);
 		panel_2.add(textArea);
 		
+		 arr= new ArrayList<>();
+	        int x=0;
+	        int y=0;
+	        for(int i=1;i<=20;i++) {        	
+	        	JLabel lb1= new JLabel("");
+	        	lb1.setFont(new Font("Arail",Font.PLAIN,12));
+	        	lb1.setForeground(new Color(0,0,0,180));
+	        	lb1.setBounds(x,y,185,30);
+	        	y=y+30;
+	        	if(i%4==0) {
+	        		x+=205;
+	        		y=20;
+	        	}
+	        	textArea.add(lb1);
+	        	arr.add(lb1);
+	        }
 		
 		comboBox_2.addItemListener(new ItemListener() {
 			
@@ -179,25 +223,91 @@ public class ChamCongPage1 extends JPanel {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange()==ItemEvent.SELECTED) {
 					String selectedOption = (String) comboBox_2.getSelectedItem();
-					event_name[0]=selectedOption;
+					event_name[0]=selectedOption;					
 					event_action();
 				}
 				
 			}
 		});
 		
-//		yearChooser.addComponentListener(new ChangeListener() {
-//		    @Override
-//		    public void stateChanged(ChangeEvent e) {
-//		        int selectedYear = yearChooser.getYear();
-//		        // Thực hiện các hành động cần thiết khi giá trị của JYearChooser thay đổi
-//		        // Ví dụ: Cập nhật dữ liệu hiển thị trên JTable dựa trên năm đã chọn
-//		        event_name[2] = String.valueOf(selectedYear);
-//		        event_action();
-//		    }
-//		});
-//
+		
+		
+		monthChooser.addPropertyChangeListener((PropertyChangeListener) new PropertyChangeListener() {
+		    @Override
+		    public void propertyChange(PropertyChangeEvent e) {
+		        if ("month".equals(e.getPropertyName())) {
+		        	int selectedOption=(Integer) monthChooser.getMonth()+1;     	
+		        	event_name[1]=String.valueOf(selectedOption);
+		            event_action();
+		        }
+		    }
+		});
+		
+		yearChooser.addPropertyChangeListener((PropertyChangeListener) new PropertyChangeListener() {
+		    @Override
+		    public void propertyChange(PropertyChangeEvent e) {
+		        if ("year".equals(e.getPropertyName())) {
+		        	int selectedOption=(Integer) yearChooser.getYear();     	
+		        	event_name[2]=String.valueOf(selectedOption);
+		            event_action();
+		        }
+		    }
+		});
+		
+		table.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				int row= table.rowAtPoint(e.getPoint());
+				String maBCC= table.getValueAt(row, 1).toString();
+				for(CHAMCONG i: chamcong_BUS.getList()) {
+					if(i.getMaBangChamCong().equals(maBCC)) {
+						for(JLabel k: getArr()) {
+							k.setText("");
+						}
+						if(i.getChiTiet()==null) {
+							System.out.println("null");
+						}
+						else {
+							String[] a= i.getChiTiet().split(",");
+							for(int j=0; j<a.length;j++) {
+								String c = null;
+								String[] b= a[j].split("-");
+								if(b[0].equals("N")) {
+									c=b[1]+": "+" Nghỉ";
+								}
+								else if(b[0].equals("T"))
+									c=b[1]+": "+" Đi trễ";
+								else if(b[0].equals("TC"))
+									c = b[1]+": "+"Tăng ca "+ b[2] +" Giờ";
+								getArr().get(j).setText(c);
+							}
+						}
 
+
+					}
+				}
+			}
+			
+		});
+		
+		btnReset.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (JLabel label : arr) {
+		            label.setText("");
+		        }
+				
+		        resetData();
+			}
+		});
+
+
+	}
+	
+	public void resetData() {
+		data=chamcong_BUS.renderChamCongData();
+		model.setDataVector(data, columnNames);
+		table.setModel(model);
 	}
 	public void event_action() {
 		data = chamcong_BUS.changeDataValue(event_name);

@@ -6,8 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.concurrent.Flow.Publisher;
+
+import org.jdesktop.animation.timing.triggers.FocusTrigger;
 
 import DTO.DANHGIA;
 import DTO.NHANVIEN;
@@ -28,7 +31,10 @@ public class DanhGiaDAO implements DAOInterface<DANHGIA>{
 				temp.setMaDanhGia(rs.getString("maDanhGia"));
 				temp.setMaNhanVien(rs.getString("maNhanVien"));
 				temp.setNguoiDanhGia(rs.getString("nguoiDanhGia"));
-				temp.setNgayDanhGia(rs.getDate("ngayDanhGia"));
+				java.sql.Date sqlDate = rs.getDate("ngayDanhGia");
+				LocalDate ngayDanhGia = sqlDate.toLocalDate();
+				temp.setNgayDanhGia(ngayDanhGia);
+
 				temp.setDiemDanhGia(rs.getFloat("diemDanhGia"));
 				temp.setXepLoaiDanhGia(rs.getString("xepLoaiDanhGia"));
 				temp.setChiTietDanhGia(rs.getString("chiTietDanhGia"));
@@ -56,7 +62,9 @@ public class DanhGiaDAO implements DAOInterface<DANHGIA>{
 			pst.setString(1, bangDanhGia.getMaDanhGia());
 			pst.setString(2, bangDanhGia.getMaNhanVien());
 			pst.setString(3, bangDanhGia.getNguoiDanhGia());
-			pst.setDate(4, bangDanhGia.getNgayDanhGia());
+			LocalDate ngayDanhGia = bangDanhGia.getNgayDanhGia();
+			java.sql.Date sqlDate = java.sql.Date.valueOf(ngayDanhGia);
+			pst.setDate(4, sqlDate);
 			pst.setFloat(5, bangDanhGia.getDiemDanhGia());
 			pst.setString(6, bangDanhGia.getXepLoaiDanhGia());
 			pst.setString(7, bangDanhGia.getChiTietDanhGia());
@@ -80,7 +88,9 @@ public class DanhGiaDAO implements DAOInterface<DANHGIA>{
 			pst.setString(1, bangDanhGia.getMaDanhGia());
 			pst.setString(2, bangDanhGia.getMaNhanVien());
 			pst.setString(3, bangDanhGia.getNguoiDanhGia());
-			pst.setDate(4, bangDanhGia.getNgayDanhGia());
+			LocalDate ngayDanhGia = bangDanhGia.getNgayDanhGia();
+			java.sql.Date sqlDate = java.sql.Date.valueOf(ngayDanhGia);
+			pst.setDate(4, sqlDate);
 			pst.setFloat(5, bangDanhGia.getDiemDanhGia());
 			pst.setString(6, bangDanhGia.getXepLoaiDanhGia());
 			pst.setString(7, bangDanhGia.getChiTietDanhGia());
@@ -122,7 +132,9 @@ public class DanhGiaDAO implements DAOInterface<DANHGIA>{
 				
 				x.setMaDanhGia(rs.getString("maDanhGia"));
 				x.setMaNhanVien(rs.getString("maNhanVien"));
-				x.setNgayDanhGia(rs.getDate("ngayDanhGia"));
+				java.sql.Date sqlDate = rs.getDate("ngayDanhGia");
+				LocalDate ngayDanhGia = sqlDate.toLocalDate();
+				x.setNgayDanhGia(ngayDanhGia);
 				x.setNguoiDanhGia(rs.getString("nguoiDanhGia"));
 				x.setDiemDanhGia(rs.getFloat("diemDanhGia"));
 				x.setXepLoaiDanhGia(rs.getString("xepLoaiDanhGia"));
@@ -229,6 +241,59 @@ public class DanhGiaDAO implements DAOInterface<DANHGIA>{
 		}
 		return null;
 	}
+	
+	public ArrayList<DANHGIA> renderChangeValue(String[] default_val, String[] event_name) {
+	    Connection con = ConnectionManager.getConnection();
+	    ArrayList<DANHGIA> list = new ArrayList<>();
+	    try {
+	        String sql = "SELECT * FROM BANGDANHGIA BDG where 1=1 ";
+	        if (!default_val[0].equals(event_name[0])) {
+	            sql+="and BDG.xepLoaiDanhGia= N'"+event_name[0]+"'";
+	            
+	        }
+	        if (!default_val[1].equals(event_name[1])) {           
+	                sql += " AND BDG.loaiDanhGia = N'" + event_name[1] + "'";            
+	        }
+	        if (!default_val[2].equals(event_name[2])) {
+	        	if(default_val[2].equals("Điểm đánh giá")) {
+	        		sql += " ORDER BY BDG.diemDanhGia ";
+		            if (default_val[3].equals("Tăng dần"))
+		            	sql+=" ASC ";
+		            else
+		            	sql+=" DESC";
+	        	}
+	        	else {
+	        		sql += " ORDER BY BDG.ngayDanhGia ";
+		            if (default_val[3].equals("Tăng dần"))
+		            	sql+=" ASC ";
+		            else 
+		            	sql+=" DESC";
+				}	                	          
+	        }
+	        PreparedStatement ps = con.prepareStatement(sql);
+	        ResultSet rs = ps.executeQuery();
+	        while (rs.next()) {
+	            DANHGIA dg = new DANHGIA(); // Khởi tạo một đối tượng DANHGIA mới
+	            dg.setMaDanhGia(rs.getString("maDanhGia"));
+	            dg.setMaNhanVien(rs.getString("maNhanVien"));
+	            java.sql.Date sqlDate = rs.getDate("ngayDanhGia");
+	            LocalDate ngayDanhGia = sqlDate.toLocalDate();
+	            dg.setNgayDanhGia(ngayDanhGia);
+	            dg.setNguoiDanhGia(rs.getString("nguoiDanhGia"));
+	            dg.setDiemDanhGia(rs.getFloat("diemDanhGia"));
+	            dg.setXepLoaiDanhGia(rs.getString("xepLoaiDanhGia"));
+	            dg.setChiTietDanhGia(rs.getString("chiTietDanhGia"));
+	            dg.setLoaiDanhGia(rs.getString("loaiDanhGia"));
+	            list.add(dg);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        ConnectionManager.closeConnection(con);
+	    }
+	    return list;
+	}
+
 
 	
 }

@@ -250,17 +250,13 @@ public class ChamCongDAO implements DAOInterface<CHAMCONG> {
     	Connection con=ConnectionManager.getConnection();
     	ArrayList<CHAMCONG> list=new ArrayList<>();
     	try {
-			String sql="select * from BANGCHAMCONG BCC join NHANVIEN NV on BCC.maNhanVien=NV.maNhanVien join PHONGBAN PB on NV.maPhong= PB.maPhong";
-			boolean check=false;
+			String sql="select * from BANGCHAMCONG BCC join NHANVIEN NV on BCC.maNhanVien=NV.maNhanVien join PHONGBAN PB on NV.maPhong= PB.maPhong where 1=1";			
 			if (!default_val[0].equals(event_name[0])) {
-				sql +="where tenPhong = N'"+event_name[0]+"'";
-				check=true;
+				sql +=" and tenPhong = N'"+event_name[0]+"'";
+				
 			}
-			if(!default_val[1].equals(event_name[1]) || !default_val[2].equals(event_name[2])) {
-				if (check) 						
-					sql +=" and thangChamCong = N'"+event_name[1]+"'"+"and namChamCong = N'"+event_name[2]+"'";
-				else 
-					sql +=" where thangChamCong = N'"+event_name[1]+"'"+"and namChamCong = N'"+event_name[2]+"'";
+			if(!default_val[1].equals(event_name[1]) || !default_val[2].equals(event_name[2])) {							
+					sql +=" and thangChamCong = N'"+event_name[1]+"'"+"and namChamCong = N'"+event_name[2]+"'";	
 			}
 			PreparedStatement ps= con.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
