@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 // import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -95,5 +96,25 @@ public class ChucVuDAO implements DAOInterface<CHUCVU>{
 		}
         return result;
     }
+
+    public Object[] getChucVuCongTyTuTen(String tenChucVu) {
+		Object data[] = new Object[3];
+		Connection con = ConnectionManager.getConnection();
+		try {
+			Statement st = con.createStatement();
+			ResultSet rs  = st.executeQuery("select * from CHUCVUCONGTY where tenChucVu = N'"+tenChucVu+"'");
+			while(rs.next()) {
+				data[0] = rs.getString("maChucVu");
+				data[1] = rs.getString("tenChucVu");
+				data[2] = rs.getDouble("phuCapChucVu");
+			}
+			ConnectionManager.closeConnection(con);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return data;
+	}
 
 }

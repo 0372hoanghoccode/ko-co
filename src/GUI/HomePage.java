@@ -20,6 +20,7 @@ public class HomePage extends JPanel {
 	}
 	
 	public void init() {
+		
 		setLayout(null);
 		tk1 = new HomePageTK1();
 		tk1.setBounds(5, 5, 500, 295);
@@ -27,6 +28,8 @@ public class HomePage extends JPanel {
 		
 		tk2 = new HomePageTK2();
 		tk2.setBounds(510, 5, 480, 295);
+		tk2.setData(DAO.PhongBanDAO.getInstance().getDanhSachTenVaSoLuongNhanVienPhongBan());
+		tk2.ani();
 		add(tk2);
 		
 		tk3 = new HomePageTK3();

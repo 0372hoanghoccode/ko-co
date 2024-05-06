@@ -6,6 +6,9 @@ import javax.swing.JScrollPane;
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.swing.JTable;
@@ -16,6 +19,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import BUS.PHONGBAN_BUS;
+
 
 import javax.swing.JButton;
 
@@ -39,10 +43,12 @@ public class PhongbanPage extends JPanel {
 	Object[][] dataNV = phongban_bus.renderChiTietPhongBan(0);
 
 
+
 	/**
 	 * Create the panel.
 	 */
 	public PhongbanPage() {
+		
 		init();
 	}
 	
@@ -99,7 +105,6 @@ public class PhongbanPage extends JPanel {
 		JButton btnNewButton_3 = new JButton("Xuất");
 		btnNewButton_3.setBounds(869, 14, 85, 21);
 		panel_1.add(btnNewButton_3);
-		
 		
 		
 		
@@ -241,6 +246,13 @@ public class PhongbanPage extends JPanel {
         tableNV.getSelectionModel().addListSelectionListener(tableNVListener);
 		
 		
+		
 
+	}
+
+	public String LocalDateToString(LocalDate date) {
+		String arr[] = date.toString().split("-");
+		return arr[2]+"-"+arr[1]+"-"+arr[0];
+		
 	}
 }

@@ -10,10 +10,19 @@ import java.util.Locale;
 import java.util.Collections;
 import java.util.Comparator;
 
-
+import DAO.ChucVuDAO;
 import DAO.NhanVienDAO;
-
+import DTO.CHUCVU;
+import DTO.CMND;
+import DTO.DIACHI;
+import DTO.HOPDONGLAODONG;
 import DTO.NHANVIEN;
+import DTO.NHANVIENCHINHTHUC;
+import DTO.NHANVIENTHUVIEC;
+import DTO.TAIKHOAN;
+import DTO.TRINHDO;
+
+
 
 public class NhanVienBUS {
     private final NhanVienDAO nhanvien_dao = new NhanVienDAO();
@@ -193,6 +202,8 @@ public class NhanVienBUS {
         });
         return getDataObjectToRender();
     }
+
+    
     
     
 

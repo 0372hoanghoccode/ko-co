@@ -73,8 +73,8 @@ public class HopdongPage_Kigiahan extends JPanel{
 	private DefaultTableModel model;
 	private Object[][] data;
 	private static String[] columnName = {"STT","Nhân viên","Phòng ban","Thử việc từ"};
-	 private PHONGBAN_BUS phongban_BUS = new PHONGBAN_BUS();
-	 private NhanVienDAO nhanvienDAO = new NhanVienDAO();
+	private PHONGBAN_BUS phongban_BUS = new PHONGBAN_BUS();
+	private NhanVienDAO nhanvienDAO = new NhanVienDAO();
 	
 	public HopdongPage_Kigiahan() {
 		listlabel = new ArrayList<>();
@@ -410,7 +410,54 @@ public class HopdongPage_Kigiahan extends JPanel{
 
 		table.setModel(model);
 		
-//		formatSizeColumn();
+
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		table.getColumnModel().getColumn(0).setPreferredWidth(60);
+		table.getColumnModel().getColumn(1).setPreferredWidth(220);  
+		table.getColumnModel().getColumn(2).setPreferredWidth(240); 
+		
+		cbbPhong.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+
+                    
+					String selectedPhong = (String) cbbPhong.getSelectedItem();
+					int selectedSortBy = cbbSort.getSelectedIndex();
+					int selectedSortMode = cbbSort2.getSelectedIndex();
+                   
+					updateTable(selectedPhong, selectedSortBy, selectedSortMode);
+                }
+            }
+        });
+		
+        cbbSort.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    
+					String selectedPhong = (String) cbbPhong.getSelectedItem();
+					int selectedSortBy = cbbSort.getSelectedIndex();
+					int selectedSortMode = cbbSort2.getSelectedIndex();
+                   
+					updateTable(selectedPhong, selectedSortBy, selectedSortMode);
+                }
+            }
+        });
+
+        cbbSort2.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    
+					String selectedPhong = (String) cbbPhong.getSelectedItem();
+					int selectedSortBy = cbbSort.getSelectedIndex();
+					int selectedSortMode = cbbSort2.getSelectedIndex();
+                    
+					updateTable(selectedPhong, selectedSortBy, selectedSortMode);
+                }
+            }
+        });
 
 		tfBatDauHopDong.getDocument().addDocumentListener(new DocumentListener() {
 		    @Override
@@ -441,51 +488,14 @@ public class HopdongPage_Kigiahan extends JPanel{
 	public void setSalaryData(Object[][] data) {
 		this.data = data;
 		model.setDataVector(this.data, columnName);
-		formatSizeColumn();
-	}
-	public void formatSizeColumn() {
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.getColumnModel().getColumn(0).setPreferredWidth(60);
 		table.getColumnModel().getColumn(1).setPreferredWidth(220);  
 		table.getColumnModel().getColumn(2).setPreferredWidth(240); 
-		table.getColumnModel().getColumn(3).setPreferredWidth(120);  
-		
-		cbbPhong.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    updateTable();
-                    System.out.println("Phòng đã chọn: " + cbbPhong.getSelectedItem());
-                }
-            }
-        });
-		
-        cbbSort.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    updateTable();
-                    System.out.println("Sắp xếp đã chọn: " + cbbSort.getSelectedItem());
-                }
-            }
-        });
+	}
 
-        cbbSort2.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    updateTable();
-                    System.out.println("Chế độ sắp xếp đã chọn: " + cbbSort2.getSelectedItem());
-                }
-            }
-        });
-    }
 
-    private void updateTable() {
-        String selectedPhong = (String) cbbPhong.getSelectedItem();
-        int selectedSortBy = cbbSort.getSelectedIndex();
-        int selectedSortMode = cbbSort2.getSelectedIndex();
-
+    private void updateTable(String selectedPhong, int selectedSortBy, int selectedSortMode) {
         Object[][] newData = nhanvienDAO.getDanhSachNhanVienThuViecToRender(selectedPhong, selectedSortBy, selectedSortMode);
         model.setRowCount(0); 
         for (Object[] row : newData) {

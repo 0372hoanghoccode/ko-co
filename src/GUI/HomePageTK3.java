@@ -4,15 +4,24 @@ import javax.swing.JPanel;
 
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Font;
 import java.awt.Color;
 
+import BUS.PHONGBAN_BUS;
+
 public class HomePageTK3 extends JPanel {
 
     private static final long serialVersionUID = 1L;
-
+    JTable table;
+	PHONGBAN_BUS phongban_bus = new PHONGBAN_BUS();
+    String[] columnNames = {
+        "STT", "T\u00EAn ph\u00F2ng", "Tr\u01B0\u1EDFng ph\u00F2ng", "S\u1ED1 nh\u00E2n vi\u00EAn", "L\u01B0\u01A1ng trung b\u00ECnh"
+    };
+    Object[][] data = {};
     /**
      * Create the panel.
      */
@@ -35,31 +44,28 @@ public class HomePageTK3 extends JPanel {
         
 
         // Tạo bảng
-        String[] columnNames = {"STT", "Tên Phòng", "Tên Trưởng Phòng", "Số Nhân Viên", "Lương Trung Bình"};
-        Object[][] data = {
-            {"1", "Phòng A", "Nguyễn Văn A", "25", "4242424"},
-            {"2", "Phòng B", "Trần Thị B", "30", "23213131"},
-            {"3", "Phòng C", "Lê Văn C", "28", "45242314"},
-            {"4", "Phòng D", "Hoàng Văn D", "35", "6342423"},
-            {"5", "Phòng E", "Mai Thị E", "27", "3351313"},
-            {"6", "Phòng F", "Đỗ Văn F", "31", "8624234"},
-            {"7", "Phòng G", "Vũ Thị G", "33", "7842311"},
-            {"8", "Phòng H", "Phạm Văn H", "29", "5224123"},
-            {"9", "Phòng I", "Bùi Thị I", "26", "7412314"},
-            {"10", "Phòng K", "Nguyễn Văn K", "32", "8923123"},
-            {"11", "Phòng L", "Trần Văn L", "36", "6532423"},
-            {"12", "Phòng M", "Lê Thị M", "29", "4321313"},
-            {"13", "Phòng N", "Hoàng Văn N", "30", "7434234"},
-            {"14", "Phòng O", "Mai Thị O", "28", "9822311"},
-            {"15", "Phòng P", "Đỗ Văn P", "34", "5224123"}
-        };
+       
 
-        DefaultTableModel model = new DefaultTableModel(data, columnNames);
-        JTable table = new JTable(model);
-        table.setFont(new Font("Arial", Font.PLAIN, 12));
+        data = phongban_bus.renderAllPhongBanData();
+		DefaultTableModel model = new DefaultTableModel(data, columnNames) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+		table = new JTable(model);
+		table.setFont(new Font("Arial", Font.PLAIN, 12));
+		table.setRowHeight(30);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		if (table.getRowCount() > 0) {
+			table.setRowSelectionInterval(0, 0);
+		}
 
         JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setBackground(Color.white);
+		scrollPane.setVerticalScrollBar(new myScrollBar());
+		scrollPane.setBorder(new EmptyBorder(0,0,0,0));
         scrollPane.setBounds(10, 37, 965, 299);
+        
         add(scrollPane);
     }
 }

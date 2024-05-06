@@ -3,79 +3,91 @@ package GUI;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.util.ArrayList;
 import java.awt.Color;
+
+import GUI.PieChart.PieChart;
+import GUI.PieChart.ModelPieChart;
 
 public class HomePageTK2 extends JPanel {
 
-	private static final long serialVersionUID = 1L;
-
-	/**
-	 * Create the panel.
-	 */
+	private ArrayList<Object[]> dataPieChart;
+	private JPanel panelDetail;
+	private ArrayList<ModelPieChart> arr1;
+	private PieChart pieChart1;
+	private static Color[] colorList = {Color.decode("#0984e3"),Color.decode("#4cd137"), Color.decode("#f1c40f"),Color.decode("#FF8000"),Color.decode("#e74c3c") ,Color.decode("#9b59b6")};
+	
 	public HomePageTK2() {
-		setBackground(new Color(255, 255, 255));
+		this.dataPieChart = new ArrayList<>();
 		init();
 	}
-	
 	public void init() {
-		setLayout(null);
 		
-		setBounds(470, 5, 460, 275);
+		this.setBounds(555,10,520,320);
+		this.setBackground(Color.white);
+		this.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Tỉ lệ nhân viên từng phòng ban");
-		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblNewLabel.setBounds(10, 10, 205, 30);
-		add(lblNewLabel);
+		pieChart1 = new PieChart();
+		pieChart1.setChartType(PieChart.PeiChartType.DONUT_CHART);
+        pieChart1.setBounds(273,52,192,179);
+        this.add(pieChart1);
+        panelDetail = new JPanel();
+        panelDetail.setBounds(10,10,220,300);
+        panelDetail.setLayout(null);
+        panelDetail.setBackground(Color.white);
+        this.add(panelDetail);
+	}
+	public void setData(ArrayList<Object[]> data) {
+		this.dataPieChart = data;
+		panelDetail.removeAll();
+        for(int i=0;i<dataPieChart.size();i++) {
+        	JPanel pn = new JPanel();
+        	pn.setBackground(colorList[i]);
+        	pn.setBounds(30,40+i*32,12,12);
+        	panelDetail.add(pn);
+        	JLabel lbpie1 = new JLabel((String)dataPieChart.get(i)[0]);
+            lbpie1.setFont(new Font("sansserif",1,12));
+            lbpie1.setForeground(new Color(0,0,0,200));
+            lbpie1.setBounds(50,35+i*32,200,20);
+            panelDetail.add(lbpie1);
+        }
+	}
+	public void ani() {
+		ModelPieChart md = new ModelPieChart("P1",0, Color.white);
+		arr1 = new ArrayList<>();
+		for(int i=0;i<dataPieChart.size();i++) {
+			ModelPieChart md1 = new ModelPieChart("P2", 0, colorList[i]);
+			arr1.add(md1);
+		}
+		arr1.add(md);	
+
 		
-		JPanel panel_4 = new JPanel(); // bao chú thích
-		panel_4.setBounds(10, 43, 123, 222);
-		add(panel_4);
-		panel_4.setLayout(null);
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(10, 10, 10, 10);
-		panel_4.add(panel_1);
-		panel_1.setBackground(new Color(128, 0, 255));
-		
-		JLabel lblNewLabel_1 = new JLabel("Phòng 1");
-		lblNewLabel_1.setBounds(30, 10, 45, 13);
-		panel_4.add(lblNewLabel_1);
-		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(10, 30, 10, 10);
-		panel_4.add(panel_2);
-		panel_2.setBackground(new Color(255, 0, 128));
-		
-		JLabel lblNewLabel_2 = new JLabel("Phòng 2");
-		lblNewLabel_2.setBounds(30, 30, 45, 13);
-		panel_4.add(lblNewLabel_2);
-		
-		JPanel panel_3 = new JPanel();
-		panel_3.setBounds(10, 50, 10, 10);
-		panel_4.add(panel_3);
-		panel_3.setBackground(new Color(64, 0, 64));
-		
-		JLabel lblNewLabel_3 = new JLabel("Phòng 3");
-		lblNewLabel_3.setBounds(30, 47, 45, 13);
-		panel_4.add(lblNewLabel_3);
-		
-		JPanel panel = new JPanel();
-		panel.setBounds(10, 73, 10, 10);
-		panel_4.add(panel);
-		panel.setBackground(new Color(0, 128, 128));
-		
-		JLabel lblNewLabel_4 = new JLabel("Phòng 4");
-		lblNewLabel_4.setBounds(30, 70, 45, 13);
-		panel_4.add(lblNewLabel_4);
-		
-		JPanel panel_5 = new JPanel();
-		panel_5.setBackground(new Color(255, 0, 0));
-		panel_5.setBounds(10, 96, 10, 10);
-		panel_4.add(panel_5);
-		
-		JLabel lblNewLabel_5 = new JLabel("Phòng 5");
-		lblNewLabel_5.setBounds(30, 93, 45, 13);
-		panel_4.add(lblNewLabel_5);
+		pieChart1.setData(arr1);
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				int sizeList = arr1.size()-1;
+				int total = 0;
+				for(int i=0;i<dataPieChart.size();i++) {
+					total += (int)dataPieChart.get(i)[1];
+				}
+				for(int i = 0;i<dataPieChart.size();i++) {
+					for(int j=1;j<=(int)dataPieChart.get(i)[1];j++) {
+						arr1.get(i).setValues(j);
+						total--;
+						arr1.get(sizeList).setValues(total);
+						repaint();
+						try {
+							Thread.sleep(4);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+				pieChart1.delDate(md);
+				repaint();
+			}
+		}).start();
 		
 	}
 }
