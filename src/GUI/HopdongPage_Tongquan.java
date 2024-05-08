@@ -13,17 +13,26 @@ import BUS.HOPDONGLAODONG_BUS;
 import BUS.PHONGBAN_BUS;
 
 public class HopdongPage_Tongquan extends JPanel {
-
-	private static final long serialVersionUID = 1L;
-	private HOPDONGLAODONG_BUS hopdonglaodong_bus = new HOPDONGLAODONG_BUS();
-	private PHONGBAN_BUS phongban_BUS = new PHONGBAN_BUS();
-	private JTable table;
-	private HopdongPage_Giahan giaHanPage;
+    private static final long serialVersionUID = 1L;
+    private HOPDONGLAODONG_BUS hopdonglaodong_bus = new HOPDONGLAODONG_BUS();
+    private PHONGBAN_BUS phongban_BUS = new PHONGBAN_BUS();
+    private HopdongPage_Giahan giaHanPage;
+    private myTable table; 
+    private String[] columnName = {
+        "STT", "Mã HĐ", "Mã nv", "Tên", "Phòng", "Bắt đầu", "Kết thúc", "Loại hợp đồng", "Lương"
+    };
+    private DefaultTableModel model;
+    private Object[][] data;
 
 	public HopdongPage_Tongquan() {
 		init();
 		// Khởi tạo trang gia hạn
-		giaHanPage = new HopdongPage_Giahan();
+        data = hopdonglaodong_bus.getDataObjectToRender();
+        model = new DefaultTableModel(data, columnName);
+        table.setModel(model);
+
+        // Initialize Gia Han page
+        giaHanPage = new HopdongPage_Giahan();
 	}
 
 	public void init() {
@@ -92,15 +101,6 @@ public class HopdongPage_Tongquan extends JPanel {
 		txtLuongDen.setColumns(10);
 		panel.add(txtLuongDen);
 
-		String[] columnNames = { "STT", "Mã HĐ", "Mã nv", "Tên", "Phòng", "Bắt đầu", "Kết thúc", "Loại hợp đồng",
-				"Lương" };
-		Object[][] data = hopdonglaodong_bus.getDataObjectToRender();
-
-		DefaultTableModel model = new DefaultTableModel(data, columnNames) {
-			public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		};
 
 		btnGiaHan.addActionListener(new ActionListener() {
 			@Override
@@ -110,30 +110,33 @@ public class HopdongPage_Tongquan extends JPanel {
 			}
 		});
 
-		table = new JTable(model);
-		table.setRowHeight(30);
-		table.setFont(new Font("Arial", Font.PLAIN, 12));
-		table.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 1) {
-					int selectedRow = table.getSelectedRow();
-					if (selectedRow != -1) {
-						Object[][] selectedData = new Object[1][table.getColumnCount()];
-						for (int i = 0; i < table.getColumnCount(); i++) {
-							selectedData[0][i] = table.getValueAt(selectedRow, i);
-						}
-						giaHanPage.setData(selectedData);
-					}
-				}
-			}
-		});
+        table = new myTable();
+        table.setRowHeight(30);
+        table.setFont(new Font("Arial", Font.PLAIN, 12));
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) {
+                    int selectedRow = table.getSelectedRow();
+                    if (selectedRow != -1) {
+                        Object[][] selectedData = new Object[1][table.getColumnCount()];
+                        for (int i = 0; i < table.getColumnCount(); i++) {
+                            selectedData[0][i] = table.getValueAt(selectedRow, i);
+                        }
+                        giaHanPage.setData(selectedData);
+                    }
+                }
+            }
+        });
 
-		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBackground(Color.WHITE);
-		scrollPane.setBounds(0, 50, 985, 555);
-		add(scrollPane);
-	}
+        // Add scroll pane containing the table
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setBackground(Color.WHITE);
+        scrollPane.setBounds(0, 50, 985, 555);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        add(scrollPane);
+    }
 
 	private void displayGiaHanPage() {
 		JFrame frame = new JFrame("Gia hạn hợp đồng");

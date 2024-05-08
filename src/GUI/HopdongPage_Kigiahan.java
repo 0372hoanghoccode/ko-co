@@ -23,11 +23,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
 
 
 
@@ -88,10 +86,15 @@ public class HopdongPage_Kigiahan extends JPanel{
 		
 		
 		JPanel panelFeature = new JPanel();
+
 		panelFeature.setBounds(0,5,645,90);
+
+		panelFeature.setBounds(0,11,640,90);
+
 		panelFeature.setBackground(Color.white);
 		this.add(panelFeature);
 		panelFeature.setLayout(null);
+
 		
 		JLabel titelLabel = new JLabel("DANH SÁCH NHÂN VIÊN THỬ VIỆC");
 		titelLabel.setForeground(new Color(0,0,0,140));
@@ -325,6 +328,8 @@ public class HopdongPage_Kigiahan extends JPanel{
 		table.getColumnModel().getColumn(1).setPreferredWidth(220);  
 		table.getColumnModel().getColumn(2).setPreferredWidth(240); 
 		table.getColumnModel().getColumn(3).setPreferredWidth(110);
+		table.getColumnModel().getColumn(3).setPreferredWidth(110); 
+
 		
 		cbbPhong.addItemListener(new ItemListener() {
             @Override

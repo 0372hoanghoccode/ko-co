@@ -1,6 +1,7 @@
 package GUI;
 
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Color;
@@ -24,10 +25,27 @@ public class LuongPage1 extends JPanel {
     private JTextField textField;
     LUONG_BUS luongBUS = new LUONG_BUS();
     PHONGBAN_BUS phongban_BUS = new PHONGBAN_BUS();
+    private myTable table; 
+    private DefaultTableModel model;
+    private Object[][] data;
+    private String[] columnName = { 
+            "STT", "Nhân Viên", "Thời Gian", "Lương cơ bản",
+                    "Lương thực tế", "Phụ cấp", "Lương thưởng", 
+                    "Các khoản trừ", "Thuế", "Thực lãnh"
+        };
+    
     /**
      * Create the panel.
      */
     public LuongPage1() {
+		init();
+	
+		data = luongBUS.getDataObjectToRender(); 
+        model = new DefaultTableModel(data, columnName);
+        table.setModel(model);
+
+	}
+    public void init() {
         setBounds(100, 100, 985, 615);
         setLayout(null);
         
@@ -35,20 +53,9 @@ public class LuongPage1 extends JPanel {
         scrollPane.setBounds(0, 118, 985, 490);
         add(scrollPane);
         
-        String[] columnNames = { 
-        "STT", "Nhân Viên", "Thời Gian", "Lương cơ bản",
-                "Lương thực tế", "Phụ cấp", "Lương thưởng", 
-                "Các khoản trừ", "Thuế", "Thực lãnh"
-    };
-    Object[][] data = luongBUS.getDataObjectToRender(); 
-    DefaultTableModel model = new DefaultTableModel(data, columnNames) {
-		private static final long serialVersionUID = 1L;
-		public boolean isCellEditable(int row, int column) {
-            return false;
-        }
-    };
-    JTable table = new JTable(model);
-    
+        
+    table = new myTable();
+    table.setRowHeight(30);
     String[] event_name = new String[]{
     	"Năm", "Tháng", "Phòng ban", "khoảng lương", "Thứ tự sắp"
     };
