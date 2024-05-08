@@ -13,9 +13,9 @@ import javax.swing.table.DefaultTableModel;
 
 import BUS.DANHGIA_BUS;
 import DAO.DanhGiaDAO;
-import DAO.access_BANGDANHGIA;
+// import DAO.access_BANGDANHGIA;
 import DTO.DANHGIA;
-import DTO.SUPPORT;
+// import DTO.SUPPORT;
 
 import java.awt.Color;
 import java.awt.Container;

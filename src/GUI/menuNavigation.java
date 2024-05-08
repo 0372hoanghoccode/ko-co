@@ -20,10 +20,27 @@ public class menuNavigation extends JPanel {
     
     private static final long serialVersionUID = 1L;
 	private static final String FlatRobotoFont = null;
-    public final String[] fnc = {"Trang chính", "Nhân viên", "Phòng ban", "Hợp đồng","Chấm công", "Lương thưởng","Đánh giá", "Tài khoản", "Tuyển dụng"};
-    public final String[] iconMenu = {"/assets/appIcon/icons8-home-24.png","/assets/appIcon/icons8-staff-50.png","/assets/appIcon/icons8-department-50.png",
-            "/assets/appIcon/icons8-contract-24.png","/assets/appIcon/icons8-calendar-48.png","/assets/appIcon/icons8-salary-50.png",
-            "/assets/appIcon/icons8-favorite-64.png","/assets/appIcon/icons8-login-50.png","/assets/appIcon/icons8-salary-50.png"};
+    public final String[] fnc = {
+        "Trang chính",  // 0
+        "Nhân viên",   // 1
+        "Phòng ban",   // 2
+        "Hợp đồng",    // 3
+        "Chấm công",   // 4
+        "Lương thưởng", // 5
+        "Đánh giá",    // 6
+        "Tài khoản",   // 7
+        "Tuyển dụng"  //8
+    };
+    public final String[] iconMenu = {
+            "/assets/appIcon/icons8-home-24.png",
+            "/assets/appIcon/icons8-staff-50.png",
+            "/assets/appIcon/icons8-department-50.png",
+            "/assets/appIcon/icons8-contract-24.png",
+            "/assets/appIcon/icons8-calendar-48.png",
+            "/assets/appIcon/icons8-salary-50.png",
+            "/assets/appIcon/icons8-favorite-64.png",
+            "/assets/appIcon/icons8-login-50.png",
+            "/assets/appIcon/icons8-salary-50.png"};
     private ArrayList<JButton> btnList;
     private static int index_menu = 0;
     private appFrame app;

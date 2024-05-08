@@ -76,96 +76,38 @@ public class appFrame extends JFrame {
 		ArrayList<String> icon = new ArrayList<>();
 		title.add(nav.fnc[0]);
 		icon.add(nav.iconMenu[0]);
-
-		if (eventFnc[5] || eventFnc[8]) {
-			// them icon vao 
-			title.add(nav.fnc[8]); // tuyển dụng
-			icon.add(nav.iconMenu[8]);
-			if (!eventFnc[5]) {
-				// không có trang tuyển dụng, có trang ứng viên
-				content.getUngvien().getLb1().setText("Ứng viên");
-				content.getUngvien().getLb1().setBounds(15, 0, 100, 30);
-				content.getUngvien().getLb2().setVisible(false);
-				content.getUngvien().getTuyenDungView().setVisible(false);
-				content.getUngvien().getUngVienView().setVisible(true);
-
-				if (!eventFnc[9]) {
-					content.getUngvien().getUngVienView().getButton_UngVien_Them().setVisible(false);
-				}
-				if (!eventFnc[10]) {
-					content.getUngvien().getUngVienView().getButton_UngVien_Xoa().setVisible(false);
-				}
-				if (!eventFnc[11]) {
-					content.getUngvien().getUngVienView().getButtonTuyenUngVien().setVisible(false);
-				}
-			}
-			if (!eventFnc[8]) {
-				// không có trang ứng viên, có trang tuyển dụng
-				content.getUngvien().getLb1().setVisible(false);
-				content.getUngvien().getLb2().setBounds(115, 0, 130, 30);
-				content.getUngvien().getTuyenDungView().setVisible(true);
-				content.getUngvien().getUngVienView().setVisible(false);
-
-				if (!eventFnc[6]) {
-					content.getUngvien().getTuyenDungView().getButton_TuyenDung_Them().setVisible(false);
-				}
-				if (!eventFnc[7]) {
-					content.getUngvien().getTuyenDungView().getButton_TuyenDung_Xoa().setVisible(false);
-				}
-			}
-		}
-
+		
 		// nhân viên 
 		if (eventFnc[0] || eventFnc[1]) {
 			title.add(nav.fnc[1]);
 			icon.add(nav.iconMenu[1]);
 
-			if (!eventFnc[1]) {
-				// xem thông tin cá nhân 
-			} else {
-				if (!eventFnc[2]) {
-					// vô hiệu hóa import với thêm (setEnable và setVisible)
-				}
-				if (!eventFnc[4]) {
-					// vô hiệu hóa export 
-				}
-				if (!eventFnc[3]) {
-					// hiển thị chi tiết 
-					// ẩn xóa sửa tt(xóa , sửa, chi tiết)
-					content.getEmployeePage().getButton_ChiTiet().setBounds(915, 83, 50, 30);
-				}
+			// if (!eventFnc[1]) {
+			// 	// xem thông tin cá nhân 
+			// } else {
+			// 	if (!eventFnc[2]) {
+			// 		// vô hiệu hóa import với thêm (setEnable và setVisible)
+			// 	}
+			// 	if (!eventFnc[4]) {
+			// 		// vô hiệu hóa export 
+			// 	}
+			// 	if (!eventFnc[3]) {
+			// 		// hiển thị chi tiết 
+			// 		// ẩn xóa sửa tt(xóa , sửa, chi tiết)
+			// 		content.getEmployeePage().getButton_ChiTiet().setBounds(915, 83, 50, 30);
+			// 	}
 
-				if (!eventFnc[2] && !eventFnc[4]) {
-					// hiện nút tìm kiếm (filed và button)
-				} else if (!eventFnc[2] && eventFnc[4]) {
-					// không có thêm, có xuất (export, find filed, find button)
-				} else if (eventFnc[2] && !eventFnc[4]) {
+			// 	if (!eventFnc[2] && !eventFnc[4]) {
+			// 		// hiện nút tìm kiếm (filed và button)
+			// 	} else if (!eventFnc[2] && eventFnc[4]) {
+			// 		// không có thêm, có xuất (export, find filed, find button)
+			// 	} else if (eventFnc[2] && !eventFnc[4]) {
 					
-				}
+			// 	}
 
-			}
+			// }
 		}
 
-		// Hợp đồng
-		if (eventFnc[12]) {
-			title.add(nav.fnc[3]);
-			icon.add(nav.iconMenu[3]);
-
-			if (!eventFnc[16]) {
-				// ẩn btn export và vô hiệu hóa nó 
-			} 
-
-
-			if (!eventFnc[13] && !eventFnc[15]) {
-				// ẩn kí hợp đồng và thống kê
-			} else if (eventFnc[13] && !eventFnc[15]) {
-				// ẩn thống kê
-			} else if (!eventFnc[13] && eventFnc[15]) {
-				// ẩn kí hợp đồng
-			} else {
-
-			}
-		}
 
 		// Phòng ban
 		if (eventFnc[17] || eventFnc[21]) {
@@ -194,6 +136,31 @@ public class appFrame extends JFrame {
 			}
 		}
 
+		
+		
+
+		// Hợp đồng
+		if (eventFnc[12]) {
+			title.add(nav.fnc[3]);
+			icon.add(nav.iconMenu[3]);
+
+			if (!eventFnc[16]) {
+				// ẩn btn export và vô hiệu hóa nó 
+			} 
+
+
+			if (!eventFnc[13] && !eventFnc[15]) {
+				// ẩn kí hợp đồng và thống kê
+			} else if (eventFnc[13] && !eventFnc[15]) {
+				// ẩn thống kê
+			} else if (!eventFnc[13] && eventFnc[15]) {
+				// ẩn kí hợp đồng
+			} else {
+
+			}
+		}
+
+
 		// chấm công
 		if (eventFnc[23] || eventFnc[24]) {
 			title.add(nav.fnc[4]);
@@ -210,6 +177,7 @@ public class appFrame extends JFrame {
 				}
 			}
 		}
+
 
 		// Lương
 		if (eventFnc[28] || eventFnc[29]) {
@@ -253,11 +221,55 @@ public class appFrame extends JFrame {
 			}
 		}
 
-		// giao diện phân quyền 
+		// tài khoản
 		if (eventFnc[37]) {
-			title.add(nav.fnc[8]);
-			icon.add(nav.iconMenu[8]);
+			title.add(nav.fnc[7]);
+			icon.add(nav.iconMenu[7]);
 		}
+
+		// tuyển dụng 
+		if (eventFnc[5] || eventFnc[8]) {
+			
+			title.add(nav.fnc[8]); // tuyển dụng
+			icon.add(nav.iconMenu[8]);
+			// if (!eventFnc[5]) {
+			// 	// không có trang tuyển dụng, có trang ứng viên
+			// 	content.getUngvien().getLb1().setText("Ứng viên");
+			// 	content.getUngvien().getLb1().setBounds(15, 0, 100, 30);
+			// 	content.getUngvien().getLb2().setVisible(false);
+			// 	content.getUngvien().getTuyenDungView().setVisible(false);
+			// 	content.getUngvien().getUngVienView().setVisible(true);
+
+			// 	if (!eventFnc[9]) {
+			// 		content.getUngvien().getUngVienView().getButton_UngVien_Them().setVisible(false);
+			// 	}
+			// 	if (!eventFnc[10]) {
+			// 		content.getUngvien().getUngVienView().getButton_UngVien_Xoa().setVisible(false);
+			// 	}
+			// 	if (!eventFnc[11]) {
+			// 		content.getUngvien().getUngVienView().getButtonTuyenUngVien().setVisible(false);
+			// 	}
+			// }
+			// if (!eventFnc[8]) {
+			// 	// không có trang ứng viên, có trang tuyển dụng
+			// 	content.getUngvien().getLb1().setVisible(false);
+			// 	content.getUngvien().getLb2().setBounds(115, 0, 130, 30);
+			// 	content.getUngvien().getTuyenDungView().setVisible(true);
+			// 	content.getUngvien().getUngVienView().setVisible(false);
+
+			// 	if (!eventFnc[6]) {
+			// 		content.getUngvien().getTuyenDungView().getButton_TuyenDung_Them().setVisible(false);
+			// 	}
+			// 	if (!eventFnc[7]) {
+			// 		content.getUngvien().getTuyenDungView().getButton_TuyenDung_Xoa().setVisible(false);
+			// 	}
+			// }
+		}
+
+		
+
+		
+
 
 		// render menu ở đây 
 		// mảng title và icon xem dc ở đây
