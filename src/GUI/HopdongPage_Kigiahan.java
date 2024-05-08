@@ -88,7 +88,7 @@ public class HopdongPage_Kigiahan extends JPanel{
 		
 		
 		JPanel panelFeature = new JPanel();
-		panelFeature.setBounds(0,11,640,80);
+		panelFeature.setBounds(0,5,645,90);
 		panelFeature.setBackground(Color.white);
 		this.add(panelFeature);
 		panelFeature.setLayout(null);
@@ -147,7 +147,7 @@ public class HopdongPage_Kigiahan extends JPanel{
 		
 		JPanel panelThuong = new JPanel();
 		panelThuong.setBackground(Color.white);
-		panelThuong.setBounds(650,0,440,665);
+		panelThuong.setBounds(650,0,345,575);
 		panelThuong.setLayout(null);
 		this.add(panelThuong);
 		JLabel titelLabel2 = new JLabel("KÍ HỢP ĐỒNG LAO ĐỘNG");
@@ -159,178 +159,87 @@ public class HopdongPage_Kigiahan extends JPanel{
 		JLabel lbt1 = new JLabel("Nhân viên:");
 		lbt1.setForeground(new Color(0,0,0,140));
 		lbt1.setFont(new Font("arial", 1, 13));
-		lbt1.setBounds(10,50,250,25);
+		lbt1.setBounds(10,30,250,25);
 		panelThuong.add(lbt1);
-		
-		JLabel lbt11 = new JLabel("......................................");
-		lbt11.setForeground(new Color(0,0,0,140));
-		lbt11.setFont(new Font("arial", 1, 13));
-		lbt11.setBounds(120,50,250,25);
-		panelThuong.add(lbt11);
-		listlabel.add(lbt11);
 		
 		
 		
 		JLabel lbt2 = new JLabel("Ngày sinh:");
 		lbt2.setForeground(new Color(0,0,0,140));
 		lbt2.setFont(new Font("arial", 1, 13));
-		lbt2.setBounds(10,80,250,25);
+		lbt2.setBounds(10,50,250,25);
 		panelThuong.add(lbt2);
-		
-		JLabel lbt22 = new JLabel("............................");
-		lbt22.setForeground(new Color(0,0,0,140));
-		lbt22.setFont(new Font("arial", 1, 13));
-		lbt22.setBounds(120,80,250,25);
-		panelThuong.add(lbt22);
-		listlabel.add(lbt22);
 		JLabel lbt3 = new JLabel("Giới tính:");
 		lbt3.setForeground(new Color(0,0,0,140));
 		lbt3.setFont(new Font("arial", 1, 13));
-		lbt3.setBounds(260,80,250,25);
+		lbt3.setBounds(10,294,250,25);
 		panelThuong.add(lbt3);
-		
-		JLabel lbt33 = new JLabel("..................");
-		lbt33.setForeground(new Color(0,0,0,140));
-		lbt33.setFont(new Font("arial", 1, 13));
-		lbt33.setBounds(350,80,250,25);
-		panelThuong.add(lbt33);
-		listlabel.add(lbt33);
 		JLabel lbt4 = new JLabel("Địa chỉ:");
 		lbt4.setForeground(new Color(0,0,0,140));
 		lbt4.setFont(new Font("arial", 1, 13));
-		lbt4.setBounds(10,110,250,25);
+		lbt4.setBounds(10,75,250,25);
 		panelThuong.add(lbt4);
-		
-		JLabel lbt44 = new JLabel("........................................................");
-		lbt44.setForeground(new Color(0,0,0,140));
-		lbt44.setFont(new Font("arial", 1, 13));
-		lbt44.setBounds(120,110,300,25);
-		panelThuong.add(lbt44);
-		listlabel.add(lbt44);
 		JLabel lbt5 = new JLabel("Số điện thoại:");
 		lbt5.setForeground(new Color(0,0,0,140));
 		lbt5.setFont(new Font("arial", 1, 13));
-		lbt5.setBounds(10,140,250,25);
+		lbt5.setBounds(10,96,250,25);
 		panelThuong.add(lbt5);
-		
-		JLabel lbt55 = new JLabel("............................");
-		lbt55.setForeground(new Color(0,0,0,140));
-		lbt55.setFont(new Font("arial", 1, 13));
-		lbt55.setBounds(120,140,300,25);
-		panelThuong.add(lbt55);
-		listlabel.add(lbt55);
 		JLabel lbt6 = new JLabel("Email:");
 		lbt6.setForeground(new Color(0,0,0,140));
 		lbt6.setFont(new Font("arial", 1, 13));
-		lbt6.setBounds(10,170,250,25);
+		lbt6.setBounds(10,120,250,25);
 		panelThuong.add(lbt6);
-		
-		JLabel lbt66 = new JLabel("............................");
-		lbt66.setForeground(new Color(0,0,0,140));
-		lbt66.setFont(new Font("arial", 1, 13));
-		lbt66.setBounds(120,170,300,25);
-		panelThuong.add(lbt66);
-		listlabel.add(lbt66);
 		JLabel lbt7 = new JLabel("CMND:");
 		lbt7.setForeground(new Color(0,0,0,140));
 		lbt7.setFont(new Font("arial", 1, 13));
-		lbt7.setBounds(10,200,250,25);
+		lbt7.setBounds(10,143,250,25);
 		panelThuong.add(lbt7);
-		
-		JLabel lbt77 = new JLabel("............................................");
-		lbt77.setForeground(new Color(0,0,0,140));
-		lbt77.setFont(new Font("arial", 1, 13));
-		lbt77.setBounds(120,200,300,25);
-		panelThuong.add(lbt77);
-		listlabel.add(lbt77);
 		
 		JLabel lbt8 = new JLabel("Học vấn:");
 		lbt8.setForeground(new Color(0,0,0,140));
 		lbt8.setFont(new Font("arial", 1, 13));
-		lbt8.setBounds(10,230,250,25);
+		lbt8.setBounds(10,167,250,25);
 		panelThuong.add(lbt8);
-		
-		JLabel lbt88= new JLabel("............................");
-		lbt88.setForeground(new Color(0,0,0,140));
-		lbt88.setFont(new Font("arial", 1, 13));
-		lbt88.setBounds(120,230,300,25);
-		panelThuong.add(lbt88);
-		listlabel.add(lbt88);
 		JLabel lbt9 = new JLabel("Chuyên môn:");
 		lbt9.setForeground(new Color(0,0,0,140));
 		lbt9.setFont(new Font("arial", 1, 13));
-		lbt9.setBounds(260,230,250,25);
+		lbt9.setBounds(10,266,250,25);
 		panelThuong.add(lbt9);
-		
-		JLabel lbt99= new JLabel("..................");
-		lbt99.setForeground(new Color(0,0,0,140));
-		lbt99.setFont(new Font("arial", 1, 13));
-		lbt99.setBounds(350,230,300,25);
-		panelThuong.add(lbt99);
-		listlabel.add(lbt99);
 		JLabel lbt10 = new JLabel("Chuyên ngành:");
 		lbt10.setForeground(new Color(0,0,0,140));
 		lbt10.setFont(new Font("arial", 1, 13));
-		lbt10.setBounds(10,260,250,25);
+		lbt10.setBounds(10,189,250,25);
 		panelThuong.add(lbt10);
-		
-		JLabel lbt101= new JLabel("............................");
-		lbt101.setForeground(new Color(0,0,0,140));
-		lbt101.setFont(new Font("arial", 1, 13));
-		lbt101.setBounds(120,260,300,25);
-		panelThuong.add(lbt101);
-		listlabel.add(lbt101);
 		JLabel lbt111 = new JLabel("Phòng ban:");
 		lbt111.setForeground(new Color(0,0,0,140));
 		lbt111.setFont(new Font("arial", 1, 13));
-		lbt111.setBounds(10,290,250,25);
+		lbt111.setBounds(10,210,250,25);
 		panelThuong.add(lbt111);
-		
-		JLabel lbt1111= new JLabel("........................................");
-		lbt1111.setForeground(new Color(0,0,0,140));
-		lbt1111.setFont(new Font("arial", 1, 13));
-		lbt1111.setBounds(120,290,300,25);
-		panelThuong.add(lbt1111);
-		listlabel.add(lbt1111);
 		JLabel lbt222 = new JLabel("Chức vụ:");
 		lbt222.setForeground(new Color(0,0,0,140));
 		lbt222.setFont(new Font("arial", 1, 13));
-		lbt222.setBounds(10,320,250,25);
+		lbt222.setBounds(10,239,250,25);
 		panelThuong.add(lbt222);
-		
-		JLabel lbt2222= new JLabel(".................................");
-		lbt2222.setForeground(new Color(0,0,0,140));
-		lbt2222.setFont(new Font("arial", 1, 13));
-		lbt2222.setBounds(120,320,300,25);
-		panelThuong.add(lbt2222);
-		listlabel.add(lbt2222);
 		JLabel lbt333 = new JLabel("Mức lương:");
 		lbt333.setForeground(new Color(0,0,0,140));
 		lbt333.setFont(new Font("arial", 1, 13));
-		lbt333.setBounds(10,350,250,25);
+		lbt333.setBounds(10,319,98,25);
 		panelThuong.add(lbt333);
-		
-		JLabel lbt3333= new JLabel("............................");
-		lbt3333.setForeground(new Color(0,0,0,140));
-		lbt3333.setFont(new Font("arial", 1, 13));
-		lbt3333.setBounds(120,350,300,25);
-		panelThuong.add(lbt3333);
-		listlabel.add(lbt3333);
 		
 		JLabel titelLabel3 = new JLabel("BỔ SUNG THÔNG TIN");
 		titelLabel3.setForeground(new Color(0,0,0,140));
 		titelLabel3.setFont(new Font("arial", 1, 13));
-		titelLabel3.setBounds(10,420,250,25);
+		titelLabel3.setBounds(10,371,250,25);
 		panelThuong.add(titelLabel3);
 		
 		JLabel lbt444= new JLabel("Bắt đầu hợp đồng");
 		lbt444.setForeground(new Color(0,0,0,140));
 		lbt444.setFont(new Font("arial", 1, 13));
-		lbt444.setBounds(10,450,300,25);
+		lbt444.setBounds(10,413,150,25);
 		panelThuong.add(lbt444);
 		
 		tfBatDauHopDong = new JTextField();
-		tfBatDauHopDong.setBounds(10,480,150,28);
+		tfBatDauHopDong.setBounds(10,448,150,28);
 		tfBatDauHopDong.setForeground(new Color(0,0,0,140));
 		tfBatDauHopDong.setFont(new Font("arial", 1, 13));
 		panelThuong.add(tfBatDauHopDong);
@@ -340,11 +249,11 @@ public class HopdongPage_Kigiahan extends JPanel{
 		JLabel lbt555= new JLabel("Kết thúc hợp đồng");
 		lbt555.setForeground(new Color(0,0,0,140));
 		lbt555.setFont(new Font("arial", 1, 13));
-		lbt555.setBounds(200,450,300,25);
+		lbt555.setBounds(170,413,150,25);
 		panelThuong.add(lbt555);
 		
 		tfKetThucHopDong = new JTextField();
-		tfKetThucHopDong.setBounds(200,480,150,28);
+		tfKetThucHopDong.setBounds(170,448,150,28);
 		tfKetThucHopDong.setForeground(new Color(0,0,0,140));
 		tfKetThucHopDong.setFont(new Font("arial", 1, 13));
 		panelThuong.add(tfKetThucHopDong);
@@ -353,12 +262,12 @@ public class HopdongPage_Kigiahan extends JPanel{
 		JLabel lbt4444= new JLabel("Thời hạn hợp đồng");
 		lbt4444.setForeground(new Color(0,0,0,140));
 		lbt4444.setFont(new Font("arial", 1, 13));
-		lbt4444.setBounds(10,500,300,25);
+		lbt4444.setBounds(10,486,150,25);
 		panelThuong.add(lbt4444);
 		
 		cbbThoiHanHopDong = new myCombobox<>();
 		cbbThoiHanHopDong.setModel(new DefaultComboBoxModel<>(new String[] {"1 năm","2 năm","3 năm","4 năm","5 năm"}));
-		cbbThoiHanHopDong.setBounds(10,530,150,30);
+		cbbThoiHanHopDong.setBounds(10,521,150,30);
 		cbbThoiHanHopDong.setForeground(new Color(0,0,0,140));
 		cbbThoiHanHopDong.setFont(new Font("arial", 1, 13));
 		panelThuong.add(cbbThoiHanHopDong);
@@ -366,7 +275,7 @@ public class HopdongPage_Kigiahan extends JPanel{
 		
 		btnKiHopDong = new Button();
 		btnKiHopDong.setText("Tạo hợp đồng");
-		btnKiHopDong.setBounds(200,530,120,35);
+		btnKiHopDong.setBounds(188,521,120,35);
 		btnKiHopDong.setForeground(Color.white);
 		btnKiHopDong.setFont(new Font("arial", 1, 13));
 		btnKiHopDong.setBackground(Color.decode("#0097e6"));
@@ -378,7 +287,7 @@ public class HopdongPage_Kigiahan extends JPanel{
 		jsp1.setBackground(Color.white);
 		jsp1.setVerticalScrollBar(new myScrollBar());
 		jsp1.setBorder(new EmptyBorder(0,0,0,0));
-		jsp1.setBounds(0,96,645,500);
+		jsp1.setBounds(0,96,645,475);
 		this.add(jsp1);
 
 		table = new myTable();
@@ -412,9 +321,10 @@ public class HopdongPage_Kigiahan extends JPanel{
 		
 
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		table.getColumnModel().getColumn(0).setPreferredWidth(60);
+		table.getColumnModel().getColumn(0).setPreferredWidth(70);
 		table.getColumnModel().getColumn(1).setPreferredWidth(220);  
 		table.getColumnModel().getColumn(2).setPreferredWidth(240); 
+		table.getColumnModel().getColumn(3).setPreferredWidth(110);
 		
 		cbbPhong.addItemListener(new ItemListener() {
             @Override

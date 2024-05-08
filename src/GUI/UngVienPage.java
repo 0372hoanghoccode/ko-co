@@ -68,7 +68,7 @@ public class UngVienPage extends JPanel {
 			
 			// Thông tin tuyển dụng
 			info_TuyenDung= new JPanel();
-			info_TuyenDung.setBounds(10, 128, 957, 75);
+			info_TuyenDung.setBounds(10, 128, 979, 75);
 			info_TuyenDung.setLayout(null);
 			info_TuyenDung.setOpaque(true);
 			info_TuyenDung.setBackground(Color.WHITE);
@@ -231,12 +231,12 @@ public class UngVienPage extends JPanel {
 	        renderData();
 	        
 	        scrollPane = new JScrollPane(objectTable);
-	        scrollPane.setBounds(20, 214, 947, 413);
+	        scrollPane.setBounds(10, 213, 979, 377);
 	        scrollPane.setVerticalScrollBar(new myScrollBar());
 	        scrollPane.setBorder(new LineBorder(Color.decode("#dfe4ea"),3));
 	        this.add(scrollPane);
 	        
-			this.setBounds(220,46,990,599);
+			this.setBounds(220,46,999,590);
 			this.setBackground(UIManager.getColor("Button.disabledShadow"));
 			this.setVisible(false);
 		}
@@ -329,13 +329,13 @@ public class UngVienPage extends JPanel {
 		}
 		public void formatSizeColumn() {
 			objectTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-			objectTable.getColumnModel().getColumn(0).setPreferredWidth(100);  
-			objectTable.getColumnModel().getColumn(1).setPreferredWidth(195);  
-			objectTable.getColumnModel().getColumn(2).setPreferredWidth(110);   
-			objectTable.getColumnModel().getColumn(3).setPreferredWidth(180);  
-			objectTable.getColumnModel().getColumn(4).setPreferredWidth(150);  
-			objectTable.getColumnModel().getColumn(5).setPreferredWidth(90);  
-			objectTable.getColumnModel().getColumn(6).setPreferredWidth(120);   
-			objectTable.getColumnModel().getColumn(7).setPreferredWidth(100);   
+			objectTable.getColumnModel().getColumn(0).setPreferredWidth(105);  
+			objectTable.getColumnModel().getColumn(1).setPreferredWidth(190);  
+			objectTable.getColumnModel().getColumn(2).setPreferredWidth(100);   
+			objectTable.getColumnModel().getColumn(3).setPreferredWidth(160);  
+			objectTable.getColumnModel().getColumn(4).setPreferredWidth(130);  
+			objectTable.getColumnModel().getColumn(5).setPreferredWidth(80);  
+			objectTable.getColumnModel().getColumn(6).setPreferredWidth(110);   
+			objectTable.getColumnModel().getColumn(7).setPreferredWidth(80);   
 		}
 }

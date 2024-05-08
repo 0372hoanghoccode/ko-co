@@ -46,13 +46,13 @@ public class UngVienPage_TuyenUngVien extends JFrame{
 	public void init() {
 		this.setSize(1020,550);
 		this.setLocationRelativeTo(null);
-		this.setLayout(null);
+		getContentPane().setLayout(null);
 		JPanel panelContent =new JPanel();
-		panelContent.setBounds(0,0,this.getWidth(),this.getHeight());
+		panelContent.setBounds(0,0,1020,550);
 		panelContent.setBackground(Color.white);
 		panelContent.setBorder(new LineBorder(Color.decode("#0097e6"),3));
 		panelContent.setLayout(null);
-		this.add(panelContent);
+		getContentPane().add(panelContent);
 		JLabel label_Title= new JLabel("Tuyển ứng viên");
 		label_Title.setForeground(Color.decode("#3498db"));
 		label_Title.setBounds(70,15,400,30);
@@ -86,7 +86,7 @@ public class UngVienPage_TuyenUngVien extends JFrame{
 		panelContent.add(info_UngVien);
 		
 		label_avt= new JLabel();
-		label_avt.setBounds(20,30,120,150);
+		label_avt.setBounds(20,30,28,29);
 		label_avt.setOpaque(true);
 		label_avt.setBackground(Color.green);
 		label_avt.setFont(new Font("Arial",Font.BOLD,13));

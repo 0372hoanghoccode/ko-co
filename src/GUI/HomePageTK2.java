@@ -29,10 +29,10 @@ public class HomePageTK2 extends JPanel {
 		
 		pieChart1 = new PieChart();
 		pieChart1.setChartType(PieChart.PeiChartType.DONUT_CHART);
-        pieChart1.setBounds(273,52,192,179);
+        pieChart1.setBounds(249,53,192,179);
         this.add(pieChart1);
         panelDetail = new JPanel();
-        panelDetail.setBounds(10,10,220,300);
+        panelDetail.setBounds(0,10,220,300);
         panelDetail.setLayout(null);
         panelDetail.setBackground(Color.white);
         this.add(panelDetail);
