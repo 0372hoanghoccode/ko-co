@@ -1,12 +1,21 @@
 package GUI;
 
 import javax.swing.JPanel;
+import PDF.InPDF;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
@@ -18,6 +27,7 @@ import javax.swing.ImageIcon;
 import BUS.LUONG_BUS;
 import BUS.NhanVienBUS;
 import BUS.PHONGBAN_BUS;
+import PDF.InPDF;
 
 public class LuongPage1 extends JPanel {
 
@@ -146,5 +156,40 @@ public class LuongPage1 extends JPanel {
         button_excel.setBounds(829, 12, 63, 31);
         button_excel.setBorderPainted(false);
         panel.add(button_excel);
+        
+        
+        JButton btnExportPDF = new JButton("Xuất PDF");
+		btnExportPDF.setBounds(273, 12, 103, 25); 
+		btnExportPDF.setFont(new Font("Tahoma", Font.BOLD, 13));
+		ImageIcon pdfIcon = new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-user-24.png"));
+		Image pdfImg = pdfIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+		btnExportPDF.setIcon(new ImageIcon(pdfImg));
+		btnExportPDF.setHorizontalTextPosition(SwingConstants.RIGHT);
+		btnExportPDF.setVerticalTextPosition(SwingConstants.CENTER);
+		panel.add(btnExportPDF);
+
+		btnExportPDF.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        JFileChooser jFileChooser = new JFileChooser();
+		        jFileChooser.setDialogTitle("Lưu file PDF");
+		        int returnVal = jFileChooser.showSaveDialog(panel);
+		        if (returnVal == JFileChooser.APPROVE_OPTION) {
+		            File file = jFileChooser.getSelectedFile();
+		            String filePath = file.getAbsolutePath();
+		            if (!filePath.endsWith(".pdf")) {
+		                filePath += ".pdf";
+		            }
+		            
+		            InPDF pdfExporter = new InPDF();
+		            try {
+		                pdfExporter.generatePDF(filePath, table);
+		                JOptionPane.showMessageDialog(panel, "Xuất dữ liệu ra file PDF thành công!");
+		            } catch (Exception ex) {
+		                JOptionPane.showMessageDialog(panel, "Xuất dữ liệu ra file PDF không thành công: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		            }
+		        }
+		    }
+		});
     }
 }

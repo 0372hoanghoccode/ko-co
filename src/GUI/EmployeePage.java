@@ -24,6 +24,7 @@ public class EmployeePage extends JPanel {
     private myTable table;
     private DefaultTableModel model;
     private Object[][] data;
+
      String[] event_name = new String[]{
     	"Phòng ban", "Giới tính", "Độ tuổi", "Thuộc tính sắp xếp", "Thứ tự sắp"
     };
@@ -332,6 +333,18 @@ btnExportExcel.addActionListener(new ActionListener() {
     public JButton getButton_ChiTiet() {
         return btnNewButton_2;
     }
+    
+    public void setData() {
+        data = nhanVienBUS.getDataObjectToRender(); 
+        model = new DefaultTableModel(data, columnNames);
+        table.setModel(model);
+    }
+    
+
+
+    
+
+    
 
 
 }

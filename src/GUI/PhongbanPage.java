@@ -1,27 +1,35 @@
 package GUI;
 
 import javax.swing.JPanel;
+import PDF.InPDF;
 import javax.swing.JScrollPane;
 
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import BUS.PHONGBAN_BUS;
+import PDF.InPDF;
 
-
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 
 public class PhongbanPage extends JPanel {
 
@@ -62,8 +70,8 @@ public class PhongbanPage extends JPanel {
 		panel_1.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Quản lí phòng ban");
-		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 14));
 		lblNewLabel.setBounds(10, 10, 177, 26);
+		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 14));
 		panel_1.add(lblNewLabel);
 		
 		
@@ -83,10 +91,10 @@ public class PhongbanPage extends JPanel {
 		}
 
 		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(10, 46, 965, 219);
 		scrollPane.setBackground(Color.white);
 		scrollPane.setVerticalScrollBar(new myScrollBar());
 		scrollPane.setBorder(new EmptyBorder(0,0,0,0));
-        scrollPane.setBounds(10, 46, 965, 219);
 
 		panel_1.add(scrollPane);
 		
@@ -164,7 +172,6 @@ public class PhongbanPage extends JPanel {
 		lblNewLabel_8.setOpaque(true);
 		lblNewLabel_8.setBounds(194, 48, 121, 157);
 		panel_2.add(lblNewLabel_8);
-		
 		
 		// table nhân viên
 		DefaultTableModel modelNV = new DefaultTableModel(dataNV, columnNamesNV) {
@@ -255,4 +262,6 @@ public class PhongbanPage extends JPanel {
 		return arr[2]+"-"+arr[1]+"-"+arr[0];
 		
 	}
+
+	
 }

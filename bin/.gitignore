@@ -3,6 +3,7 @@
 /DTO/
 /EXCEL/
 /GUI/
+/PDF/
 /TimingFramework-0.55.jar
 /assets/
 /background-login.jpg
@@ -16,9 +17,12 @@
 /jgoodies-common-1.2.0.jar
 /jgoodies-looks-2.4.1.jar
 /junit-4.6.jar
+/pdfbox-app-2.0.31.jar
 /poi-4.0.1.jar
 /poi-ooxml-4.0.1.jar
 /poi-ooxml-schemas-4.0.1.jar
 /run/
 /sqljdbc4.jar
 /xmlbeans-3.0.2.jar
+/PDFTableExporter$1.class
+/PDFTableExporter.class
