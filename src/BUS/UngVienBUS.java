@@ -1,51 +1,65 @@
 package BUS;
 
 import java.util.ArrayList;
+
+import DAO.HopDongLaoDongDAO;
 import DAO.UngVienDAO;
+import DTO.HOPDONGLAODONG;
 import DTO.UNGVIEN;
 
 public class UngVienBUS {
-    private final UngVienDAO ungVienDAO = UngVienDAO.getInstance(); 
+    private final UngVienDAO ungVienDAO = new UngVienDAO(); 
     private ArrayList<UNGVIEN> listUngVien = new ArrayList<>();
 
+    
     public UngVienBUS() {
-        refreshListUngVien();
+       
+        listUngVien = new ArrayList<>();
     }
 
-    // Tải lại danh sách ứng viên từ cơ sở dữ liệu
-    public void refreshListUngVien() {
-        listUngVien = ungVienDAO.getList();
-    }
-
-
-    // Lấy danh sách ứng viên
-    public ArrayList<UNGVIEN> getListUngVien() {
+    public ArrayList<UNGVIEN> getList() {
         return listUngVien;
     }
 
-    public Object[][] getObject(){
-		Object[][] data = new Object[listUngVien.size()][];
-        for (int i = 0; i < listUngVien.size(); i++) {
-        	UNGVIEN obj = listUngVien.get(i);
-            data[i] = new Object[]{obj.getMaTuyenDung(), obj.getMaUngVien()+" - "+obj.getHoTen(),obj.getSdt(),obj.getEmail(),obj.getChucVu(),obj.getTrinhDo().getTrinhDoHocVan(),obj.getMucLuongDeal(),obj.getTrangThai()};
-        }
-        return data;
-	}
+    
 
-    // Thêm một ứng viên mới vào cơ sở dữ liệu và danh sách
+    public Object[][] getObject() {
+        int n = listUngVien.size();
+        Object[][] data = new Object[n][];
+        
+        for (int i = 0; i < listUngVien.size(); i++) {
+            UNGVIEN uv = listUngVien.get(i);
+    
+           
+            data[i] = new Object[]{
+                i + 1,  
+                uv.getMaTuyenDung(),                                
+                uv.getMaUngVien() + " - " + uv.getHoTen(), 
+                uv.getSdt(),                             
+                uv.getEmail(),                           
+                uv.getChucVu(),                          
+                uv.getTrinhDo().getTrinhDoHocVan(),      
+                uv.getMucLuongDeal(),         
+                uv.getTrangThai()            
+            };
+        }
+    
+        return data;
+    }
+    
     public int addUngVien(UNGVIEN uv) {
         int result = ungVienDAO.insert(uv);
         if (result > 0) {
-            listUngVien.add(uv); // Thêm vào danh sách nếu thêm vào cơ sở dữ liệu thành công
+            listUngVien.add(uv); 
         }
         return result;
     }
 
-    // Cập nhật thông tin của một ứng viên
+   
     public int updateUngVien(UNGVIEN uv) {
         int result = ungVienDAO.update(uv);
         if (result > 0) {
-            // Tìm và cập nhật ứng viên trong danh sách
+            
             for (UNGVIEN u : listUngVien) {
                 if (u.getMaUngVien().equals(uv.getMaUngVien())) {
                     u.setHoTen(uv.getHoTen());
@@ -62,11 +76,11 @@ public class UngVienBUS {
         return result;
     }
 
-    // Xoá một ứng viên khỏi cơ sở dữ liệu và danh sách
+    
     public int deleteUngVien(String maUngVien) {
         int result = ungVienDAO.del(maUngVien);
         if (result > 0) {
-            // Xoá ứng viên khỏi danh sách nếu xoá khỏi cơ sở dữ liệu thành công
+        
             listUngVien.removeIf(uv -> uv.getMaUngVien().equals(maUngVien));
         }
         return result;

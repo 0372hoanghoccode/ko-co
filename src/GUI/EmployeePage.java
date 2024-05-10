@@ -6,12 +6,13 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
 
 import BUS.NhanVienBUS;
 import BUS.PHONGBAN_BUS;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+import EXCEL.XuatNhapExcel;
 
 
 public class EmployeePage extends JPanel {
@@ -19,27 +20,24 @@ public class EmployeePage extends JPanel {
     private static final long serialVersionUID = 1L;
     NhanVienBUS nhanVienBUS = new NhanVienBUS();
     PHONGBAN_BUS phongban_BUS = new PHONGBAN_BUS();
-
-
     JButton btnNewButton_2;
-
-
-
-    String[] event_name = new String[]{
+    private myTable table;
+    private DefaultTableModel model;
+    private Object[][] data;
+     String[] event_name = new String[]{
     	"Phòng ban", "Giới tính", "Độ tuổi", "Thuộc tính sắp xếp", "Thứ tự sắp"
     };
-    String[] columnNames = { "STT", "Mã - Tên", "Giới Tính", "Năm Sinh", "Địa chỉ", "SĐT", "Phòng Ban", "Chức Vụ", "Lương" };
-    Object[][] data = nhanVienBUS.getDataObjectToRender(); 
-    DefaultTableModel model = new DefaultTableModel(data, columnNames) {
-		private static final long serialVersionUID = 1L;
-		public boolean isCellEditable(int row, int column) {
-            return false;
-        }
-    };
-    JTable table = new JTable();
+    private String[] columnNames = { "STT", "Mã - Tên", "Giới Tính", "Năm Sinh", "Địa chỉ", "SĐT", "Phòng Ban", "Chức Vụ", "Lương" };
+    
+    
+    
 
     public EmployeePage() {
-        init();
+    	init();
+    	data = nhanVienBUS.getDataObjectToRender(); 
+        model = new DefaultTableModel(data, columnNames);
+        table.setModel(model);
+        
     }
 
     public void init() {
@@ -127,15 +125,63 @@ public class EmployeePage extends JPanel {
         searchIconLabel.setBounds(170, 0, 25, 30);
         searchPanel.add(searchIconLabel);
 
-        JButton btnNewButton = new JButton("");
-        btnNewButton.setIcon(new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-reset-24.png")));
-        btnNewButton.setBounds(915, 20, 50, 29);
-        panel.add(btnNewButton);
+       
+//nhập excel
+        JButton btnImportExcel = new JButton("Nhập Excel");
+btnImportExcel.setFont(new Font("Tahoma", Font.BOLD, 13));
+btnImportExcel.setBounds(557, 16, 150, 29);
+ImageIcon importIcon = new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-reset-24.png"));
+Image importImg = importIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+btnImportExcel.setIcon(new ImageIcon(importImg));
+btnImportExcel.setHorizontalTextPosition(SwingConstants.RIGHT);  
+btnImportExcel.setVerticalTextPosition(SwingConstants.CENTER);
+panel.add(btnImportExcel);
 
-        JButton btnNewButton_1 = new JButton("");
-        btnNewButton_1.setIcon(new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-user-24.png")));
-        btnNewButton_1.setBounds(831, 19, 74, 30);
-        panel.add(btnNewButton_1);
+btnImportExcel.addActionListener(new ActionListener() {
+    public void actionPerformed(ActionEvent e) {
+        JFileChooser jFileChooser = new JFileChooser();
+        jFileChooser.setDialogTitle("Chọn file Excel để nhập");
+        int returnVal = jFileChooser.showOpenDialog(panel);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = jFileChooser.getSelectedFile();
+           
+            XuatNhapExcel.readExcelToTable(file, table);
+        }
+    }
+});
+
+
+
+//xuất excel
+JButton btnExportExcel = new JButton("Xuất Excel");
+btnExportExcel.setFont(new Font("Tahoma", Font.BOLD, 13));
+btnExportExcel.setBounds(820, 20, 150, 29);
+ImageIcon exportIcon = new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-user-24.png"));
+Image exportImg = exportIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+btnExportExcel.setIcon(new ImageIcon(exportImg));
+btnExportExcel.setHorizontalTextPosition(SwingConstants.RIGHT);
+btnExportExcel.setVerticalTextPosition(SwingConstants.CENTER);
+panel.add(btnExportExcel);
+
+btnExportExcel.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JFileChooser jFileChooser = new JFileChooser();
+        jFileChooser.setDialogTitle("Lưu file Excel");
+        int returnVal = jFileChooser.showSaveDialog(panel);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = jFileChooser.getSelectedFile();
+            String filePath = file.getAbsolutePath();
+            if (!filePath.endsWith(".xlsx")) {
+                filePath += ".xlsx";
+            }
+            
+            XuatNhapExcel.exportDataToExcel(table, filePath, "Tên Sheet");
+            JOptionPane.showMessageDialog(panel, "Xuất dữ liệu ra file Excel thành công!");
+        }
+    }
+});
+
 
         btnNewButton_2 = new JButton(""); // chi tiết
         btnNewButton_2.addActionListener(new ActionListener() {
@@ -146,7 +192,7 @@ public class EmployeePage extends JPanel {
                 EmployeeDetail employeeDetail = new EmployeeDetail(data);
                 employeeDetail.setVisible(true);
         	}
-        });
+       });
         btnNewButton_2.setIcon(new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-user-24.png")));
         btnNewButton_2.setBounds(915, 83, 50, 30);
         panel.add(btnNewButton_2);
@@ -163,20 +209,20 @@ public class EmployeePage extends JPanel {
         panel_2.setLayout(new BorderLayout());
 
         
-        table.setModel(model);
+        table = new myTable();
         table.setRowHeight(30);
         table.setFont(new Font("Arial", Font.PLAIN, 12));
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-       
-        table.getColumnModel().getColumn(0).setPreferredWidth(30);  // stt
-		table.getColumnModel().getColumn(1).setPreferredWidth(150);  // ten
-		table.getColumnModel().getColumn(2).setPreferredWidth(65);   // gioitinh
-		table.getColumnModel().getColumn(3).setPreferredWidth(70);  // ngaysinh
-		table.getColumnModel().getColumn(4).setPreferredWidth(250);  // diachi
-		table.getColumnModel().getColumn(5).setPreferredWidth(80);  // Sdt
-		table.getColumnModel().getColumn(6).setPreferredWidth(180);   // phongban
-		table.getColumnModel().getColumn(7).setPreferredWidth(130);  // chucvu
-		table.getColumnModel().getColumn(8).setPreferredWidth(90);  // luong
+//        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//       
+//        table.getColumnModel().getColumn(0).setPreferredWidth(30);  // stt
+//		table.getColumnModel().getColumn(1).setPreferredWidth(150);  // ten
+//		table.getColumnModel().getColumn(2).setPreferredWidth(65);   // gioitinh
+//		table.getColumnModel().getColumn(3).setPreferredWidth(70);  // ngaysinh
+//		table.getColumnModel().getColumn(4).setPreferredWidth(250);  // diachi
+//		table.getColumnModel().getColumn(5).setPreferredWidth(80);  // Sdt
+//		table.getColumnModel().getColumn(6).setPreferredWidth(180);   // phongban
+//		table.getColumnModel().getColumn(7).setPreferredWidth(130);  // chucvu
+//		table.getColumnModel().getColumn(8).setPreferredWidth(90);  // luong
 
 
         JScrollPane scrollPane = new JScrollPane(table);      

@@ -10,8 +10,14 @@
 	<classpathentry kind="lib" path="src/jgoodies-common-1.2.0.jar"/>
 	<classpathentry kind="lib" path="src/jgoodies-looks-2.4.1.jar"/>
 	<classpathentry kind="lib" path="src/junit-4.6.jar"/>
-	<classpathentry kind="lib" path="lib/jcalendar-1.4.jar"/>
 	<classpathentry kind="lib" path="src/TimingFramework-0.55.jar"/>
 	<classpathentry kind="lib" path="src/sqljdbc4.jar"/>
+	<classpathentry kind="lib" path="src/poi-4.0.1.jar"/>
+	<classpathentry kind="lib" path="src/poi-ooxml-4.0.1.jar"/>
+	<classpathentry kind="lib" path="src/poi-ooxml-schemas-4.0.1.jar"/>
+	<classpathentry kind="lib" path="src/commons-collections4-4.4.jar"/>
+	<classpathentry kind="lib" path="src/xmlbeans-3.0.2.jar"/>
+	<classpathentry kind="lib" path="src/commons-compress-1.18.jar"/>
+	<classpathentry kind="lib" path="src/commons-collections4-4.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

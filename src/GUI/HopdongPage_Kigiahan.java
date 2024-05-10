@@ -322,13 +322,13 @@ public class HopdongPage_Kigiahan extends JPanel{
 
 		table.setModel(model);
 		
-
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		table.getColumnModel().getColumn(0).setPreferredWidth(70);
-		table.getColumnModel().getColumn(1).setPreferredWidth(220);  
-		table.getColumnModel().getColumn(2).setPreferredWidth(240); 
-		table.getColumnModel().getColumn(3).setPreferredWidth(110);
-		table.getColumnModel().getColumn(3).setPreferredWidth(110); 
+//
+//		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+//		table.getColumnModel().getColumn(0).setPreferredWidth(70);
+//		table.getColumnModel().getColumn(1).setPreferredWidth(220);  
+//		table.getColumnModel().getColumn(2).setPreferredWidth(240); 
+//		table.getColumnModel().getColumn(3).setPreferredWidth(110);
+//		table.getColumnModel().getColumn(3).setPreferredWidth(110); 
 
 		
 		cbbPhong.addItemListener(new ItemListener() {
