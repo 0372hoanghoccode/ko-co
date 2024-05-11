@@ -24,20 +24,21 @@ public class EmployeePage extends JPanel {
     private myTable table;
     private DefaultTableModel model;
     private Object[][] data;
-
      String[] event_name = new String[]{
     	"Phòng ban", "Giới tính", "Độ tuổi", "Thuộc tính sắp xếp", "Thứ tự sắp"
     };
     private String[] columnNames = { "STT", "Mã - Tên", "Giới Tính", "Năm Sinh", "Địa chỉ", "SĐT", "Phòng Ban", "Chức Vụ", "Lương" };
     
     
-    
+    public void setData() {
+        data = nhanVienBUS.getDataObjectToRender(); 
+        model = new DefaultTableModel(data, columnNames);
+        table.setModel(model);
+    }
 
     public EmployeePage() {
     	init();
-    	data = nhanVienBUS.getDataObjectToRender(); 
-        model = new DefaultTableModel(data, columnNames);
-        table.setModel(model);
+    	setData();
         
     }
 
@@ -127,61 +128,61 @@ public class EmployeePage extends JPanel {
         searchPanel.add(searchIconLabel);
 
        
-//nhập excel
+        //nhập excel
         JButton btnImportExcel = new JButton("Nhập Excel");
-btnImportExcel.setFont(new Font("Tahoma", Font.BOLD, 13));
-btnImportExcel.setBounds(557, 16, 150, 29);
-ImageIcon importIcon = new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-reset-24.png"));
-Image importImg = importIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-btnImportExcel.setIcon(new ImageIcon(importImg));
-btnImportExcel.setHorizontalTextPosition(SwingConstants.RIGHT);  
-btnImportExcel.setVerticalTextPosition(SwingConstants.CENTER);
-panel.add(btnImportExcel);
+        btnImportExcel.setFont(new Font("Tahoma", Font.BOLD, 13));
+        btnImportExcel.setBounds(557, 16, 150, 29);
+        ImageIcon importIcon = new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-reset-24.png"));
+        Image importImg = importIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+        btnImportExcel.setIcon(new ImageIcon(importImg));
+        btnImportExcel.setHorizontalTextPosition(SwingConstants.RIGHT);  
+        btnImportExcel.setVerticalTextPosition(SwingConstants.CENTER);
+        panel.add(btnImportExcel);
 
-btnImportExcel.addActionListener(new ActionListener() {
-    public void actionPerformed(ActionEvent e) {
-        JFileChooser jFileChooser = new JFileChooser();
-        jFileChooser.setDialogTitle("Chọn file Excel để nhập");
-        int returnVal = jFileChooser.showOpenDialog(panel);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = jFileChooser.getSelectedFile();
-           
-            XuatNhapExcel.readExcelToTable(file, table);
-        }
-    }
-});
-
-
-
-//xuất excel
-JButton btnExportExcel = new JButton("Xuất Excel");
-btnExportExcel.setFont(new Font("Tahoma", Font.BOLD, 13));
-btnExportExcel.setBounds(820, 20, 150, 29);
-ImageIcon exportIcon = new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-user-24.png"));
-Image exportImg = exportIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-btnExportExcel.setIcon(new ImageIcon(exportImg));
-btnExportExcel.setHorizontalTextPosition(SwingConstants.RIGHT);
-btnExportExcel.setVerticalTextPosition(SwingConstants.CENTER);
-panel.add(btnExportExcel);
-
-btnExportExcel.addActionListener(new ActionListener() {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        JFileChooser jFileChooser = new JFileChooser();
-        jFileChooser.setDialogTitle("Lưu file Excel");
-        int returnVal = jFileChooser.showSaveDialog(panel);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = jFileChooser.getSelectedFile();
-            String filePath = file.getAbsolutePath();
-            if (!filePath.endsWith(".xlsx")) {
-                filePath += ".xlsx";
+        btnImportExcel.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser jFileChooser = new JFileChooser();
+                jFileChooser.setDialogTitle("Chọn file Excel để nhập");
+                int returnVal = jFileChooser.showOpenDialog(panel);
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    File file = jFileChooser.getSelectedFile();
+                
+                    XuatNhapExcel.readExcelToTable(file, table);
+                }
             }
-            
-            XuatNhapExcel.exportDataToExcel(table, filePath, "Tên Sheet");
-            JOptionPane.showMessageDialog(panel, "Xuất dữ liệu ra file Excel thành công!");
-        }
-    }
-});
+        });
+
+
+
+        //xuất excel
+        JButton btnExportExcel = new JButton("Xuất Excel");
+        btnExportExcel.setFont(new Font("Tahoma", Font.BOLD, 13));
+        btnExportExcel.setBounds(820, 20, 150, 29);
+        ImageIcon exportIcon = new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-user-24.png"));
+        Image exportImg = exportIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+        btnExportExcel.setIcon(new ImageIcon(exportImg));
+        btnExportExcel.setHorizontalTextPosition(SwingConstants.RIGHT);
+        btnExportExcel.setVerticalTextPosition(SwingConstants.CENTER);
+        panel.add(btnExportExcel);
+
+        btnExportExcel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser jFileChooser = new JFileChooser();
+                jFileChooser.setDialogTitle("Lưu file Excel");
+                int returnVal = jFileChooser.showSaveDialog(panel);
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    File file = jFileChooser.getSelectedFile();
+                    String filePath = file.getAbsolutePath();
+                    if (!filePath.endsWith(".xlsx")) {
+                        filePath += ".xlsx";
+                    }
+                    
+                    XuatNhapExcel.exportDataToExcel(table, filePath, "Tên Sheet");
+                    JOptionPane.showMessageDialog(panel, "Xuất dữ liệu ra file Excel thành công!");
+                }
+            }
+        });
 
 
         btnNewButton_2 = new JButton(""); // chi tiết
@@ -190,7 +191,7 @@ btnExportExcel.addActionListener(new ActionListener() {
                 int viewRow = table.getSelectedRow();
                 String[] maVaTen = ((String) table.getValueAt(viewRow, 1)).split(" - ");
         		Object[] data = nhanVienBUS.renderSelectedNhanVien(maVaTen[0]);
-                EmployeeDetail employeeDetail = new EmployeeDetail(data);
+                EmployeeDetail employeeDetail = new EmployeeDetail(data, getEmployeePage());
                 employeeDetail.setVisible(true);
         	}
        });
@@ -213,9 +214,9 @@ btnExportExcel.addActionListener(new ActionListener() {
         table = new myTable();
         table.setRowHeight(30);
         table.setFont(new Font("Arial", Font.PLAIN, 12));
-//        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//      table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 //       
-//        table.getColumnModel().getColumn(0).setPreferredWidth(30);  // stt
+//      table.getColumnModel().getColumn(0).setPreferredWidth(30);  // stt
 //		table.getColumnModel().getColumn(1).setPreferredWidth(150);  // ten
 //		table.getColumnModel().getColumn(2).setPreferredWidth(65);   // gioitinh
 //		table.getColumnModel().getColumn(3).setPreferredWidth(70);  // ngaysinh
@@ -333,18 +334,8 @@ btnExportExcel.addActionListener(new ActionListener() {
     public JButton getButton_ChiTiet() {
         return btnNewButton_2;
     }
-    
-    public void setData() {
-        data = nhanVienBUS.getDataObjectToRender(); 
-        model = new DefaultTableModel(data, columnNames);
-        table.setModel(model);
+
+    public EmployeePage getEmployeePage() {
+        return this;
     }
-    
-
-
-    
-
-    
-
-
 }

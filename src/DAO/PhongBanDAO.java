@@ -125,7 +125,7 @@ public class PhongBanDAO implements DAOInterface<PHONGBAN> {
         return maPhong;
     }
 
-    public static String getTenTuMaSo(String maPhong) {
+    public String getTenTuMaSo(String maPhong) {
         if (maPhong == null || maPhong.trim().isEmpty()) {
             return "Không xác định"; // Hoặc một giá trị mặc định phù hợp
         }

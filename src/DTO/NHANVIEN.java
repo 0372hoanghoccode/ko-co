@@ -93,7 +93,7 @@ public class NHANVIEN extends CONNGUOI {
     		ngayKetThuc =  LocalDateToString(((NHANVIENCHINHTHUC)this).getHopDong().getDenNgay());
     	}
     	String[] data = new String[] {
-			this.getMaNhanVien(),this.getHoTen(),PhongBanDAO.getTenTuMaSo(this.maPhong),this.getChucVu().getTenChucVu(),LocalDateToString(this.getChucVu().getNgayNhanChuc()),loaiHinh,
+			this.getMaNhanVien(),this.getHoTen(),PhongBanDAO.getInstance().getTenTuMaSo(this.maPhong),this.getChucVu().getTenChucVu(),LocalDateToString(this.getChucVu().getNgayNhanChuc()),loaiHinh,
 			hopDong,ngayBatDau,ngayKetThuc,loaiHopDong,changeSalaryToFormatString(this.getMucLuongChung()),
 			this.getGioiTinh(),LocalDateToString(this.getNgaySinh()),this.getDiaChi().toString(),this.getSdt(),this.getCmnd().getSoCmnd()+" - "+this.getCmnd().getNoiCap()+" - "+LocalDateToString(this.getCmnd().getNgayCap()),this.getTrinhDo().getTrinhDoChuyenMon()+" - "+this.getTrinhDo().getChuyenNganh(),this.getDanToc(),this.getTonGiao(),
 			this.getHoTen(),this.getDiaChi().getTinhThanhPho(),this.getSdt(),this.getEmail(),
@@ -103,7 +103,7 @@ public class NHANVIEN extends CONNGUOI {
 		return data;
     }
     public String[] getDataToRenderDepartmentDetailInfoEmployee() {
-    	String data[] = {this.getMaNhanVien(),this.getHoTen(),this.getGioiTinh(),LocalDateToString(this.getNgaySinh()),this.getSdt(),this.getDiaChi().getTinhThanhPho().trim(),PhongBanDAO.getTenTuMaSo(this.getMaPhong()),this.getChucVu().getTenChucVu(),"         "+this.getChucVu().getNgayNhanChuc().toString()};
+    	String data[] = {this.getMaNhanVien(),this.getHoTen(),this.getGioiTinh(),LocalDateToString(this.getNgaySinh()),this.getSdt(),this.getDiaChi().getTinhThanhPho().trim(),PhongBanDAO.getInstance().getTenTuMaSo(this.getMaPhong()),this.getChucVu().getTenChucVu(),"         "+this.getChucVu().getNgayNhanChuc().toString()};
     	return data;
     }
     public String[] getDataToFix() {
@@ -127,7 +127,7 @@ public class NHANVIEN extends CONNGUOI {
     			this.getTrinhDo().getTrinhDoHocVan(),this.getTrinhDo().getTrinhDoChuyenMon(),this.getTrinhDo().getChuyenNganh(),
     			this.getCmnd().getSoCmnd(),LocalDateToString(this.getCmnd().getNgayCap()),this.getCmnd().getNoiCap(),
     			this.getDanToc(),this.getTonGiao(),
-    			PhongBanDAO.getTenTuMaSo(this.maPhong),
+    			PhongBanDAO.getInstance().getTenTuMaSo(this.maPhong),
     			this.getChucVu().getTenChucVu(),LocalDateToString(this.getChucVu().getNgayNhanChuc()),
     			loaiHinh,
     			ngayBatDau,ngayKetThuc,mucLuong,

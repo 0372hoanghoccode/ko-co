@@ -111,7 +111,31 @@ public class ChucVuDAO implements DAOInterface<CHUCVU>{
 			ConnectionManager.closeConnection(con);
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+		}
+		return data;
+	}
+
+	public String[] getDanhSachTenChucVuCongTy() {
+		String data[] = null;
+		Connection con = ConnectionManager.getConnection();
+		try {
+			Statement st = con.createStatement();
+			ResultSet rs  = st.executeQuery("select COUNT(tenChucVu) from CHUCVUCONGTY");
+			while(rs.next()) {
+				data = new String[rs.getInt(1)];
+			}
+			rs = st.executeQuery("select * from CHUCVUCONGTY order by phuCapChucVu desc");
+			int count =0;
+			while(rs.next()) {
+				data[count] = rs.getString("tenChucVu");
+				count++;
+			}
+			ConnectionManager.closeConnection(con);
+			
+		} catch (SQLException e) {
+			
 			e.printStackTrace();
 		}
 		return data;

@@ -122,7 +122,7 @@ public class NhanVienBUS {
 
     public Object[] renderSelectedNhanVien(String maNhanVien) {
         NHANVIEN nv = nhanvien_dao.getNhanVien(maNhanVien);
-        Object[] data = new Object[13];
+        Object[] data = new Object[15];
         data[0] = nv.getMaNhanVien();
         data[1] = nv.getHoTen();
         data[2] = nv.getGioiTinh();
@@ -132,10 +132,12 @@ public class NhanVienBUS {
         data[6] = nv.getDanToc();
         data[7] = nv.getTonGiao();
         data[8] = nv.getEmail();
-        data[9] = nv.getMaPhong();
-        data[10] = nv.getTrinhDo().getMaTrinhDo();
-        data[11] = nv.getChucVu().getMaChucVu();
-        data[12] = formatSalary(nv.getMucLuongChung());
+        data[9] = DAO.PhongBanDAO.getInstance().getTenTuMaSo(nv.getMaPhong());
+        data[10] = nv.getTrinhDo().getTrinhDoHocVan();
+        data[11] = nv.getTrinhDo().getTrinhDoChuyenMon();
+        data[12] = nv.getTrinhDo().getChuyenNganh();
+        data[13] = nv.getChucVu().getTenChucVu();
+        data[14] = formatSalary(nv.getMucLuongChung());
         return data;
     }
 
