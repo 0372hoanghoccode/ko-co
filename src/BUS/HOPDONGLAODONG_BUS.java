@@ -87,9 +87,7 @@ public class HOPDONGLAODONG_BUS {
 
             data[i] = new Object[] {
                 i + 1 + "",
-                temp_hdld.getMaHopDong(),
-                temp_hdld.getMaNhanVien(),
-                temp_hdld.getTenNhanVien(),
+                temp_hdld.getMaNhanVien() + " - " + temp_hdld.getTenNhanVien() ,
                 temp_hdld.getPhongBan(),
                 formatDate(temp_hdld.getTuNgay()),
                 formatDate(temp_hdld.getDenNgay()),

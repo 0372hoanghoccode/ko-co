@@ -14,31 +14,39 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class XuatNhapExcel {
-	 public static String exportDataToExcel(JTable table, String filePath, String tenSheet) {
-		    String message;
-		    try (XSSFWorkbook workbook = new XSSFWorkbook()) {
-		        org.apache.poi.ss.usermodel.Sheet sheet = workbook.createSheet("tenSheet");
+	public static String exportDataToExcel(JTable table, String filePath, String tenSheet) {
+	    String message;
+	    try (XSSFWorkbook workbook = new XSSFWorkbook()) {
+	        org.apache.poi.ss.usermodel.Sheet sheet = workbook.createSheet(tenSheet);
 
-		        for (int i = 0; i < table.getRowCount(); i++) {
-		            Row row = sheet.createRow(i);
-		            for (int j = 0; j < table.getColumnCount(); j++) {
-		                Object value = table.getValueAt(i, j);
-		                Cell cell = row.createCell(j);
-		                if (value != null) {
-		                    cell.setCellValue(value.toString());
-		                }
-		            }
-		        }
+	        // Create a row for column headers
+	        Row headerRow = sheet.createRow(0);
+	        for (int i = 0; i < table.getColumnCount(); i++) {
+	            Cell cell = headerRow.createCell(i);
+	            cell.setCellValue(table.getColumnName(i));
+	        }
 
-		        try (FileOutputStream outputStream = new FileOutputStream(filePath)) {
-		            workbook.write(outputStream);
-		        }
-		        message = "Xuất dữ liệu ra file Excel thành công!";
-		    } catch (IOException e) {
-		        message = "Lỗi khi xuất dữ liệu ra file Excel: " + e.getMessage();
-		    }
-		    return message;
-		}
+	        // Now create rows for data
+	        for (int i = 0; i < table.getRowCount(); i++) {
+	            Row row = sheet.createRow(i + 1); // Add 1 to index because of header row
+	            for (int j = 0; j < table.getColumnCount(); j++) {
+	                Object value = table.getValueAt(i, j);
+	                Cell cell = row.createCell(j);
+	                if (value != null) {
+	                    cell.setCellValue(value.toString());
+	                }
+	            }
+	        }
+
+	        try (FileOutputStream outputStream = new FileOutputStream(filePath)) {
+	            workbook.write(outputStream);
+	        }
+	        message = "Xuất dữ liệu ra file Excel thành công!";
+	    } catch (IOException e) {
+	        message = "Lỗi khi xuất dữ liệu ra file Excel: " + e.getMessage();
+	    }
+	    return message;
+	}
 
 	 public static void readExcelToTable(File file, JTable table) {
 	        DefaultTableModel model = (DefaultTableModel) table.getModel();

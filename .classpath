@@ -20,5 +20,6 @@
 	<classpathentry kind="lib" path="src/commons-compress-1.18.jar"/>
 	<classpathentry kind="lib" path="src/commons-collections4-4.2.jar"/>
 	<classpathentry kind="lib" path="src/pdfbox-app-2.0.31.jar"/>
+	<classpathentry kind="lib" path="src/itextpdf-5.5.13.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

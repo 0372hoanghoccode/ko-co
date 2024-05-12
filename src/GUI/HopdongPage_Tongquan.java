@@ -27,7 +27,7 @@ public class HopdongPage_Tongquan extends JPanel {
     private HopdongPage_Giahan giaHanPage;
     private myTable table; 
     private String[] columnName = {
-        "STT", "Mã HĐ", "Mã nv", "Tên", "Phòng", "Bắt đầu", "Kết thúc", "Loại hợp đồng", "Lương"
+        "STT", "Mã - Họ tên", "Phòng", "Bắt đầu", "Kết thúc", "Loại hợp đồng", "Lương"
     };
     private DefaultTableModel model;
     private Object[][] data;
@@ -123,7 +123,7 @@ btnExportExcel.addActionListener(new ActionListener() {
 
 
 JButton btnExportPDF = new JButton("Xuất PDF");
-btnExportPDF.setBounds(500, 41, 103, 25); 
+btnExportPDF.setBounds(500, 41, 103, 25);
 btnExportPDF.setFont(new Font("Tahoma", Font.BOLD, 13));
 ImageIcon pdfIcon = new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-user-24.png"));
 Image pdfImg = pdfIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
@@ -132,33 +132,28 @@ btnExportPDF.setHorizontalTextPosition(SwingConstants.RIGHT);
 btnExportPDF.setVerticalTextPosition(SwingConstants.CENTER);
 panel.add(btnExportPDF);
 
+
 btnExportPDF.addActionListener(new ActionListener() {
     @Override
     public void actionPerformed(ActionEvent e) {
-        JFileChooser jFileChooser = new JFileChooser();
-        jFileChooser.setDialogTitle("Lưu file PDF");
-        int returnVal = jFileChooser.showSaveDialog(panel);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = jFileChooser.getSelectedFile();
-            String filePath = file.getAbsolutePath();
-            if (!filePath.endsWith(".pdf")) {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Lưu file PDF");
+        int userSelection = fileChooser.showSaveDialog(panel);
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            String filePath = fileToSave.getAbsolutePath();
+            if (!filePath.toLowerCase().endsWith(".pdf")) {
                 filePath += ".pdf";
             }
             
             InPDF pdfExporter = new InPDF();
-            try {
-                pdfExporter.generatePDF(filePath, table);
-                JOptionPane.showMessageDialog(panel, "Xuất dữ liệu ra file PDF thành công!");
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(panel, "Xuất dữ liệu ra file PDF không thành công: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            pdfExporter.savePDF(table, filePath);
+            JOptionPane.showMessageDialog(panel, "Xuất dữ liệu ra file PDF thành công!");
         }
     }
 });
+panel.add(btnExportPDF);
 
-
-
-        
 
 
 		btnHuyHopDong.addActionListener(new ActionListener() {
@@ -241,24 +236,26 @@ btnExportPDF.addActionListener(new ActionListener() {
 			}
 		});
 
-        table = new myTable();
-        table.setRowHeight(30);
-        table.setFont(new Font("Arial", Font.PLAIN, 12));
-        table.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 1) {
-                    int selectedRow = table.getSelectedRow();
-                    if (selectedRow != -1) {
-                        Object[][] selectedData = new Object[1][table.getColumnCount()];
-                        for (int i = 0; i < table.getColumnCount(); i++) {
-                            selectedData[0][i] = table.getValueAt(selectedRow, i);
-                        }
-                        giaHanPage.setData(selectedData);
-                    }
-                }
-            }
-        });
+		table = new myTable();
+		table.setRowHeight(30);
+		table.setFont(new Font("Arial", Font.PLAIN, 12));
+
+		table.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        if (e.getClickCount() == 1) {
+		            int selectedRow = table.getSelectedRow();
+		            if (selectedRow != -1) {
+		                Object[][] selectedData = new Object[1][table.getColumnCount()];
+		                for (int i = 0; i < table.getColumnCount(); i++) {
+		                    selectedData[0][i] = table.getValueAt(selectedRow, i);
+		                }
+		                giaHanPage.setData(selectedData);
+		            }
+		        }
+		    }
+		});
+
 
         // Add scroll pane containing the table
         JScrollPane scrollPane = new JScrollPane(table);
