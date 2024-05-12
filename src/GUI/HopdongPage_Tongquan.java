@@ -32,14 +32,16 @@ public class HopdongPage_Tongquan extends JPanel {
     private DefaultTableModel model;
     private Object[][] data;
 
+	public void setData() {
+        data = hopdonglaodong_bus.getDataObjectToRender(); 
+        model = new DefaultTableModel(data, columnName);
+        table.setModel(model);
+    }
+
 	public HopdongPage_Tongquan() {
 		init();
 		
-        data = hopdonglaodong_bus.getDataObjectToRender();
-        model = new DefaultTableModel(data, columnName);
-        table.setModel(model);
-
-      
+        setData();
         giaHanPage = new HopdongPage_Giahan();
 	}
 
@@ -89,7 +91,40 @@ btnImportExcel.addActionListener(new ActionListener() {
     }
 });
 
+ImageIcon searchIcon = new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-search-24.png"));
 
+ImageIcon resetIcon = new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-reset-24.png"));
+
+JButton searchButton = new JButton();
+searchButton.setBounds(532, 18, 50, 30);
+panel.add(searchButton);
+searchButton.setIcon(searchIcon);
+
+        JTextField searchField = new JTextField();
+        searchField.setBounds(368, 19, 165, 30);
+        panel.add(searchField);
+        
+        JButton resetButton = new JButton();
+        resetButton.setBounds(447, 83, 45, 30);
+        panel.add(resetButton);
+        
+                resetButton.setIcon(resetIcon);
+                
+                        resetButton.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                setData();
+                            }
+                        });
+searchButton.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String searchText = searchField.getText();
+        data = hopdonglaodong_bus.filterData(searchText);
+        model.setDataVector(data, columnName);
+        table.setModel(model);
+    }
+});
 
 //xuất excel
 JButton btnExportExcel = new JButton("Xuất Excel");

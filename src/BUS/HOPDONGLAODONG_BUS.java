@@ -99,6 +99,38 @@ public class HOPDONGLAODONG_BUS {
 
         return data;
     }
+    //tìm theo tên và mã nhân viên
+    public Object[][] filterData(String searchText) {
+        ArrayList<HOPDONGLAODONG> allContracts = hopdonglaodong_dao.getList(); 
+        ArrayList<HOPDONGLAODONG> filteredContracts = new ArrayList<>();
+
+        String lowerCaseSearchText = searchText.toLowerCase();
+
+        for (HOPDONGLAODONG hdld : allContracts) {
+            String maVaTen = hdld.getMaNhanVien() + " - " + hdld.getTenNhanVien();
+
+            if (maVaTen.toLowerCase().contains(lowerCaseSearchText)) {
+                filteredContracts.add(hdld);
+            }
+        }
+
+        Object[][] data = new Object[filteredContracts.size()][];
+        for (int i = 0; i < filteredContracts.size(); i++) {
+            HOPDONGLAODONG temp_hdld = filteredContracts.get(i);
+            data[i] = new Object[] {
+                i + 1 + "",
+                temp_hdld.getMaNhanVien() + " - " + temp_hdld.getTenNhanVien(),
+                temp_hdld.getPhongBan(),
+                formatDate(temp_hdld.getTuNgay()),
+                formatDate(temp_hdld.getDenNgay()),
+                temp_hdld.getLoaiHopDong(),
+                formatSalary(temp_hdld.getLuongCoBan()),
+            };
+        }
+
+        return data;
+    }
+
 
     public Object[][] getDataObjectToRenderByMaHopDong(String maHopDong) {
         List<HOPDONGLAODONG> list = list_hopdonglaodong.stream().filter(hdld -> hdld.getMaHopDong().equals(maHopDong)).collect(Collectors.toList());
@@ -119,6 +151,9 @@ public class HOPDONGLAODONG_BUS {
         }
         return data;
     }
+   
+
+      
 
     
 }   

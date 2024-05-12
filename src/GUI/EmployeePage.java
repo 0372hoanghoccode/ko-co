@@ -1,5 +1,6 @@
 package GUI;
 
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.*;
 import javax.swing.border.EmptyBorder;
@@ -8,8 +9,10 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
 
+import java.util.ArrayList;
 import BUS.NhanVienBUS;
 import BUS.PHONGBAN_BUS;
+import DAO.NhanVienDAO;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import EXCEL.XuatNhapExcel;
@@ -21,6 +24,7 @@ public class EmployeePage extends JPanel {
     NhanVienBUS nhanVienBUS = new NhanVienBUS();
     PHONGBAN_BUS phongban_BUS = new PHONGBAN_BUS();
     JButton btnNewButton_2;
+
     private myTable table;
     private DefaultTableModel model;
     private Object[][] data;
@@ -38,7 +42,7 @@ public class EmployeePage extends JPanel {
 
     public EmployeePage() {
     	init();
-    	setData();
+		setData();
         
     }
 
@@ -53,7 +57,7 @@ public class EmployeePage extends JPanel {
 
         JLabel lblNewLabel = new JLabel("Thông tin nhân viên ");
         lblNewLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        lblNewLabel.setBounds(10, 10, 179, 39);
+        lblNewLabel.setBounds(11, 9, 179, 39);
         panel.add(lblNewLabel);
 
         JLabel lblNewLabel_1 = new JLabel("Tìm kiếm theo:");
@@ -110,28 +114,20 @@ public class EmployeePage extends JPanel {
         comboBox_4.addItem("Tăng dần");
         comboBox_4.addItem("Giảm dần");
         panel.add(comboBox_4);
+        ImageIcon searchIcon = new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-search-24.png"));
 
-        // Tạo JPanel để chứa JTextField và JLabel chứa icon tìm kiếm
-        JPanel searchPanel = new JPanel();
-        searchPanel.setLayout(null);
-        searchPanel.setBounds(302, 19, 195, 30);
-        searchPanel.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 0, Color.GRAY)); // Đặt viền cho searchPanel
-        panel.add(searchPanel);
+        ImageIcon resetIcon = new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-reset-24.png"));
 
-        JTextField searchField = new JTextField();
-        searchField.setBounds(0, 0, 165, 30);
-        searchPanel.add(searchField);
+       
+        
 
-        JLabel searchIconLabel = new JLabel("");
-        searchIconLabel.setIcon(new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-search-24.png")));
-        searchIconLabel.setBounds(170, 0, 25, 30);
-        searchPanel.add(searchIconLabel);
+
 
        
         //nhập excel
         JButton btnImportExcel = new JButton("Nhập Excel");
         btnImportExcel.setFont(new Font("Tahoma", Font.BOLD, 13));
-        btnImportExcel.setBounds(557, 16, 150, 29);
+        btnImportExcel.setBounds(640, 19, 150, 29);
         ImageIcon importIcon = new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-reset-24.png"));
         Image importImg = importIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
         btnImportExcel.setIcon(new ImageIcon(importImg));
@@ -203,6 +199,38 @@ public class EmployeePage extends JPanel {
         btnNewButton_3.setIcon(new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-reset-24.png")));
         btnNewButton_3.setBounds(855, 83, 50, 30);
         panel.add(btnNewButton_3);
+        
+                JButton searchButton = new JButton();
+                searchButton.setBounds(532, 18, 50, 30);
+                panel.add(searchButton);
+                searchButton.setIcon(searchIcon);
+                
+                        JTextField searchField = new JTextField();
+                        searchField.setBounds(368, 19, 165, 30);
+                        panel.add(searchField);
+                        
+                        JButton resetButton = new JButton();
+                        resetButton.setBounds(447, 83, 45, 30);
+                        panel.add(resetButton);
+                        
+                                resetButton.setIcon(resetIcon);
+                                
+                                        resetButton.addActionListener(new ActionListener() {
+                                            @Override
+                                            public void actionPerformed(ActionEvent e) {
+                                                setData();
+                                            }
+                                        });
+                searchButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String searchText = searchField.getText();
+                        data = nhanVienBUS.filterData(searchText);
+                        model.setDataVector(data, columnNames);
+                        table.setModel(model);
+                    }
+                });
+        
 
         JPanel panel_2 = new JPanel();
         panel_2.setBackground(new Color(255, 255, 255));
@@ -238,6 +266,9 @@ public class EmployeePage extends JPanel {
         // ----- EVENT -------
         
         // 3 là reset, 2 là chi tiết
+        
+        
+
 
         
 

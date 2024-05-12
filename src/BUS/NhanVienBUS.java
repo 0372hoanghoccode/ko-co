@@ -29,7 +29,7 @@ public class NhanVienBUS {
     private ArrayList<NHANVIEN> list_nhanvien = new ArrayList<>();
 
     public NhanVienBUS() {
-        // nhanvien_dao.getInstance();
+        
         list_nhanvien = nhanvien_dao.getList();
 
     }
@@ -61,6 +61,7 @@ public class NhanVienBUS {
         }
         return result;
     }
+    
 
     private int getByMaNhanVien(String maNhanVien) {
         int i = 0;
@@ -119,7 +120,44 @@ public class NhanVienBUS {
     	return getDataObjectToRender();
     	
     }
+    
+    public Object[][] filterData(String searchText) {
+        ArrayList<NHANVIEN> allEmployees = nhanvien_dao.getList(); 
+        ArrayList<NHANVIEN> filteredEmployees = new ArrayList<>();
 
+        // chuyển về chuổi thường
+        String lowerCaseSearchText = searchText.toLowerCase();
+
+        for (NHANVIEN nv : allEmployees) {
+            String maVaTen = nv.getMaNhanVien() + " - " + nv.getHoTen();
+
+            // chuyển về chuổi thường trc khi so 
+            if (maVaTen.toLowerCase().contains(lowerCaseSearchText)) {
+                filteredEmployees.add(nv);
+            }
+        }
+
+        Object[][] data = new Object[filteredEmployees.size()][];
+        for (int i = 0; i < filteredEmployees.size(); i++) {
+            NHANVIEN temp_nv = filteredEmployees.get(i);
+            data[i] = new Object[] {
+                i+1 + "", 
+                temp_nv.getMaNhanVien() + " - " + temp_nv.getHoTen(),
+                temp_nv.getGioiTinh(),
+                formatDate(temp_nv.getNgaySinh()),
+                temp_nv.getDiaChi().toString(),
+                temp_nv.getSdt(),
+                DAO.PhongBanDAO.getInstance().getTenTuMaSo(temp_nv.getMaPhong()),
+                temp_nv.getChucVu().getTenChucVu(),
+                formatSalary(temp_nv.getMucLuongChung()),
+            };
+        }
+
+        return data;
+    }
+
+
+  
     public Object[] renderSelectedNhanVien(String maNhanVien) {
         NHANVIEN nv = nhanvien_dao.getNhanVien(maNhanVien);
         Object[] data = new Object[15];
@@ -140,6 +178,10 @@ public class NhanVienBUS {
         data[14] = formatSalary(nv.getMucLuongChung());
         return data;
     }
+    
+    
+
+
 
     // Tên
     public Object[][] sortNhanVienByNameAscending() {

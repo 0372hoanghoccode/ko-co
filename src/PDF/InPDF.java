@@ -15,13 +15,10 @@ public class InPDF {
             
             Document document = new Document(PageSize.A4.rotate());
 
-            
             PdfWriter.getInstance(document, new FileOutputStream(filePath));
-
             
             document.open();
 
-            
             BaseFont bf = BaseFont.createFont("C:\\Windows\\Fonts\\Arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
             com.itextpdf.text.Font font = new com.itextpdf.text.Font(bf);
             
@@ -30,7 +27,6 @@ public class InPDF {
             for (int i = 0; i < table.getColumnCount(); i++) {
                 pdfTable.addCell(new Paragraph(table.getColumnName(i), font));
             }
-
         
             for (int rows = 0; rows < table.getRowCount(); rows++) {
                 for (int cols = 0; cols < table.getColumnCount(); cols++) {
@@ -38,7 +34,6 @@ public class InPDF {
                 }
             }
 
-           
             document.add(pdfTable);
 
             document.close();

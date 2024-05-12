@@ -158,5 +158,36 @@ public class LuongPage1 extends JPanel {
         panel.add(button_excel);
         
         
+        JButton btnExportPDF = new JButton("Xuất PDF");
+btnExportPDF.setBounds(273, 12, 103, 25);
+btnExportPDF.setFont(new Font("Tahoma", Font.BOLD, 13));
+ImageIcon pdfIcon = new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-user-24.png"));
+Image pdfImg = pdfIcon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+btnExportPDF.setIcon(new ImageIcon(pdfImg));
+btnExportPDF.setHorizontalTextPosition(SwingConstants.RIGHT);
+btnExportPDF.setVerticalTextPosition(SwingConstants.CENTER);
+panel.add(btnExportPDF);
+
+
+btnExportPDF.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Lưu file PDF");
+        int userSelection = fileChooser.showSaveDialog(panel);
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            String filePath = fileToSave.getAbsolutePath();
+            if (!filePath.toLowerCase().endsWith(".pdf")) {
+                filePath += ".pdf";
+            }
+            
+            InPDF pdfExporter = new InPDF();
+            pdfExporter.savePDF(table, filePath);
+            JOptionPane.showMessageDialog(panel, "Xuất dữ liệu ra file PDF thành công!");
+        }
+    }
+});
+panel.add(btnExportPDF);
     }
 }
