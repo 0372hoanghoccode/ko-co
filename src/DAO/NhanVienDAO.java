@@ -338,14 +338,11 @@ public class NhanVienDAO implements DAOInterface<NHANVIEN>{
 	public void insertNHANVIENfromUNGVIEN(NHANVIEN x) {
 		Connection con = ConnectionManager.getConnection();
 		try {
-			// trinh do
-			TRINHDO t = x.getTrinhDo();
-			// chuc vu
-			CHUCVU c = x.getChucVu();
-			// nhanvien
+			TrinhDoDAO.getInstance().insert(x.getTrinhDo());
+			ChucVuDAO.getInstance().insert(x.getChucVu());
 			PreparedStatement pst;
 			if(x instanceof NHANVIENCHINHTHUC) {
-				HOPDONGLAODONG h = ((NHANVIENCHINHTHUC)x).getHopDong();
+				HopDongLaoDongDAO.getInstance().insert(((NHANVIENCHINHTHUC)x).getHopDong()) ;
 				// nhan vien
 				
 				pst = con.prepareStatement("insert NHANVIEN values(?,?,?,?,?,?,?,?,?,?)");

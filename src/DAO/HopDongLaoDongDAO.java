@@ -57,7 +57,7 @@ public class HopDongLaoDongDAO implements DAOInterface<HOPDONGLAODONG>{
         int result = 0;
         Connection con = ConnectionManager.getConnection();
         try {
-            String sql = "insert into HOPDONGLAODONG values(?,?,?,?,?,?)";
+            String sql = "insert into HOPDONGLAODONG values(?,?,?,?,?)";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, t.getMaHopDong());
 			pst.setDate(2, Date.valueOf(t.getTuNgay()));

@@ -2,10 +2,16 @@ package BUS;
 
 import java.util.ArrayList;
 
+
+import DAO.TuyenDungDAO;
+import DTO.BAOCAOTUYENDUNG;
 import DAO.HopDongLaoDongDAO;
 import DAO.UngVienDAO;
 import DTO.HOPDONGLAODONG;
 import DTO.UNGVIEN;
+
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class UngVienBUS {
     private final UngVienDAO ungVienDAO = new UngVienDAO(); 
@@ -13,8 +19,8 @@ public class UngVienBUS {
 
     
     public UngVienBUS() {
-       
-        listUngVien = new ArrayList<>();
+    	listUngVien = ungVienDAO.getList();
+        
     }
 
     public ArrayList<UNGVIEN> getList() {
@@ -44,8 +50,25 @@ public class UngVienBUS {
             };
         }
     
+        
         return data;
     }
+    
+    public String vnd(Double number) {
+		Locale locale = new Locale("vi", "VN"); // Thiết lập locale cho tiếng Việt
+		NumberFormat numberFormat = NumberFormat.getInstance(locale);
+		String formattedNumber = numberFormat.format(number);
+		return formattedNumber;
+	}
+
+    public Object[][] getObject1(){
+		Object[][] data = new Object[listUngVien.size()][];
+        for (int i = 0; i < listUngVien.size(); i++) {
+        	UNGVIEN obj = listUngVien.get(i);
+            data[i] = new Object[]{obj.getMaTuyenDung(), obj.getMaUngVien()+" - "+obj.getHoTen(),obj.getSdt(),obj.getEmail(),obj.getChucVu(),obj.getTrinhDo().getTrinhDoHocVan(),vnd(obj.getMucLuongDeal()),obj.getTrangThai()};
+        }
+        return data;
+	}
     
     public int addUngVien(UNGVIEN uv) {
         int result = ungVienDAO.insert(uv);
@@ -85,4 +108,13 @@ public class UngVienBUS {
         }
         return result;
     }
+    
+    public UNGVIEN getUngVien(String maUngVien) {
+		for(UNGVIEN i : listUngVien) {
+			if(i.getMaUngVien().equals(maUngVien)) {
+				return i;
+			}
+		}
+		return null;
+	}
 }

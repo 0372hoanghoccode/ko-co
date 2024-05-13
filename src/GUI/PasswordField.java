@@ -129,10 +129,10 @@ public class PasswordField extends JPasswordField {
                 location = fraction;
                 repaint();
             }
-
+            
         };
-        eye = new ImageIcon(getClass().getResource("/assets/img/eye.png")).getImage();
-        eye_hide = new ImageIcon(getClass().getResource("/assets/img/eye_hide.png")).getImage();
+        eye = new ImageIcon(getClass().getResource("/assets/appIcon/eye.png")).getImage();
+        eye_hide = new ImageIcon(getClass().getResource("/assets/appIcon/eye_hide.png")).getImage();
         animator = new Animator(300, target);
         animator.setResolution(0);
         animator.setAcceleration(0.5f);

@@ -1,6 +1,10 @@
 package BUS;
 
+
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
+
 import DAO.TuyenDungDAO;
 import DTO.BAOCAOTUYENDUNG;
 
@@ -57,4 +61,30 @@ public class TUYENDUNG_BUS {
         }
         return result;
     }
+    
+    public String vnd(Double number) {
+		Locale locale = new Locale("vi", "VN"); // Thiết lập locale cho tiếng Việt
+		NumberFormat numberFormat = NumberFormat.getInstance(locale);
+		String formattedNumber = numberFormat.format(number);
+		return formattedNumber;
+	}
+
+    public Object[][] getDataObjectToRender(){
+		Object[][] data = new Object[listBaoCaoTuyenDung.size()][];
+        for (int i = 0; i < listBaoCaoTuyenDung.size(); i++) {
+            BAOCAOTUYENDUNG obj = listBaoCaoTuyenDung.get(i);
+            data[i] = new Object[]{i+1,obj.getMaTuyenDung(), obj.getChucVu(),obj.getHocVan(),obj.getGioiTinh(),obj.getDoTuoi(),obj.getSoLuongCanTuyen(),obj.getSoLuongNopHoSo(),obj.getSoLuongDaTuyen(),obj.getHanNopHoSo(),vnd(obj.getMucLuongToiThieu()),vnd(obj.getMucLuongToiDa())};
+        }
+        return data;
+	}
+
+    public BAOCAOTUYENDUNG getBaoCaoTuyenDung(String maBaoCao) {
+		for(BAOCAOTUYENDUNG i : listBaoCaoTuyenDung) {
+			if(i.getMaTuyenDung().equals(maBaoCao)) {
+				return i;
+			}
+		}
+		return null;
+	}
+    
 }

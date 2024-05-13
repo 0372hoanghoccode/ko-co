@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import DTO.BAOCAOTUYENDUNG;
+import DTO.CONNGUOI;
 import DTO.DIACHI;
 import DTO.TRINHDO;
 
@@ -27,7 +28,8 @@ public class UngVienDAO implements DAOInterface<UNGVIEN> {
              try {
                 // chuc vu, tai khoan
                 
-                pst = con.prepareStatement("select * from UNGVIEN join CONNGUOI on UNGVIEN.CMND=CONNGUOI.CMND join CMND on UNGVIEN.CMND= CMND.soCMND join TRINHDO on TRINHDO.maTrinhDo=UNGVIEN.maTrinhDo");
+                pst = con.prepareStatement("select * from UNGVIEN join CONNGUOI on UNGVIEN.CMND=CONNGUOI.CMND "
+                		+ "join CMND on UNGVIEN.CMND= CMND.soCMND join TRINHDO on TRINHDO.maTrinhDo=UNGVIEN.maTrinhDo");
                 rs = pst.executeQuery();
                 while(rs.next()) {
                     UNGVIEN x = new UNGVIEN();
@@ -75,15 +77,19 @@ public class UngVienDAO implements DAOInterface<UNGVIEN> {
         Connection con = ConnectionManager.getConnection();
         PreparedStatement pst = null;
         try {
-            pst = con.prepareStatement("INSERT INTO UNGVIEN (maUngVien, hoTen, gioiTinh, ngaySinh, soDienThoai, email, diaChi, trinhDoHocVan) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            pst.setString(1, uv.getMaUngVien());
-            pst.setString(2, uv.getHoTen());
-            pst.setString(3, uv.getGioiTinh());
-            pst.setDate(4, java.sql.Date.valueOf(uv.getNgaySinh()));
-            pst.setString(5, uv.getSdt());
-            pst.setString(6, uv.getEmail());
-            pst.setString(7, uv.getDiaChi().toString());
-            pst.setString(8, uv.getTrinhDo().getTrinhDoHocVan()); 
+
+            TrinhDoDAO.getInstance().insert(uv.getTrinhDo());
+            CMND_DAO.getInstance().insert(uv.getCmnd());
+            ConNguoiDAO.getInstance().insert((CONNGUOI)uv);
+
+            pst = con.prepareStatement("insert UNGVIEN values(?,?,?,?,?,?,?)");
+			pst.setString(1, uv.getMaTuyenDung());
+			pst.setString(2, uv.getMaUngVien());
+			pst.setString(3, uv.getCmnd().getSoCmnd());
+			pst.setDouble(4, uv.getMucLuongDeal());
+			pst.setString(5, uv.getTrinhDo().getMaTrinhDo());
+			pst.setString(6, uv.getChucVu());
+			pst.setString(7, uv.getTrangThai());
             return pst.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -146,4 +152,66 @@ public class UngVienDAO implements DAOInterface<UNGVIEN> {
             }
         }
     }
+    
+    
+    public void updateTrangThai(String maUngVien,String trangThai) {
+		Connection con = ConnectionManager.getConnection();
+		try {
+			PreparedStatement pst = con.prepareStatement("update UNGVIEN set trangThai=?  where maUngVien = ?");
+			pst.setString(1, trangThai);
+			pst.setString(2, maUngVien);
+			pst.executeUpdate();
+			ConnectionManager.closeConnection(con);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+    public ArrayList<String> getDanhSachMaSo() {
+		Connection con = ConnectionManager.getConnection();
+		try {
+			ArrayList<String> list =new ArrayList<>();
+			PreparedStatement pst = con.prepareStatement("select * from UNGVIEN");
+			ResultSet rs = pst.executeQuery();
+			while(rs.next()) {
+				  list.add(rs.getString("maUngVien")); 
+			}
+			ConnectionManager.closeConnection(con);
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+
+    public void deleteUngVien(String maTrinhDo, String soCMND, String maUngVien) {
+		Connection con = ConnectionManager.getConnection();
+		try {
+			PreparedStatement pst = con.prepareStatement("delete UNGVIEN where maUngVien = ?");
+			pst.setString(1, maUngVien);
+			pst.executeUpdate();
+			
+			pst = con.prepareStatement("delete CONNGUOI where CMND = ?");
+			pst.setString(1, soCMND);
+			pst.executeUpdate();
+			
+			pst = con.prepareStatement("delete CMND where soCMND = ?");
+			pst.setString(1, soCMND);
+			pst.executeUpdate();
+			
+			pst = con.prepareStatement("delete TRINHDO where maTrinhDo = ?");
+			pst.setString(1, maTrinhDo);
+			pst.executeUpdate();
+			
+			ConnectionManager.closeConnection(con);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+    
+    
+    
+    
 }

@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import DTO.BAOCAOTUYENDUNG;
@@ -17,37 +18,46 @@ public class TuyenDungDAO implements DAOInterface<BAOCAOTUYENDUNG> {
     }
 
     @Override
-    public ArrayList<BAOCAOTUYENDUNG> getList() {
-        ArrayList<BAOCAOTUYENDUNG> list = new ArrayList<>();
-        Connection con = ConnectionManager.getConnection();
-        PreparedStatement pst = null;
-        ResultSet rs = null;
-        try {
-            pst = con.prepareStatement("SELECT * FROM BAOCAOTUYENDUNG ORDER BY maTuyenDung");
-            rs = pst.executeQuery();
-            while (rs.next()) {
-                BAOCAOTUYENDUNG x = new BAOCAOTUYENDUNG();
-                x.setMaTuyenDung(rs.getString("maTuyenDung"));
-                x.setChucVu(rs.getString("chucVu"));
-                x.setHocVan(rs.getString("hocVan"));
-                x.setGioiTinh(rs.getString("yeuCauGioiTinh"));
-                x.setDoTuoi(rs.getString("yeuCauDoTuoi"));
-                x.setSoLuongCanTuyen(rs.getInt("soLuongCanTuyen"));
-                x.setHanNopHoSo(rs.getDate("hanNopHoSo").toLocalDate());
-                x.setMucLuongToiThieu(rs.getDouble("mucLuongToiThieu"));
-                x.setMucLuongToiDa(rs.getDouble("mucLuongToiDa"));
-                // Query for additional fields like soLuongNopHoSo and soLuongDaTuyen
-                x.setSoLuongNopHoSo(getSoLuongNopHoSo(con, rs.getString("maTuyenDung")));
-                x.setSoLuongDaTuyen(getSoLuongDaTuyen(con, rs.getString("maTuyenDung")));
-                list.add(x);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            closeResources(rs, pst, con);
-        }
-        return list;
-    }
+    public ArrayList<BAOCAOTUYENDUNG> getList(){
+		ArrayList<BAOCAOTUYENDUNG> list= new ArrayList<>();
+		// Tạo kết nối
+ 		Connection con = ConnectionManager.getConnection();
+ 		Statement st;
+ 		try {
+			st = con.createStatement();
+			ResultSet rs = st.executeQuery("select * from BAOCAOTUYENDUNG order by maTuyenDung");
+			while(rs.next()) {
+				BAOCAOTUYENDUNG x = new BAOCAOTUYENDUNG();
+				x.setMaTuyenDung(rs.getString("maTuyenDung"));
+				x.setChucVu(rs.getString("chucVu"));
+				x.setHocVan(rs.getString("hocVan"));
+				x.setGioiTinh(rs.getString("yeuCauGioiTinh"));
+				x.setDoTuoi(rs.getString("yeuCauDoTuoi"));;
+				x.setSoLuongCanTuyen(Integer.parseInt(rs.getString(6)));
+				x.setHanNopHoSo(rs.getDate("hanNopHoSo").toLocalDate().plusDays(2));
+				x.setMucLuongToiThieu(rs.getDouble("mucLuongToiThieu"));
+				x.setMucLuongToiDa(rs.getDouble("mucLuongToiDa"));
+				Statement st1 = con.createStatement();
+				ResultSet rs1 = st1.executeQuery("select COUNT(CMND) from UNGVIEN where maTuyenDung = '"+x.getMaTuyenDung()+"'");
+				
+				while(rs1.next()) {
+					x.setSoLuongNopHoSo(Integer.parseInt(rs1.getString(1)));
+				}
+				Statement st2 = con.createStatement();
+				ResultSet rs2 = st2.executeQuery("select count(maUngVien) from UNGVIEN uv join NHANVIEN nv on nv.CMND = uv.CMND where uv.maTuyenDung = '"+x.getMaTuyenDung()+"'");
+				
+				while(rs2.next()) {
+					x.setSoLuongDaTuyen(Integer.parseInt(rs2.getString(1)));
+				}
+				list.add(x);
+			}
+			ConnectionManager.closeConnection(con);
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
     public int update(BAOCAOTUYENDUNG x) {
         Connection con = ConnectionManager.getConnection();
@@ -76,7 +86,8 @@ public class TuyenDungDAO implements DAOInterface<BAOCAOTUYENDUNG> {
             closeResources(null, pst, con);
         }
     }
-    private  int getSoLuongNopHoSo(Connection con, String maTuyenDung) throws SQLException {
+    @SuppressWarnings("unused")
+	private  int getSoLuongNopHoSo(Connection con, String maTuyenDung) throws SQLException {
         PreparedStatement pst = con.prepareStatement("SELECT COUNT(CMND) AS Total FROM UNGVIEN WHERE maTuyenDung = ?");
         pst.setString(1, maTuyenDung);
         ResultSet rs = pst.executeQuery();
@@ -89,7 +100,8 @@ public class TuyenDungDAO implements DAOInterface<BAOCAOTUYENDUNG> {
         return total;
     }
 
-    private int getSoLuongDaTuyen(Connection con, String maTuyenDung) throws SQLException {
+    @SuppressWarnings("unused")
+	private int getSoLuongDaTuyen(Connection con, String maTuyenDung) throws SQLException {
         PreparedStatement pst = con.prepareStatement("SELECT COUNT(maUngVien) AS Total FROM UNGVIEN UV JOIN NHANVIEN NV ON NV.CMND = UV.CMND WHERE UV.maTuyenDung = ?");
         pst.setString(1, maTuyenDung);
         ResultSet rs = pst.executeQuery();
@@ -167,5 +179,39 @@ public class TuyenDungDAO implements DAOInterface<BAOCAOTUYENDUNG> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    
+    public String[] getMaTuyenDung() {
+		String data[] = null;
+		Connection con = ConnectionManager.getConnection();
+		try {
+			Statement st = con.createStatement();
+			ResultSet rs  = st.executeQuery("select COUNT(DISTINCT maTuyenDung) from BAOCAOTUYENDUNG");
+			while(rs.next()) {
+				data = new String[rs.getInt(1)];
+			}
+			rs = st.executeQuery("select * from BAOCAOTUYENDUNG order by maTuyenDung");
+			int count =0;
+			while(rs.next()) {
+				data[count] = rs.getString(1);
+				count++;
+			}
+			ConnectionManager.closeConnection(con);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return data;
+	}
+
+    public BAOCAOTUYENDUNG getBaoCaoTuyenDung(String maBaoCao) { 
+        ArrayList<BAOCAOTUYENDUNG> list = this.getList();
+        for(BAOCAOTUYENDUNG i : list) {
+			if(i.getMaTuyenDung().equals(maBaoCao)) {
+				return i;
+			}
+		}
+		return null;
+
     }
 }

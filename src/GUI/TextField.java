@@ -30,11 +30,11 @@ public class TextField extends JTextField {
     private boolean show;
     private boolean mouseOver = false;
     private String labelText = "Label";
-    private Color lineColor = new Color(3, 155, 216);
+    private Color lineColor = new Color(34, 139, 34); 
 
     public TextField() {
         setBorder(new EmptyBorder(20, 3, 10, 3));
-        setSelectionColor(new Color(76, 204, 255));
+        setSelectionColor(new Color(34, 139, 34));
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent me) {
