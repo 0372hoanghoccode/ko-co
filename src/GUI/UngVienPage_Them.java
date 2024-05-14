@@ -7,6 +7,8 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -14,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.JTextField;
@@ -21,8 +24,20 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 
+import DTO.BAOCAOTUYENDUNG;
+import DTO.CMND;
+import DTO.DIACHI;
+import DTO.TRINHDO;
+import DTO.UNGVIEN;
+
+
+import DTO.BAOCAOTUYENDUNG;
+import dateChooser.DateChooser;
+
+
 
 public class UngVienPage_Them extends JFrame {
+	UngVienPage uvp;
 	private JButton button_dong;
 	private JButton button_luu;
 	private JTextField textField_NgaySinh;
@@ -32,16 +47,16 @@ public class UngVienPage_Them extends JFrame {
 	private JTextField textField_SDT;
 	private JTextField textField_Email;
 	private JTextField textField_MucLuongDeal;
-	private JComboBox<String> cbbNoiCap;
+	private JTextField textfield_NoiCap;
 	private JTextField textField_NgayCap;
-	private JComboBox<String> cbbTinhThanhPho;
-	private JComboBox<String> cbbQuanHuyen;
-	private JComboBox<String> cbbPhuongXa;
-	private JComboBox<String> cbbDuong;
+	private JTextField textfield_TinhThanhPho;
+	private JTextField textfiled_QuanHuyen;
+	private  JTextField textfiled_PhuongXa;
+	private  JTextField textfiled_Duong;
 	private JTextField textField_DiaChi;
 	private JComboBox<String> comboBox_MaTuyenDung;
 	private JComboBox<String> comboBox_GioiTinh;
-	private JComboBox<String> comboBox_TinhTrangHonNhan;
+	// private JComboBox<String> comboBox_TinhTrangHonNhan;
 	private JComboBox<String> comboBox_TonGiao;
 	private JComboBox<String> comboBox_HocVan;
 	private JComboBox<String> comboBox_DanToc;
@@ -80,6 +95,12 @@ public class UngVienPage_Them extends JFrame {
 		label_img.setBounds(40,35,40,40);
 		
 		button_dong= new JButton("Đóng");
+		button_dong.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				reset();
+			}
+		});
 		panelContent.add(button_dong);
 		button_dong.setBounds(700,530,90,30);
 		button_dong.setForeground(new Color(0,128,255));
@@ -89,6 +110,33 @@ public class UngVienPage_Them extends JFrame {
 		
 
 		button_luu=new JButton("Lưu");
+		button_luu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String ungVienData[] = getDataToAdd();
+				if (!checkUngVienData(ungVienData)) {
+					return;
+				} else {
+					double mucLuongDeal = Double.valueOf(ungVienData[20]);
+					BAOCAOTUYENDUNG bctd = DAO.TuyenDungDAO.getInstance().getBaoCaoTuyenDung(ungVienData[0]);
+					if(mucLuongDeal<bctd.getMucLuongToiThieu() ){
+						JOptionPane.showMessageDialog(UngVienPage_Them.this, "Mức lương thỏa thuận của ứng viên nhỏ hơn mức lương tối thiểu của đợt tuyển dụng này!");
+						return;
+					}else if(mucLuongDeal>bctd.getMucLuongToiDa()) {
+						JOptionPane.showMessageDialog(UngVienPage_Them.this, "Mức lương thỏa thuận của ứng viên lớn hơn mức lương tối đa của đợt tuyển dụng này!");
+						return;
+					}
+					CMND cmnd = new CMND(ungVienData[7], ungVienData[9], toLocalDate(ungVienData[8]));
+					DIACHI dc = new DIACHI("TDUV"+ungVienData[16], ungVienData[15], ungVienData[14], ungVienData[13], ungVienData[12]);
+					TRINHDO td = new TRINHDO("TDUV"+ungVienData[1], ungVienData[17], ungVienData[18], ungVienData[19]);
+					UNGVIEN uv= new UNGVIEN(cmnd , ungVienData[2], ungVienData[3], toLocalDate(ungVienData[4]), dc, ungVienData[5], ungVienData[10], ungVienData[11], ungVienData[6], ungVienData[0], ungVienData[1], mucLuongDeal, td, DAO.TuyenDungDAO.getInstance().getChucVuTuyenDung(ungVienData[0]), "Chưa tuyển");
+					
+					DAO.UngVienDAO.getInstance().insert(uv);
+					uvp.resetBUS();
+					uvp.setData();
+
+				}
+			}
+		});
 		panelContent.add(button_luu);
 		button_luu.setBounds(810,530,80,30);
 		button_luu.setForeground(new Color(0,128,255));
@@ -141,8 +189,8 @@ public class UngVienPage_Them extends JFrame {
 		textField_NgaySinh.setBounds(50,410,170,30);
 		textField_NgaySinh.setFont(new Font("Arial",1,12));
 		
-//		DateChooser dccc = new DateChooser();
-//		dccc.setTextRefernce(textField_NgaySinh);
+		DateChooser dccc = new DateChooser();
+		dccc.setTextRefernce(textField_NgaySinh);
 		
 		 label_GioiTinh = new JLabel("Giới tính");
 		 panelContent.add(label_GioiTinh);
@@ -189,18 +237,18 @@ public class UngVienPage_Them extends JFrame {
 		textField_CMND.setBounds(270,200,170,30);
 		textField_CMND.setFont(new Font("Arial",1,12));
 		
-		JLabel label_TinhTrangHonNhan = new JLabel("Tình trạng hôn nhân");
-		panelContent.add(label_TinhTrangHonNhan);
-		label_TinhTrangHonNhan.setFont(new Font("Arial",0,15));
-		label_TinhTrangHonNhan.setBounds(490,450,230,30);
+		// JLabel label_TinhTrangHonNhan = new JLabel("Tình trạng hôn nhân");
+		// panelContent.add(label_TinhTrangHonNhan);
+		// label_TinhTrangHonNhan.setFont(new Font("Arial",0,15));
+		// label_TinhTrangHonNhan.setBounds(490,450,230,30);
 
 		
-		comboBox_TinhTrangHonNhan= new myCombobox<String>();
-		String[] tinhtrang= {"Độc thân","Đã kết hôn"};
-		comboBox_TinhTrangHonNhan.setModel(new DefaultComboBoxModel<>(tinhtrang));
-		panelContent.add(comboBox_TinhTrangHonNhan);
-		comboBox_TinhTrangHonNhan.setBounds(490,480,170,30);
-		comboBox_TinhTrangHonNhan.setFont(new Font("Arial",1,12));
+		// comboBox_TinhTrangHonNhan= new myCombobox<String>();
+		// String[] tinhtrang= {"Độc thân","Đã kết hôn"};
+		// comboBox_TinhTrangHonNhan.setModel(new DefaultComboBoxModel<>(tinhtrang));
+		// panelContent.add(comboBox_TinhTrangHonNhan);
+		// comboBox_TinhTrangHonNhan.setBounds(490,480,170,30);
+		// comboBox_TinhTrangHonNhan.setFont(new Font("Arial",1,12));
 
 
 		JLabel label_NoiCap = new JLabel("Nơi cấp");
@@ -208,10 +256,10 @@ public class UngVienPage_Them extends JFrame {
 		label_NoiCap.setFont(new Font("Arial",0,15));
 		label_NoiCap.setBounds(270,310,230,30);
 
-		cbbNoiCap= new myCombobox<String>();
-		panelContent.add(cbbNoiCap);
-		cbbNoiCap.setBounds(270,340,170,30);
-		cbbNoiCap.setFont(new Font("Arial",1,12));
+		textfield_NoiCap= new JTextField();
+		panelContent.add(textfield_NoiCap);
+		textfield_NoiCap.setBounds(270,340,170,30);
+		textfield_NoiCap.setFont(new Font("Arial",1,12));
 		
 		JLabel label_NgayCap = new JLabel("Ngày cấp");
 		panelContent.add(label_NgayCap);
@@ -242,40 +290,40 @@ public class UngVienPage_Them extends JFrame {
 		label_Tinh.setFont(new Font("Arial",0,15));
 		label_Tinh.setBounds(490,100,230,30);
 
-		cbbTinhThanhPho= new myCombobox<String>();
-		panelContent.add(cbbTinhThanhPho);
-		cbbTinhThanhPho.setBounds(490,130,170,30);
-		cbbTinhThanhPho.setFont(new Font("Arial",1,12));
+		textfield_TinhThanhPho= new JTextField();
+		panelContent.add(textfield_TinhThanhPho);
+		textfield_TinhThanhPho.setBounds(490,130,170,30);
+		textfield_TinhThanhPho.setFont(new Font("Arial",1,12));
 		
 		JLabel label_Huyen = new JLabel("Huyện");
 		panelContent.add(label_Huyen);
 		label_Huyen.setFont(new Font("Arial",0,15));
 		label_Huyen.setBounds(490,170,170,30);
 
-		cbbQuanHuyen= new myCombobox<String>();
-		panelContent.add(cbbQuanHuyen);
-		cbbQuanHuyen.setBounds(490,200,170,30);
-		cbbQuanHuyen.setFont(new Font("Arial",1,12));
+		textfiled_QuanHuyen =  new JTextField();
+		panelContent.add(textfiled_QuanHuyen);
+		textfiled_QuanHuyen.setBounds(490,200,170,30);
+		textfiled_QuanHuyen.setFont(new Font("Arial",1,12));
 		
 		JLabel label_Xa = new JLabel("Xã");
 		panelContent.add(label_Xa);
 		label_Xa.setFont(new Font("Arial",0,15));
 		label_Xa.setBounds(490,240,170,30);
 
-		cbbPhuongXa= new myCombobox<String>();
-		panelContent.add(cbbPhuongXa);
-		cbbPhuongXa.setBounds(490,270,170,30);
-		cbbPhuongXa.setFont(new Font("Arial",1,12));
+		textfiled_PhuongXa=  new JTextField();
+		panelContent.add(textfiled_PhuongXa);
+		textfiled_PhuongXa.setBounds(490,270,170,30);
+		textfiled_PhuongXa.setFont(new Font("Arial",1,12));
 		
 		JLabel label_Duong = new JLabel("Đường");
 		panelContent.add(label_Duong);
 		label_Duong.setFont(new Font("Arial",0,15));
 		label_Duong.setBounds(490,310,230,30);
 
-		cbbDuong= new myCombobox<String>();
-		panelContent.add(cbbDuong);
-		cbbDuong.setBounds(490,340,170,30);
-		cbbDuong.setFont(new Font("Arial",1,12));
+		textfiled_Duong= new JTextField();
+		panelContent.add(textfiled_Duong);
+		textfiled_Duong.setBounds(490,340,170,30);
+		textfiled_Duong.setFont(new Font("Arial",1,12));
 		
 		JLabel label_DiaChi = new JLabel("Số nhà");
 		panelContent.add(label_DiaChi);
@@ -355,21 +403,21 @@ public class UngVienPage_Them extends JFrame {
 	public void setDataCbbMaTuyenDung(String str[]) {
 		comboBox_MaTuyenDung.setModel(new DefaultComboBoxModel<>(str));
 	}
-	public void setDataCbbTinhThanhPho(String data[]) {
-		cbbTinhThanhPho.setModel(new DefaultComboBoxModel<>(data));
-	}
-	public void setDataCbbQuanHuyen(String data[]) {
-		cbbQuanHuyen.setModel(new DefaultComboBoxModel<>(data));
-	}
-	public void setDataCbbPhuongXa(String data[]) {
-		cbbPhuongXa.setModel(new DefaultComboBoxModel<>(data));
-	}
-	public void setDataCbbDuong(String data[]) {
-		cbbDuong.setModel(new DefaultComboBoxModel<>(data));
-	}
-	public void setDataCbbNoiCap(String str[]) {
-		cbbNoiCap.setModel(new DefaultComboBoxModel<>(str));
-	}
+	// public void setDatatextfield_TinhThanhPho(String data[]) {
+	// 	textfield_TinhThanhPho.setModel(new DefaultComboBoxModel<>(data));
+	// }
+	// public void setDatatextfiled_QuanHuyen(String data[]) {
+	// 	textfiled_QuanHuyen.setModel(new DefaultComboBoxModel<>(data));
+	// }
+	// public void setDatatextfiled_PhuongXa(String data[]) {
+	// 	textfiled_PhuongXa.setModel(new DefaultComboBoxModel<>(data));
+	// }
+	// public void setDatatextfiled_Duong(String data[]) {
+	// 	textfiled_Duong.setModel(new DefaultComboBoxModel<>(data));
+	// }
+	// public void setDatatextfield_NoiCap(String str[]) {
+	// 	textfield_NoiCap.setModel(new DefaultComboBoxModel<>(str));
+	// }
 	public JButton getButton_dong() {
 		return button_dong;
 	}
@@ -378,31 +426,196 @@ public class UngVienPage_Them extends JFrame {
 	}
 	public String[] getDataToAdd() {
 		String[] data = {
-			comboBox_MaTuyenDung.getSelectedItem().toString(),
-			textField_MaUngVien.getText(),
-			textField_HoTen.getText(),
-			comboBox_GioiTinh.getSelectedItem().toString(),
-			textField_NgaySinh.getText(),
-			textField_SDT.getText(),
-			textField_Email.getText(),
-			textField_CMND.getText(),
-			textField_NgayCap.getText(),
-			cbbNoiCap.getSelectedItem().toString(),
-			comboBox_DanToc.getSelectedItem().toString(),
-			comboBox_TonGiao.getSelectedItem().toString(),
-			cbbTinhThanhPho.getSelectedItem().toString(),
-			cbbQuanHuyen.getSelectedItem().toString(),
-			cbbPhuongXa.getSelectedItem().toString(),
-			cbbDuong.getSelectedItem().toString(),
-			textField_DiaChi.getText(),
-			comboBox_TinhTrangHonNhan.getSelectedItem().toString(),
-			comboBox_HocVan.getSelectedItem().toString(),
-			comboBox_TrinhDoChuyenMon.getSelectedItem().toString(),
-			tfChuyenNganh.getText(),
-			textField_MucLuongDeal.getText(),
+			comboBox_MaTuyenDung.getSelectedItem().toString(), //0
+			textField_MaUngVien.getText(), //1 
+			textField_HoTen.getText(), //2 
+			comboBox_GioiTinh.getSelectedItem().toString(), //3
+			textField_NgaySinh.getText(), //4
+			textField_SDT.getText(),//5
+			textField_Email.getText(),//6
+			textField_CMND.getText(),//7
+			textField_NgayCap.getText(),//8
+			textfield_NoiCap.getText(),//9
+			comboBox_DanToc.getSelectedItem().toString(),//10
+			comboBox_TonGiao.getSelectedItem().toString(),//11
+			textfield_TinhThanhPho.getText(),//12
+			textfiled_QuanHuyen.getText(),//13
+			textfiled_PhuongXa.getText(),//14
+			textfiled_Duong.getText(),//15
+			textField_DiaChi.getText(),//16
+			// comboBox_TinhTrangHonNhan.getSelectedItem().toString(),
+			comboBox_HocVan.getSelectedItem().toString(),//17
+			comboBox_TrinhDoChuyenMon.getSelectedItem().toString(),//18
+			tfChuyenNganh.getText(),//19
+			textField_MucLuongDeal.getText(),//20
 		};
 		return data;
 	}
+	public static boolean checkUngVienData( String []arr) {
+		if(arr[1].equals("")) {
+			JOptionPane.showMessageDialog(null, "Chưa nhập mã ứng viên!");
+			return false;
+		}
+		if(arr[2].equals("")) {
+			JOptionPane.showMessageDialog(null, "Chưa nhập tên ứng viên!");
+			return false;
+		}
+		if(arr[5].equals("")) {
+			JOptionPane.showMessageDialog(null, "Chưa nhập số điện thoại ứng viên!");
+			return false;
+		}
+		if(arr[6].equals("")) {
+			JOptionPane.showMessageDialog(null, "Chưa nhập email ứng viên!");
+			return false;
+		}
+		if(arr[7].equals("")) {
+			JOptionPane.showMessageDialog(null, "Chưa nhập số chứng minh thư ứng viên!");
+			return false;
+		}
+		if(arr[9].equals("")) {
+			JOptionPane.showMessageDialog(null, "Chưa nhập nơi cấp chứng minh thư ứng viên!");
+			return false;
+		}
+		if(arr[16].equals("")) {
+			JOptionPane.showMessageDialog(null, "Chưa nhập số nhà ứng viên!");
+			return false;
+		}
+		if(arr[19].equals("")) {
+			JOptionPane.showMessageDialog(null, "Chưa nhập chuyên ngành ứng viên!");
+			return false;
+		}
+		if(arr[20].equals("")) {
+			JOptionPane.showMessageDialog(null, "Chưa nhập mức lương deal ứng viên!");
+			return false;
+		}
+		
+		if(checkMaUngVienTonTai(arr[1])) {
+			JOptionPane.showMessageDialog(null, "Mã ứng viên tồn tại trong danh sách!");
+			return false;
+		}
+		if(!checkHoTen(arr[2])) {
+			JOptionPane.showMessageDialog(null, "Tên ứng viên không hợp lệ!");
+			return false;
+		}
+		if(!checkSoDienThoai(arr[5])) {
+			JOptionPane.showMessageDialog(null, "Số điện thoại không hợp lệ!");
+			return false;
+		}
+		if(!checkEmail(arr[6])) {
+			JOptionPane.showMessageDialog(null, "Email không hợp lệ!\nEmail phải có dạng abc@gmail.com");
+			return false;
+		}
+		
+		if(!checkCMND(arr[7])) {
+			JOptionPane.showMessageDialog(null, "Số chứng minh nhân dân không hợp lệ! \n( Chứng minh dân nhân có 9 chữ số )");
+			return false;
+		}
+		if(checkCMNDTonTai(arr[7])) {
+			JOptionPane.showMessageDialog(null, "Chứng minh nhân dân đã tồn tại!");
+			return false;
+		}
+		if(!checkSalary(arr[20])) {
+			JOptionPane.showMessageDialog(null, "Mức lương không hợp lệ! \n( Mức lương là các chữ số! Tối thiểu 4,000,000 )");
+			return false;
+		}
+		return true;
+	}
+
+
+
+	public LocalDate toLocalDate(String str) {
+		LocalDate localDate4 = LocalDate.parse(str,DateTimeFormatter.ofPattern("dd-LL-yyyy"));
+		return localDate4;
+	}
+
+
+
+	public static boolean checkHoTen(String hoTen) {
+		hoTen = hoTen.toLowerCase();
+    	String convert_arr[] = hoTen.split(" ");
+    	String temp = "";
+    	for(int i=0;i<convert_arr.length;i++) {
+    		temp+=(convert_arr[i].charAt(0)+"").toUpperCase() + convert_arr[i].substring(1) +" ";
+    	}
+		hoTen = temp.toLowerCase();
+		int size = hoTen.length();
+		if(size<5) {
+			return false;
+		}
+		String arr[] = hoTen.split(" ");
+		if(arr.length<2) {
+			return false;
+		}
+		for(int i=0;i<size;i++) {
+			if(hoTen.charAt(i)<32) {
+				return false;
+			}
+			if(hoTen.charAt(i)>=33 && hoTen.charAt(i)<=64) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static boolean checkSoDienThoai(String sdt) {
+		if(sdt.matches("[0]{1}[1-9]{1}[0-9]{7,9}")) {
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean checkEmail(String email) {
+		if(email.endsWith("@gmail.com")) {
+			if(email.length()>14) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static boolean checkCMND(String cmnd) {
+		int size = cmnd.length();
+		if(size!=9) {
+			return false;
+		}
+		for(int i=0;i<size;i++) {
+			if(cmnd.charAt(i)<48 || cmnd.charAt(i)>57) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static boolean checkCMNDTonTai(String cmnd) {
+		ArrayList<String> listMaSo = DAO.CMND_DAO.getInstance().getDanhSachMaSo();
+		for(String i : listMaSo) {
+			if(i.equals(cmnd)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static boolean checkMaUngVienTonTai(String maSo) {
+		ArrayList<String> listMaSo = DAO.UngVienDAO.getInstance().getDanhSachMaSo();	
+		for(String i : listMaSo) {
+			if(i.equals(maSo)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static boolean checkSalary(String salary) {
+		try {
+			double value = Double.valueOf(salary);
+			if(value<4000000)	return false;
+		}catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+
 	public void reset() {
 		comboBox_MaTuyenDung.setSelectedIndex(0);
 		textField_MaUngVien.setText("");
@@ -413,15 +626,15 @@ public class UngVienPage_Them extends JFrame {
 		textField_Email.setText("");
 		textField_CMND.setText("");
 //		textField_NgayCap.setText(SUPPORT.LocalDateToString(LocalDate.now()));
-		cbbNoiCap.setSelectedIndex(0);
+		textfield_NoiCap.setText("");
 		comboBox_DanToc.setSelectedIndex(0);
 		comboBox_TonGiao.setSelectedIndex(0);
-		cbbTinhThanhPho.setSelectedIndex(0);
-		cbbQuanHuyen.setSelectedIndex(0);
-		cbbPhuongXa.setSelectedIndex(0);
-		cbbDuong.setSelectedIndex(0);
+		textfield_TinhThanhPho.setText("");
+		textfiled_QuanHuyen.setText("");
+		textfiled_PhuongXa.setText("");
+		textfiled_Duong.setText("");
 		textField_DiaChi.setText("");
-		comboBox_TinhTrangHonNhan.setSelectedIndex(0);
+		// comboBox_TinhTrangHonNhan.setSelectedIndex(0);
 		comboBox_HocVan.setSelectedIndex(0);
 		comboBox_TrinhDoChuyenMon.setSelectedIndex(0);
 		tfChuyenNganh.setText("Không");
@@ -454,17 +667,59 @@ public class UngVienPage_Them extends JFrame {
 		comboBox_TrinhDoChuyenMon.setEnabled(false);
 		tfChuyenNganh.setEnabled(false);
 	}
-	public JComboBox<String> getCbbTinhThanhPho(){
-		return this.cbbTinhThanhPho;
-	}
-	public JComboBox<String> getCbbQuanHuyen(){
-		return this.cbbQuanHuyen;
-	}
-	public JComboBox<String> getCbbPhuongXa(){
-		return this.cbbPhuongXa;
-	}
-	public JComboBox<String> getCbbDuong(){
-		return this.cbbDuong;
+	// public JComboBox<String> gettextfield_TinhThanhPho(){
+	// 	return this.textfield_TinhThanhPho;
+	// }
+	// public JComboBox<String> gettextfiled_QuanHuyen(){
+	// 	return this.textfiled_QuanHuyen;
+	// }
+	// public JComboBox<String> gettextfiled_PhuongXa(){
+	// 	return this.textfiled_PhuongXa;
+	// }
+	// public JComboBox<String> gettextfiled_Duong(){
+	// 	return this.textfiled_Duong;
+	// }
+
+	public void set_UngVienPage(UngVienPage uvp) {
+		this.uvp = uvp;
 	}
 	
+	
+
+	private void addEventListeners() {
+        button_dong.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Đóng frame phụ này lại khi button_dong được nhấn
+                dispose();
+            }
+        });
+		button_luu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String ungVienData[] = getDataToAdd();
+				if (!checkUngVienData(ungVienData)) {
+					return;
+				} else {
+					double mucLuongDeal = Double.valueOf(ungVienData[20]);
+					BAOCAOTUYENDUNG bctd = DAO.TuyenDungDAO.getInstance().getBaoCaoTuyenDung(ungVienData[0]);
+					if(mucLuongDeal<bctd.getMucLuongToiThieu() ){
+						JOptionPane.showMessageDialog(UngVienPage_Them.this, "Mức lương thỏa thuận của ứng viên nhỏ hơn mức lương tối thiểu của đợt tuyển dụng này!");
+						return;
+					}else if(mucLuongDeal>bctd.getMucLuongToiDa()) {
+						JOptionPane.showMessageDialog(UngVienPage_Them.this, "Mức lương thỏa thuận của ứng viên lớn hơn mức lương tối đa của đợt tuyển dụng này!");
+						return;
+					}
+					CMND cmnd = new CMND(ungVienData[7], ungVienData[9], toLocalDate(ungVienData[8]));
+					DIACHI dc = new DIACHI("TDUV"+ungVienData[16], ungVienData[15], ungVienData[14], ungVienData[13], ungVienData[12]);
+					TRINHDO td = new TRINHDO("TDUV"+ungVienData[1], ungVienData[17], ungVienData[18], ungVienData[19]);
+					UNGVIEN uv= new UNGVIEN(cmnd , ungVienData[2], ungVienData[3], toLocalDate(ungVienData[4]), dc, ungVienData[5], ungVienData[10], ungVienData[11], ungVienData[6], ungVienData[0], ungVienData[1], mucLuongDeal, td, DAO.TuyenDungDAO.getInstance().getChucVuTuyenDung(ungVienData[0]), "Chưa tuyển");
+					
+					DAO.UngVienDAO.getInstance().insert(uv);
+					uvp.resetBUS();
+					uvp.setData();
+
+				}
+			}
+		});
+    }
 }

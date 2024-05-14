@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.DataTruncation;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -19,12 +20,16 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+
+import DTO.BAOCAOTUYENDUNG;
+import dateChooser.DateChooser;
 
 
 
@@ -206,7 +211,8 @@ public class TuyenDungPage_Them extends JFrame{
 		label_ChucVu.setFont(new Font("Arial",0,15));
 		label_ChucVu.setBounds(50,170,230,30);
 
-		String[] chucvu = {};
+		// String[] chucvu = {};
+		String[] chucvu = DAO.ChucVuDAO.getInstance().getDanhSachTenChucVuCongTy();
 		comboBox_ChucVuCongTy = new JComboBox<>(chucvu);
 		comboBox_ChucVuCongTy.setFont(font);
 		panelContent.add(comboBox_ChucVuCongTy);
@@ -214,17 +220,17 @@ public class TuyenDungPage_Them extends JFrame{
 		comboBox_ChucVuCongTy.setBounds(50,200,170,30);
 
 		
-		 label_HanNop = new JLabel("Hạn nộp hồ sơ");
-		 panelContent.add(label_HanNop);
+		label_HanNop = new JLabel("Hạn nộp hồ sơ");
+		panelContent.add(label_HanNop);
 		label_HanNop.setFont(new Font("Arial",0,15));
 		label_HanNop.setBounds(270,310,230,30);
 
 		textField_HanNop = new JTextField();
 		textField_HanNop.setBounds(270,340,170,30);
 		panelContent.add(textField_HanNop);
-//////		DateChooser dc = new DateChooser();
-////		dc.setTextRefernce(textField_HanNop);
-////		textField_HanNop.setFont(font);
+		DateChooser dc = new DateChooser();
+		dc.setTextRefernce(textField_HanNop);
+		textField_HanNop.setFont(font);
 	}
 
 	private void addEventListeners() {
@@ -235,7 +241,34 @@ public class TuyenDungPage_Them extends JFrame{
                 dispose();
             }
         });
+		button_luu.addActionListener(new ActionListener() {
+			@Override
+            public void actionPerformed(ActionEvent e) {
+                
+                String dataBCTD[] = getDataToAdd();
+				if (!checkBaoCaoTuyenDungData((JFrame)TuyenDungPage_Them.this, dataBCTD)) {
+					return;
+				}
+				BAOCAOTUYENDUNG bctd= new BAOCAOTUYENDUNG();
+				bctd.setMaTuyenDung(dataBCTD[0]);
+				bctd.setHocVan(dataBCTD[3]);
+				bctd.setGioiTinh(dataBCTD[4]);
+				bctd.setDoTuoi(dataBCTD[5]);
+				bctd.setSoLuongCanTuyen(Integer.valueOf(dataBCTD[2]));
+				bctd.setHanNopHoSo(toLocalDate(dataBCTD[8]));
+				bctd.setMucLuongToiThieu(Double.parseDouble(dataBCTD[6]));
+				bctd.setMucLuongToiDa(Double.parseDouble(dataBCTD[7]));
+				bctd.setChucVu(dataBCTD[1]);
+
+            }
+        });
+
     }
+	
+	public static LocalDate toLocalDate(String str) {
+		LocalDate localDate4 = LocalDate.parse(str,DateTimeFormatter.ofPattern("dd-LL-yyyy"));
+		return localDate4;
+	}
 
 	public void setCbbChucVu(String data[]) {
 		String str[] = new String[data.length-2];
@@ -244,6 +277,7 @@ public class TuyenDungPage_Them extends JFrame{
 		}
 		comboBox_ChucVuCongTy.setModel(new DefaultComboBoxModel<>(str));
 	}
+
 	public String getGioiTinh() {
 		if(maleCheckBox.isSelected()) {
 			return "Nam";
@@ -254,6 +288,7 @@ public class TuyenDungPage_Them extends JFrame{
 		}
 		return "";
 	}
+
 	public String[] getDataToAdd() {
 		String data[] = new String[]{
 			textField_MaTuyenDung.getText().trim(),
@@ -267,8 +302,85 @@ public class TuyenDungPage_Them extends JFrame{
 			textField_MucLuongToiDa.getText(),
 			textField_HanNop.getText(),
 		};
+		for (String string : data) {
+			System.out.println(string);
+		}
 		return data;
 	}
+
+
+	public static boolean checkMaBCCTDTonTai(String maBTD) {
+		String dsMaTuyenDung[] = DAO.TuyenDungDAO.getInstance().getMaTuyenDung();
+		for(int i=0;i<dsMaTuyenDung.length;i++) {
+			if(maBTD.equals(dsMaTuyenDung[i])) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean checkBaoCaoTuyenDungData(JFrame app,String data[]) {
+		if(data[0].equals("")) {
+			JOptionPane.showMessageDialog(app, "Vui lòng nhập mã tuyển dụng!","Thông báo",JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+		if(data[2].equals("")) {
+			JOptionPane.showMessageDialog(app, "Vui lòng nhập số lượng cần tuyển!","Thông báo",JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+		if(data[4].equals("")) {
+			JOptionPane.showMessageDialog(app, "Vui lòng chọn yêu cầu giới tính!","Thông báo",JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+		if(data[6].equals("")) {
+			JOptionPane.showMessageDialog(app, "Vui lòng nhập mức lương tối thiểu!","Thông báo",JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+		if(data[7].equals("")) {
+			JOptionPane.showMessageDialog(app, "Vui lòng nhập mức lương tối đa!","Thông báo",JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+		if(checkMaBCCTDTonTai(data[0])) {
+			JOptionPane.showMessageDialog(app, "Mã bảng tuyển dụng đã tồn tại trong danh sách!","Thông báo",JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+		// số lượng tuyển
+		try {
+			int soLuongTuyen = Integer.valueOf(data[2]);
+			if(soLuongTuyen<1) {
+				JOptionPane.showMessageDialog(app, "Số lượng tuyển dụng quá ít!","Thông báo",JOptionPane.WARNING_MESSAGE);
+				return false;
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(app, "Vui lòng kiểm tra lại số lượng tuyển dụng!","Thông báo",JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+		// tối thiểu
+		try {
+			double toithieu = Double.valueOf(data[6]);
+			if(toithieu<4000000) {
+				JOptionPane.showMessageDialog(app, "Mức lương tối thiểu phải lớn hơn hoặc bằng 4,000,000đ!","Thông báo",JOptionPane.WARNING_MESSAGE);
+				return false;
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(app, "Vui lòng kiểm tra lại mức lương tối thiểu!","Thông báo",JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+		// tối đa
+		try {
+			double toida = Double.valueOf(data[7]);
+			if(toida<4000000) {
+				JOptionPane.showMessageDialog(app, "Mức lương tối đa phải lớn hơn hoặc bằng 4,000,000đ!","Thông báo",JOptionPane.WARNING_MESSAGE);
+				return false;
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(app, "Vui lòng kiểm tra lại mức lương tối đa!","Thông báo",JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+		
+		return true;
+	}
+
 	public JButton getButton_dong() {
 		return button_dong;
 	}

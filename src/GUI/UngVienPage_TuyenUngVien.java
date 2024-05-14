@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
@@ -20,6 +22,20 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+
+
+import DTO.CHUCVU;
+import DTO.CMND;
+import DTO.DIACHI;
+import DTO.HOPDONGLAODONG;
+import DTO.NHANVIEN;
+import DTO.NHANVIENCHINHTHUC;
+import DTO.NHANVIENTHUVIEC;
+import DTO.TAIKHOAN;
+import DTO.TRINHDO;
+
+
+import dateChooser.DateChooser;
 
 
 public class UngVienPage_TuyenUngVien extends JFrame{
@@ -37,8 +53,9 @@ public class UngVienPage_TuyenUngVien extends JFrame{
 	private ArrayList<JLabel> listlabel;
 	private String data[];
 	private ArrayList<JComponent> listCombonentBoSung;
-	private JComboBox<String> cbbPhongban;
-	private static final String titleInfoUngVien[] = {"Họ tên","Giới tính","Ngày sinh","Số điện thoại","Trình độ học vấn","Chuyên môn","Chuyên ngành","Số nhà","Đường","Phường,xã","Quận,huyện","Tỉnh,TP","Dân tộc","Tôn giáo","Số CMND","Ngày cấp","Nơi cấp","Hôn nhân","Chức vụ ứng tuyển","Mức lương deal"};
+	private JComboBox<String> cbbPhongBan;
+	private static final String titleInfoUngVien[] = {"Họ tên","Giới tính","Ngày sinh","Số điện thoại","Trình độ học vấn","Chuyên môn","Chuyên ngành","Số nhà","Đường","Phường,xã","Quận,huyện","Tỉnh,TP","Dân tộc","Tôn giáo","Số CMND","Ngày cấp","Nơi cấp","Chức vụ ứng tuyển","Mức lương deal"};
+	// hôn nhân ngay index 17
 	public UngVienPage_TuyenUngVien() {
 		init();
 	}
@@ -112,8 +129,8 @@ public class UngVienPage_TuyenUngVien extends JFrame{
 			listlabel.add(temp);
 		}
 		
-		for(int i=0;i<6;i++) {
-			JLabel temp= new JLabel(titleInfoUngVien[i+14]);
+		for(int i=0;i<5;i++) {
+			JLabel temp= new JLabel(titleInfoUngVien[i+13]);
 			temp.setBounds(750,20+32*i,250,30);
 			temp.setForeground(new Color(0,0,0,160));
 			temp.setFont(new Font("Arial",Font.BOLD,12));
@@ -145,8 +162,11 @@ public class UngVienPage_TuyenUngVien extends JFrame{
 		info_BoSungThongTin.add(lbLoaiTuyen);
 
 		// Khởi tạo JComboBox và đặt model
-		JComboBox<String> cbbLoaiTuyen = new JComboBox<>(new String[] {"Nhân viên chính thức", "Nhân viên thử việc"});
+		// JComboBox<String> cbbLoaiTuyen = new JComboBox<>(new String[] {"Nhân viên chính thức", "Nhân viên thử việc"});
+		myCombobox<String> cbbLoaiTuyen  = new myCombobox<>();
+		cbbLoaiTuyen.setModel(new DefaultComboBoxModel<>(new String[] {"Nhân viên chính thức","Nhân viên thử việc"}));
 		cbbLoaiTuyen.setBounds(20, 50, 180, 30);
+		((myCombobox<String>)cbbLoaiTuyen).showArrow();
 		cbbLoaiTuyen.setFont(new Font("Arial", Font.PLAIN, 13));
 		info_BoSungThongTin.add(cbbLoaiTuyen);
 		listCombonentBoSung.add(cbbLoaiTuyen);
@@ -171,10 +191,14 @@ public class UngVienPage_TuyenUngVien extends JFrame{
 		info_BoSungThongTin.add(lbPhongBan);
 
 		// Khởi tạo JComboBox và đặt model
-		JComboBox<String> cbbPhongBan = new JComboBox<>(new String[] {"Phòng nhân sự", "Phòng hành chính"});
+		String[] tenPhongBan = DAO.PhongBanDAO.getInstance().getTenPhongBan().toArray(new String[0]);
+		// JComboBox<String> cbbPhongBan = new JComboBox<>(tenPhongBan);
+		cbbPhongBan = new myCombobox<>();
+		cbbPhongBan.setModel(new DefaultComboBoxModel<>(tenPhongBan));
 		cbbPhongBan.setBounds(410, 50, 200, 30);
 		cbbPhongBan.setFont(new Font("Arial", Font.PLAIN, 13));
 		cbbPhongBan.setMaximumRowCount(4); // Đặt số lượng hàng tối đa được hiển thị
+		((myCombobox<String>)cbbPhongBan).showArrow();
 		info_BoSungThongTin.add(cbbPhongBan);
 		listCombonentBoSung.add(cbbPhongBan);
 
@@ -183,6 +207,9 @@ public class UngVienPage_TuyenUngVien extends JFrame{
 		cart.setBounds(650,3,347,114);
 		info_BoSungThongTin.add(cart);
 		cart.setLayout(new CardLayout());
+
+
+
 		// chính thức 
 		JPanel cart1 = new JPanel();
 		cart.add(cart1,0);
@@ -199,7 +226,10 @@ public class UngVienPage_TuyenUngVien extends JFrame{
 		tfBatDau.setBounds(0, 50, 150, 30);
 		tfBatDau.setFont(new Font("Arial", Font.PLAIN, 13));
 		cart1.add(tfBatDau);
-
+		listCombonentBoSung.add(tfBatDau);
+		DateChooser dc = new DateChooser();
+		dc.setTextRefernce(tfBatDau);
+		
 		// Khởi tạo JLabel khác
 		JLabel lbLoaiHD = new JLabel("Thời hạn");
 		lbLoaiHD.setBounds(180, 20, 120, 30);
@@ -208,13 +238,18 @@ public class UngVienPage_TuyenUngVien extends JFrame{
 		cart1.add(lbLoaiHD);
 
 		// Khởi tạo JComboBox
-		JComboBox<String> cbbLoaiHD = new JComboBox<>(new String[] {"1 năm", "2 năm", "3 năm", "4 năm"});
+		// JComboBox<String> cbbLoaiHD = new JComboBox<>(new String[] {"1 năm", "2 năm", "3 năm", "4 năm"});
+		myCombobox<String> cbbLoaiHD  = new myCombobox<>();
+		cbbLoaiHD.setModel(new DefaultComboBoxModel<>(new String[] {"1 năm","2 năm","3 năm","4 năm"}));
 		cbbLoaiHD.setBounds(180, 50, 150, 30);
 		cbbLoaiHD.setFont(new Font("Arial", Font.PLAIN, 13));
 		cart1.add(cbbLoaiHD);
 		listCombonentBoSung.add(cbbLoaiHD);
 
 		
+
+
+
 		
 		
 		// thử việc
@@ -240,11 +275,11 @@ public class UngVienPage_TuyenUngVien extends JFrame{
 		JTextField tfKetThuc  = new JTextField();
 		tfKetThuc.setBounds(180,50,150,30);
 		tfKetThuc.setFont(new Font("Arial",1,13));
-//		listCombonentBoSung.add(tfKetThuc);
-//		DateChooser dc1 = new DateChooser();
-//		dc1.setTextRefernce(tfBatDau2);
-//		DateChooser dc2 = new DateChooser();
-//		dc2.setTextRefernce(tfKetThuc);
+		listCombonentBoSung.add(tfKetThuc);
+		DateChooser dc1 = new DateChooser();
+		dc1.setTextRefernce(tfBatDau2);
+		DateChooser dc2 = new DateChooser();
+		dc2.setTextRefernce(tfKetThuc);
 		
 		cart2.add(tfKetThuc);
 		cart1.setBackground(Color.white);
@@ -266,6 +301,12 @@ public class UngVienPage_TuyenUngVien extends JFrame{
 		
 
 		button_dong= new Button();
+		button_dong.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// setVisible(false);
+				dispose();
+			}
+		});
 		button_dong.setText("Hủy");
 		panelContent.add(button_dong);
 		button_dong.setFont(new Font("Arial",1,14));
@@ -277,6 +318,57 @@ public class UngVienPage_TuyenUngVien extends JFrame{
 		
 		
 		button_luu=new Button();
+		button_luu.addActionListener(new ActionListener() {
+			
+
+			public void actionPerformed(ActionEvent e) {
+				String dataBoSung[] = getDataBoSung();
+				if(dataBoSung[1].equals("")) {
+					showMessage("Bạn chưa nhập mã nhân viên cho ứng viên này!");
+					return;
+				}
+				if(checkMaNhanVienTonTai(dataBoSung[1])) {
+					showMessage("Mã nhân viên "+dataBoSung[1]+" đã tồn tại trong danh sách nhân viên!");
+					return;
+				}
+				String dataUngVien[] = getData();
+				for (int i = 0; i < dataUngVien.length; i++) {
+					System.out.println(dataUngVien[i]);
+				}
+
+				String maNhanVien = dataBoSung[1];
+				int thoiHanHopDong = Integer.valueOf(dataBoSung[4].split(" ")[0]);	
+				LocalDate ngayBatdau = toLocalDate(dataBoSung[3]);
+				LocalDate ngayKetThuc = LocalDate.of(ngayBatdau.getYear()+thoiHanHopDong, ngayBatdau.getMonthValue(), ngayBatdau.getDayOfMonth());
+				HOPDONGLAODONG hd = new HOPDONGLAODONG("HD"+maNhanVien, ngayBatdau, ngayKetThuc, dataBoSung[4], changeStringSalaryToDouble(dataUngVien[17]));
+				TAIKHOAN tk = new TAIKHOAN(maNhanVien, maNhanVien, null, "assets/appIcon/icons8-human-head-64.png");
+				DIACHI dc = new DIACHI(dataUngVien[7], dataUngVien[8], dataUngVien[9], dataUngVien[10], dataUngVien[11]);
+				CMND cmnd = new CMND(dataUngVien[14], dataUngVien[16], toLocalDate(dataUngVien[15]));
+				TRINHDO td = new TRINHDO("TD"+maNhanVien, dataUngVien[4], dataUngVien[5], dataUngVien[6]);
+
+				Object chucVuCongTy[] = DAO.ChucVuDAO.getInstance().getChucVuCongTyTuTen(dataUngVien[16]); // ???
+				CHUCVU cv =new CHUCVU("CV"+maNhanVien, chucVuCongTy[1].toString(), Double.valueOf(chucVuCongTy[2].toString()), LocalDate.now());
+				NHANVIEN nhanVien = null;
+				String maPhong = DAO.PhongBanDAO.getInstance().getMaSoTuTen(dataBoSung[2]);
+				if(dataBoSung[0].equalsIgnoreCase("Nhân viên chính thức")) {
+					// NHÂN VIÊN CHÍNH THỨC
+					nhanVien = new NHANVIENCHINHTHUC(hd, maNhanVien,tk , dataUngVien[0], dataUngVien[1], toLocalDate(dataUngVien[2]), dc, dataUngVien[3], cmnd, dataUngVien[12], dataUngVien[13], dataUngVien[18], maPhong, td, cv);
+				}else {
+					// NHÂN VIÊN THỬ VIỆC
+					LocalDate ngaybd = toLocalDate(dataBoSung[5]);
+					LocalDate ngaykt = toLocalDate(dataBoSung[6]);
+					nhanVien = new NHANVIENTHUVIEC(maNhanVien, dataUngVien[0], dataUngVien[1], toLocalDate(dataUngVien[2]), dc,dataUngVien[3], cmnd, dataUngVien[12], dataUngVien[13], dataUngVien[18], maPhong, td, cv, tk, ngaybd, ngaykt, changeStringSalaryToDouble(dataUngVien[17])*0.8);
+				}
+				DAO.NhanVienDAO.getInstance().insertNHANVIENfromUNGVIEN(nhanVien);
+				DAO.UngVienDAO.getInstance().updateTrangThai(dataUngVien[19], "Đã tuyển");
+
+				showMessage("Tuyển ứng viên thành công!");
+
+				// render lại data
+
+
+			}
+		});
 		button_luu.setText("Lưu");
 		button_luu.setIcon(new ImageIcon(getClass().getResource("/assets/appIcon/icons8-search-24.png")));
 		panelContent.add(button_luu);
@@ -290,6 +382,31 @@ public class UngVienPage_TuyenUngVien extends JFrame{
 		this.setVisible(true);
 
 	}
+
+	public LocalDate toLocalDate(String date) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		return LocalDate.parse(date, formatter);
+	}
+
+	public boolean checkMaNhanVienTonTai(String maSo) {
+		ArrayList<String> listMaSo = DAO.NhanVienDAO.getInstance().getDanhSachMaSo();
+		for(String i : listMaSo) {
+			if(i.equals(maSo)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public Double changeStringSalaryToDouble(String value) {
+		String arr[] = value.split(",");
+		String s  ="";
+		for(int i=0;i<arr.length;i++) {
+			s = s + arr[i];
+		}
+		return Double.valueOf(s);
+	}
+
 	public JComboBox<String> getComboBox_hopdong() {
 		return comboBox_hopdong;
 	}
@@ -358,29 +475,31 @@ public class UngVienPage_TuyenUngVien extends JFrame{
 	
 	public void setData(String data[]) {
 		this.data =data;
-		for(int i=0;i<20;i++) {
+		for(int i=0;i<19;i++) {
 			listlabel.get(i).setText(titleInfoUngVien[i]+":   "+data[i]);
 		}
 	}
 	public String[] getData() {
 		return data;
 	}
-//	public String[] getDataBoSung() {
-//		String str0 = ((myCombobox<String>)listCombonentBoSung.get(0)).getSelectedItem().toString();
-//		String str1 = ((JTextField)listCombonentBoSung.get(1)).getText().trim();
-//		String str2 = ((myCombobox<String>)listCombonentBoSung.get(2)).getSelectedItem().toString();
-//		String str3 = ((JTextField)listCombonentBoSung.get(3)).getText().trim();
-//		String str4 = ((myCombobox<String>)listCombonentBoSung.get(4)).getSelectedItem().toString();
-//		String str5 = ((JTextField)listCombonentBoSung.get(5)).getText().trim();
-//		String str6 = ((JTextField)listCombonentBoSung.get(6)).getText().trim();
-//		String data[] = {str0,str1,str2,str3,str4,str5,str6};
-//		return data;
-//	}
+
+	public String[] getDataBoSung() {
+		String str0 = ((myCombobox<String>)listCombonentBoSung.get(0)).getSelectedItem().toString();
+		String str1 = ((JTextField)listCombonentBoSung.get(1)).getText().trim();
+		String str2 = ((myCombobox<String>)listCombonentBoSung.get(2)).getSelectedItem().toString();
+		String str3 = ((JTextField)listCombonentBoSung.get(3)).getText().trim();
+		String str4 = ((myCombobox<String>)listCombonentBoSung.get(4)).getSelectedItem().toString();
+		String str5 = ((JTextField)listCombonentBoSung.get(5)).getText().trim();
+		String str6 = ((JTextField)listCombonentBoSung.get(6)).getText().trim();
+		String data[] = {str0,str1,str2,str3,str4,str5,str6};
+		return data;
+	}
+
 	public void showMessage(String str) {
 		JOptionPane.showMessageDialog(this, str,"Thông báo",JOptionPane.WARNING_MESSAGE);
 		
 	}
 	public void setDataCbbPhongBanTuyenUngVien(String tuyenUngVien[]) {
-		cbbPhongban.setModel(new DefaultComboBoxModel<>(tuyenUngVien));
+		cbbPhongBan.setModel(new DefaultComboBoxModel<>(tuyenUngVien));
 	}
 }

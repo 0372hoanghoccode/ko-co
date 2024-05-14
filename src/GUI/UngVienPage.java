@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -24,6 +25,15 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import BUS.UngVienBUS;
+import BUS.TUYENDUNG_BUS;
+import DTO.BAOCAOTUYENDUNG;
+import DTO.UNGVIEN;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.time.LocalDate;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class UngVienPage extends JPanel {
 		private UngVienPage_Them uvv_t;
@@ -50,22 +60,45 @@ public class UngVienPage extends JPanel {
 		private ArrayList<JLabel> listThongTinUngVien;
 		private UngVienPage_TuyenUngVien tuyenUngVien;
 		private UngVienBUS ungvienBus = new UngVienBUS();
+		private TUYENDUNG_BUS tuyenDungBUS = new TUYENDUNG_BUS();
 
 		private static final String titleInfoTuyenDung[] = {"Chức vụ","Giới tính","Độ tuổi","Hạn nộp","Hồ sơ đã nộp","Hồ sơ đã tuyển","Lương tối thiểu","Lương tối đa"};
 		private static final String[] columnName={ "Mã tuyển dụng","Họ và tên","Số điện thooại","Email","Chức vụ","Trình độ","Mức lương Deal","Trạng thái"};
-		private static final String [] titleInfoUngVien = {"Tên ứng viên","Giới tính","Ngày sinh","Số điện thoại","Email","Số nhà","Đường","Phường xã","Quận/Huyện","Tỉnh/TP","CMND","Trình độ","Dân tộc","Tôn giáo","Hôn nhân"};
+		private static final String [] titleInfoUngVien = {"Tên ứng viên", //0
+		"Giới tính",//1
+		"Ngày sinh",
+		"Số điện thoại",
+		"Email",
+		"Số nhà",
+		"Đường",
+		"Phường xã",
+		"Quận/Huyện",
+		"Tỉnh/TP",
+		"CMND",
+		"Trình độ",
+		"Dân tộc",
+		"Tôn giáo"};
 		
 		public UngVienPage() {
 			init();
 			uvv_t= new UngVienPage_Them();
 			uvv_t.setVisible(false);
+			data = ungvienBus.getObject1();
 			model = new DefaultTableModel(data, columnName);
 			table.setModel(model);
-			data = ungvienBus.getObject();
+			
 			tuyenUngVien= new UngVienPage_TuyenUngVien();
 			tuyenUngVien.setVisible(false);
 		}
 		
+		public void setData() {
+			data = ungvienBus.getObject1();
+			
+			model = new DefaultTableModel(data, columnName);
+			table.setModel(model);
+		}
+
+
 		
 		public void init() {
 			this.setLayout(null);
@@ -114,7 +147,7 @@ public class UngVienPage extends JPanel {
 			label_avt.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/assets/appIcon/icons8-back-50.png")).getImage().getScaledInstance(label_avt.getWidth(), label_avt.getHeight(), Image.SCALE_AREA_AVERAGING)));
 			
 			label_avt.setFont(new Font("Arial",Font.BOLD,13));
-			info_UngVien.add(label_avt);
+			// info_UngVien.add(label_avt);
 			
 			listThongTinUngVien = new ArrayList<>();
 			for(int i=0;i<5;i++) {
@@ -133,7 +166,7 @@ public class UngVienPage extends JPanel {
 				info_UngVien.add(temp);
 				listThongTinUngVien.add(temp);
 			}
-			for(int i=0;i<5;i++) {
+			for(int i=0;i<4;i++) {
 				JLabel temp= new JLabel(titleInfoUngVien[10+i]);
 				temp.setBounds(730,20+i*30,280,30);
 				temp.setFont(new Font("Arial",Font.BOLD,13));
@@ -151,6 +184,7 @@ public class UngVienPage extends JPanel {
 			this.add(comboBox_MaTuyenDung);
 			comboBox_MaTuyenDung.setFont(new Font("Arial",1,12));
 			comboBox_MaTuyenDung.setBounds(10,20,140,30);
+			comboBox_MaTuyenDung.setModel(new DefaultComboBoxModel<>(DAO.TuyenDungDAO.getInstance().getMaTuyenDung()));
 			((myCombobox<String>)comboBox_MaTuyenDung).showArrow();
 			
 			
@@ -169,6 +203,13 @@ public class UngVienPage extends JPanel {
 			this.add(find);
 			
 			button_UngVien_Them= new JButton("Thêm");
+			button_UngVien_Them.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					uvv_t.setDataCbbMaTuyenDung(DAO.TuyenDungDAO.getInstance().getMaTuyenDung());
+					uvv_t.set_UngVienPage(UngVienPage.this);
+					uvv_t.setVisible(true);
+				}
+			});
 			button_UngVien_Them.setFont(new Font("Arial", 0, 13));
 			this.add(button_UngVien_Them);
 			button_UngVien_Them.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/assets/appIcon/icons8-back-50.png")).getImage().getScaledInstance(23, 23, Image.SCALE_DEFAULT)));
@@ -178,6 +219,7 @@ public class UngVienPage extends JPanel {
 			
 			
 			button_UngVien_Xoa= new JButton("Xóa");
+			
 			button_UngVien_Xoa.setFont(new Font("Arial", 0, 13));
 			this.add(button_UngVien_Xoa);
 			button_UngVien_Xoa.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/assets/appIcon/icons8-back-50.png")).getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT)));
@@ -186,6 +228,25 @@ public class UngVienPage extends JPanel {
 			button_UngVien_Xoa.setBounds(742,24,90,30);
 			
 			button_TuyenUngVien= new JButton("Tuyển");
+			button_TuyenUngVien.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					int index = table.getSelectedRow();
+					if (index < 0) {
+						JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 dòng để thêm ứng viên");
+						return;
+					}
+					String maUngVien = table.getValueAt(index, 1).toString().split(" - ")[0];
+					UNGVIEN ungVien = ungvienBus.getUngVien(maUngVien);
+					if(!ungVien.getTrangThai().equals("Chưa tuyển")) {
+						JOptionPane.showMessageDialog(null, "Đã tuyển ứng viên này!");
+						return;
+					}
+					String data[] = ungVien.getDataToTuyen();
+					tuyenUngVien.setData(data);
+					tuyenUngVien.setVisible(true);
+				}
+				
+			});
 			button_TuyenUngVien.setHorizontalAlignment(SwingConstants.LEFT);
 			button_TuyenUngVien.setFont(new Font("Arial",0,13));
 			this.add(button_TuyenUngVien);
@@ -195,6 +256,48 @@ public class UngVienPage extends JPanel {
 			//Table
 	       
 	        table = new myTable() ;
+	        table.addMouseListener(new MouseAdapter() {
+	        	@Override
+	        	public void mouseClicked(MouseEvent e) {
+					int row = table.rowAtPoint(e.getPoint());	
+
+					// Data tuyển dụng
+					String maTuyenDung = ((String)table.getValueAt(row, 0)).trim();
+					BAOCAOTUYENDUNG tuyenDung = tuyenDungBUS.getBaoCaoTuyenDung(maTuyenDung);
+					String dataTuyenDung[] = new String[] {
+						tuyenDung.getChucVu(),tuyenDung.getGioiTinh(),tuyenDung.getDoTuoi(),LocalDateToString(tuyenDung.getHanNopHoSo()),
+						tuyenDung.getSoLuongNopHoSo()+"",tuyenDung.getSoLuongDaTuyen()+"",changeSalaryToFormatString(tuyenDung.getMucLuongToiThieu()),changeSalaryToFormatString(tuyenDung.getMucLuongToiDa())
+					};
+					setDataInfotuyenDung(dataTuyenDung);
+
+
+					// Data ứng viên
+					String maUngVien = table.getValueAt(row, 1).toString().split(" - ")[0];
+					UNGVIEN ungVien = ungvienBus.getUngVien(maUngVien);
+					String data[] = new String[] {
+							ungVien.getHoTen(), // 0
+							ungVien.getGioiTinh(), // 1
+							LocalDateToString(ungVien.getNgaySinh()), //2 
+							ungVien.getSdt(),//3
+							ungVien.getEmail(), //4
+							ungVien.getDiaChi().getSoNha(), //5
+							ungVien.getDiaChi().getDuong(), //6
+							ungVien.getDiaChi().getPhuongXa(), //7
+							ungVien.getDiaChi().getQuanHuyen(), //8
+							ungVien.getDiaChi().getTinhThanhPho(), //9
+							ungVien.getCmnd().getSoCmnd(),//10
+							ungVien.getTrinhDo().getTrinhDoChuyenMon()+" - "+ungVien.getTrinhDo().getChuyenNganh(),//11
+							ungVien.getDanToc(),//12
+							ungVien.getTonGiao()//13
+					};
+					for(int i = 5 ; i < 10 ; i++) {
+						System.out.println(data[i]);
+					}
+					setDataInfoUngVien(data);
+					//đổi màu chữ "Xóa"
+					getButton_UngVien_Xoa().setForeground(Color.black);
+	        	}
+	        });
 	        table.setRowHeight(30);
 	        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
 				public Component getTableCellRendererComponent(JTable jtable, Object o, boolean selected, boolean bln1, int i, int i1) {
@@ -252,7 +355,75 @@ public class UngVienPage extends JPanel {
 			this.setBounds(220,46,1013,576);
 			this.setBackground(new Color(255, 255, 255));
 			this.setVisible(false);
+
+
+
+
+			button_UngVien_Xoa.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					JTable n_table;
+					int row =table.getSelectedRow();
+					try {
+						int a=JOptionPane.showConfirmDialog(UngVienPage.this, "Bạn có muốn xóa ứng viên "+ table.getValueAt(row, 1).toString()+ " không?") ;
+						if(a==0) {
+							if(row==-1)
+								return;
+							else {
+								// Cập nhật vào database
+								n_table=table;
+								for(UNGVIEN i: ungvienBus.getList()) {
+									if(i.getMaUngVien().equals(n_table.getValueAt(row, 1).toString().split(" - ")[0])) {
+										if(i.getTrangThai().equalsIgnoreCase("Đã tuyển")) {
+											JOptionPane.showMessageDialog(UngVienPage.this,"Ứng viên đã tuyển, không thể xóa!");
+											return;
+										}else {
+											DAO.UngVienDAO.getInstance().deleteUngVien("TDUV"+i.getMaUngVien(),i.getCmnd().getSoCmnd(),i.getMaUngVien());
+											// đổi màu chữ xóa
+											button_UngVien_Xoa.setForeground(new Color(128,128,128));
+											ungvienBus = new UngVienBUS();
+											
+											data = ungvienBus.getObject1();
+			
+											model = new DefaultTableModel(data, columnName);
+											table.setModel(model);
+											
+											return;
+										}
+										
+									}
+								} 
+								
+							}
+						}
+					} catch (Exception e2) {
+						JOptionPane.showMessageDialog(UngVienPage.this, "Vui lòng chọn ứng viên cần xóa");
+					}
+				}
+			});
+
 		}
+
+		public String LocalDateToString(LocalDate date) {
+			String arr[] = date.toString().split("-");
+			return arr[2]+"-"+arr[1]+"-"+arr[0];
+			
+		}
+
+		public String changeSalaryToFormatString(double value) {
+			long temp = (long)value;
+			String s = String.valueOf(temp);
+			
+			int n = s.length(), count = 0;
+			for(int i=n-1;i>=0;i--){
+				if(count==3){
+					s = s.substring(0, i+1) +","+ s.substring(i+1);
+					count = 0;
+				}
+				count++; 
+			}
+			return s;
+		}
+
 		public JButton getButtonTuyenUngVien() {
 			return this.button_TuyenUngVien;
 		}
@@ -305,6 +476,12 @@ public class UngVienPage extends JPanel {
 		public void setTable(myTable table) {
 			this.table = table;
 		}
+
+		public void resetBUS() {
+			this.ungvienBus = new UngVienBUS();
+		}
+
+
 		public DefaultTableModel model() {
 			return model;
 		}
@@ -324,7 +501,7 @@ public class UngVienPage extends JPanel {
 			comboBox_MaTuyenDung.setModel(new DefaultComboBoxModel<>(str));
 		}
 		public void setDataInfoUngVien(String data[]) {
-			for(int i=0;i<15;i++) {
+			for(int i=0;i<14;i++) {
 				listThongTinUngVien.get(i).setText(titleInfoUngVien[i]+":    "+data[i]);
 			}
 		}
@@ -333,7 +510,7 @@ public class UngVienPage extends JPanel {
 				listThongTinTuyenDung.get(i).setText(titleInfoTuyenDung[i]+":    "+data[i]);
 			}
 		}
-		
+			
 		public void formatSizeColumn() {
 			table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 			table.getColumnModel().getColumn(0).setPreferredWidth(100);  

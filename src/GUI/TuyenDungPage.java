@@ -16,6 +16,11 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+import BUS.TUYENDUNG_BUS;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+
 
 
 public class TuyenDungPage extends JPanel {
@@ -32,6 +37,8 @@ public class TuyenDungPage extends JPanel {
 	private String [] title_table={"Đợt", "Mã tuyển dụng","Chức vụ","Học vấn","Giới tính","Độ tuổi","SL cần tuyển","SL nộp hồ sơ","SL đã tuyển","Hạn nộp","Mức lương tối thiểu","Mức lương tối đa"};
 	private JButton button_TuyenDung_Xoa;
 	private JButton button_TuyenDung_TuyenThem;
+	private TUYENDUNG_BUS tuyenDungBUS = new TUYENDUNG_BUS();
+
 	public JButton getButton_Timkiem() {
 		return button_Timkiem;
 	}
@@ -39,6 +46,7 @@ public class TuyenDungPage extends JPanel {
 		this.button_Timkiem = button_Timkiem;
 	}
 	public TuyenDungPage() {
+		data = tuyenDungBUS.getDataObjectToRender();
 		init();
 		tuyenDungView_Them= new TuyenDungPage_Them();
 		tuyenDungView_Them.setVisible(false);
@@ -51,6 +59,11 @@ public class TuyenDungPage extends JPanel {
 		
 		
 		button_TuyenDung_Them= new JButton("Thêm");
+		button_TuyenDung_Them.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tuyenDungView_Them.setVisible(true);
+			}
+		});
 		button_TuyenDung_Them.setHorizontalAlignment(SwingConstants.LEFT);
 		button_TuyenDung_Them.setFont(new Font("Arial",0,13));
 		this.add(button_TuyenDung_Them);
@@ -103,16 +116,20 @@ public class TuyenDungPage extends JPanel {
         Table.setModel(tableModel);
         
         renderData();
-
+		
 
         JScrollPane scrollPane = new JScrollPane(Table);
-        scrollPane.setBounds(10,70,1060,570);
+        scrollPane.setBounds(10,70,950,482);
         scrollPane.setBorder(new LineBorder(Color.decode("#dfe4ea"),3));
         this.add(scrollPane);
         
-		this.setBounds(220,46,900,615);
+		this.setBounds(220,46,970,602);
 		// this.setBackground(new Color(70,130,180));
 		this.setVisible(true);
+
+		
+
+
 	}
 	public void setData(Object[][] data) {
 		this.data = data;

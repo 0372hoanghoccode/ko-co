@@ -184,11 +184,15 @@ public class EmployeePage extends JPanel {
         btnNewButton_2 = new JButton(""); // chi tiết
         btnNewButton_2.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-                int viewRow = table.getSelectedRow();
-                String[] maVaTen = ((String) table.getValueAt(viewRow, 1)).split(" - ");
-        		Object[] data = nhanVienBUS.renderSelectedNhanVien(maVaTen[0]);
-                EmployeeDetail employeeDetail = new EmployeeDetail(data, getEmployeePage());
-                employeeDetail.setVisible(true);
+        		try {
+                    int viewRow = table.getSelectedRow();
+                    String[] maVaTen = ((String) table.getValueAt(viewRow, 1)).split(" - ");
+                    Object[] data = nhanVienBUS.renderSelectedNhanVien(maVaTen[0]);
+                    EmployeeDetail employeeDetail = new EmployeeDetail(data, getEmployeePage());
+                    employeeDetail.setVisible(true);
+                } catch (Exception e1) {
+                    JOptionPane.showMessageDialog(panel, "Vui lòng chọn nhân viên cần xem chi tiết!");
+                }
         	}
        });
         btnNewButton_2.setIcon(new ImageIcon(EmployeePage.class.getResource("/assets/appIcon/icons8-user-24.png")));
@@ -219,6 +223,12 @@ public class EmployeePage extends JPanel {
                                             @Override
                                             public void actionPerformed(ActionEvent e) {
                                                 setData();
+                                                comboBox.setSelectedIndex(0);
+                                                comboBox_1.setSelectedIndex(0);
+                                                comboBox_2.setSelectedIndex(0);
+                                                comboBox_3.setSelectedIndex(0);
+                                                comboBox_4.setSelectedIndex(0);
+                                                searchField.setText("");
                                             }
                                         });
                 searchButton.addActionListener(new ActionListener() {
